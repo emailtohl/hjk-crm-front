@@ -1,0 +1,99 @@
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email">电子邮箱</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input nz-input formControlName="email" id="email">
+      <nz-form-explain *ngIf="validateForm.get('email').dirty && validateForm.get('email').errors">无效邮箱地址!</nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="password" nzRequired>密码</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input nz-input type="password" id="password" formControlName="password" (ngModelChange)="updateConfirmValidator()">
+      <nz-form-explain *ngIf="validateForm.get('password').dirty && validateForm.get('password').errors">请输入密码!</nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="checkPassword" nzRequired>校验密码</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input nz-input type="password" formControlName="checkPassword" id="checkPassword">
+      <nz-form-explain *ngIf="validateForm.get('checkPassword').dirty && validateForm.get('checkPassword').errors">
+        <ng-container *ngIf="validateForm.get('checkPassword').hasError('required')">
+          Please confirm your password!
+        </ng-container>
+        <ng-container *ngIf="validateForm.get('checkPassword').hasError('confirm')">
+          Two passwords that you enter is inconsistent!
+        </ng-container>
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="group" nzRequired>类别</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-select formControlName="group" style="width: 100%;">
+        <nz-option *ngFor="let g of groups" nzLabel="{{g.name}}" nzValue="{{g.id}}"></nz-option>
+      </nz-select>
+      <nz-form-explain *ngIf="validateForm.get('group').dirty && validateForm.get('group').errors">选择类别!</nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="name">
+      <span>
+        姓名
+        <nz-tooltip nzTitle="你的姓名">
+          <i nz-tooltip class="anticon anticon-question-circle-o"></i>
+        </nz-tooltip>
+      </span>
+    </nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input nz-input id="name" formControlName="name">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="cellPhone">联系电话</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" [nzValidateStatus]="validateForm.controls['cellPhone']">
+      <nz-input-group [nzAddOnBefore]="addOnBeforeTemplate">
+        <ng-template #addOnBeforeTemplate>
+          <nz-select formControlName="cellPhonePrefix" style="width: 70px;">
+            <nz-option nzLabel="+86" nzValue="+86"></nz-option>
+            <nz-option nzLabel="+87" nzValue="+87"></nz-option>
+          </nz-select>
+        </ng-template>
+        <input formControlName="cellPhone" id="'cellPhone'" nz-input>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <!-- 
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="captcha" nzRequired>Captcha</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <div nz-row [nzGutter]="8">
+        <div nz-col [nzSpan]="12">
+          <input nz-input formControlName="captcha" id="captcha">
+        </div>
+        <div nz-col [nzSpan]="12">
+          <button nz-button (click)="getCaptcha($event)">Get captcha</button>
+        </div>
+      </div>
+      <nz-form-explain *ngIf="validateForm.get('captcha').dirty && validateForm.get('captcha').errors">Please input the captcha you got!</nz-form-explain>
+      <nz-form-extra>We must make sure that your are a human.</nz-form-extra>
+    </nz-form-control>
+  </nz-form-item>
+   -->
+  <!-- 
+  <nz-form-item nz-row style="margin-bottom:8px;">
+    <nz-form-control [nzSpan]="14" [nzOffset]="6">
+      <label nz-checkbox formControlName="agree">
+        <span>I have read the
+          <a>agreement</a>
+        </span>
+      </label>
+    </nz-form-control>
+  </nz-form-item>
+   -->
+  <nz-form-item nz-row style="margin-bottom:8px;">
+    <nz-form-control [nzSpan]="14" [nzOffset]="6">
+      <button nz-button nzType="primary" [disabled]="validateForm.invalid">注册</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>
