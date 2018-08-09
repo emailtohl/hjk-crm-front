@@ -2,8 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
-  Validators
+  Validators,
+  FormControl
 } from '@angular/forms';
+import { Config } from '../config';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { NzMessageService } from 'ng-zorro-antd';
+import { Csrf } from '../shared/dto';
 
 @Component({
   selector: 'app-login',
@@ -12,8 +18,9 @@ import {
 })
 export class LoginComponent implements OnInit {
   validateForm: FormGroup;
+  csrf: Csrf;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private message: NzMessageService) {
   }
 
   ngOnInit(): void {
@@ -21,6 +28,10 @@ export class LoginComponent implements OnInit {
       email: [null, [Validators.required]],
       password: [null, [Validators.required]],
       remember: [true]
+    });
+    this.http.get(`${Config.backend}/csrf`).subscribe((data: Csrf) => {
+      this.csrf = data;
+      this.validateForm.addControl(data.parameterName, new FormControl(data.token, Validators.required));
     });
   }
 
@@ -31,5 +42,20 @@ export class LoginComponent implements OnInit {
         this.validateForm.controls[i].updateValueAndValidity();
       }
     }
+    const url = `${Config.backend}/login`;
+    const headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
+    const email = this.validateForm.value.email;
+    const password = this.validateForm.value.password;
+    const body = `email=${email}&password=${password}&${this.csrf.parameterName}=${this.csrf.token}`;
+    this.http.post(url, body, { headers: headers }).subscribe(resp => {
+      this.router.navigate(['service']);
+    }, err => {
+      // console.log(err);
+      if (err.error && err.error.error === 'Not Found') {
+        this.router.navigate(['login']);
+      } else {
+        this.message.create('error', `登录失败`);
+      }
+    });
   }
 }

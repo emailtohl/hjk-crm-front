@@ -8,7 +8,8 @@ import {
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Config } from '../config';
-import { Group, Csrf } from '../shared/dto';
+import { Group, Csrf, User } from '../shared/dto';
+import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-register',
@@ -18,16 +19,17 @@ import { Group, Csrf } from '../shared/dto';
 export class RegisterComponent implements OnInit {
   groups: Array<Group> = [];
   validateForm: FormGroup;
+  csrf: Csrf;
 
-  constructor(private fb: FormBuilder, private httpClient: HttpClient, private router: Router) {
+  constructor(private fb: FormBuilder, private httpClient: HttpClient, private router: Router, private message: NzMessageService) {
   }
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
       email: [null, [Validators.email]],
-      password: [null, [Validators.required]],
+      password: [null, [Validators.required, Validators.minLength(5)]],
       checkPassword: [null, [Validators.required, this.confirmationValidator]],
-      group: [null, [Validators.required]],
+      groups: [[], [Validators.required]],
       name: [null],
       cellPhonePrefix: ['+86'],
       cellPhone: [null],
@@ -35,6 +37,7 @@ export class RegisterComponent implements OnInit {
       // agree: [false]
     });
     this.httpClient.get(`${Config.backend}/csrf`).subscribe((data: Csrf) => {
+      this.csrf = data;
       this.validateForm.addControl(data.parameterName, new FormControl(data.token, Validators.required));
     });
     this.httpClient.get(`${Config.backend}/groups`).subscribe((data: Array<Group>) => {
@@ -48,8 +51,18 @@ export class RegisterComponent implements OnInit {
         this.validateForm.controls[i].updateValueAndValidity();
       }
     }
-    this.httpClient.post(`${Config.backend}/users`, this.validateForm.value).subscribe(data => {
-      // this.router.navigate();
+    this.httpClient.post(`${Config.backend}/users`, this.validateForm.value, {
+      headers: { [this.csrf.headerName]: this.csrf.token }
+    }).subscribe((data: User) => {
+      console.log(data);
+      const b = data.groups.every(g => g.id === 'CUSTOMER');
+      if (b) {
+        this.router.navigate(['service']);
+      } else {
+        this.router.navigate(['back']);
+      }
+    }, err => {
+      this.message.create('error', `注册失败`);
     });
   }
 

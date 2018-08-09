@@ -10,7 +10,14 @@
     <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="password" nzRequired>密码</nz-form-label>
     <nz-form-control [nzSm]="14" [nzXs]="24">
       <input nz-input type="password" id="password" formControlName="password" (ngModelChange)="updateConfirmValidator()">
-      <nz-form-explain *ngIf="validateForm.get('password').dirty && validateForm.get('password').errors">请输入密码!</nz-form-explain>
+      <nz-form-explain *ngIf="validateForm.get('password').dirty && validateForm.get('password').errors">
+          <ng-container *ngIf="validateForm.get('password').hasError('required')">
+              请输入密码!
+            </ng-container>
+            <ng-container *ngIf="validateForm.get('password').hasError('minlength')">
+              密码至少5位!
+            </ng-container>
+        </nz-form-explain>
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
@@ -19,21 +26,21 @@
       <input nz-input type="password" formControlName="checkPassword" id="checkPassword">
       <nz-form-explain *ngIf="validateForm.get('checkPassword').dirty && validateForm.get('checkPassword').errors">
         <ng-container *ngIf="validateForm.get('checkPassword').hasError('required')">
-          Please confirm your password!
+          再次输入密码!
         </ng-container>
         <ng-container *ngIf="validateForm.get('checkPassword').hasError('confirm')">
-          Two passwords that you enter is inconsistent!
+          两次密码输入不一致!
         </ng-container>
       </nz-form-explain>
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="group" nzRequired>类别</nz-form-label>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="groups" nzRequired>角色</nz-form-label>
     <nz-form-control [nzSm]="14" [nzXs]="24">
-      <nz-select formControlName="group" style="width: 100%;">
+      <nz-select formControlName="groups" style="width: 100%;">
         <nz-option *ngFor="let g of groups" nzLabel="{{g.name}}" nzValue="{{g.id}}"></nz-option>
       </nz-select>
-      <nz-form-explain *ngIf="validateForm.get('group').dirty && validateForm.get('group').errors">选择类别!</nz-form-explain>
+      <nz-form-explain *ngIf="validateForm.get('groups').dirty && validateForm.get('groups').errors">选择类别!</nz-form-explain>
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>

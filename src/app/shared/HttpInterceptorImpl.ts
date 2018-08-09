@@ -11,7 +11,8 @@ export class HttpInterceptorImpl implements HttpInterceptor {
     constructor(private router: Router, private confirmServ: NzModalService) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        const newReq = req.clone({withCredentials: true});
+        // 跨域携带cookie，在httpBasic下抑制浏览器弹出登录窗口
+        const newReq = req.clone({withCredentials: true, headers: req.headers.set('X-Requested-With', 'XMLHttpRequest')});
         return next.handle(newReq);
     }
 
