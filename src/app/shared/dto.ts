@@ -11,27 +11,25 @@ export class Group {
     public type: string;
 }
 
-export class User {
+export class User extends BaseEntity {
     public accountNonExpired: Boolean;
     public accountNonLocked: Boolean;
     public address: string;
     public age: number;
     public birthday: Date;
     public cellPhone: string;
-    public createDate: Date;
     public credentialsNonExpired: Boolean;
     public description: string;
     public email: string;
     public enabled: Boolean;
     public gender: string;
-    public groups: Group[];
+    public groups: string[];
     public id: number;
     public idNumber: string;
     public identityType: string;
     public image: Object;
     public lastChangeCredentials: Boolean;
     public lastLogin: Date;
-    public modifyDate: Date;
     public name: string;
     public nickname: string;
     public password: string;

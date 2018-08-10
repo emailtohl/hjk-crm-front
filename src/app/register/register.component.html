@@ -35,12 +35,12 @@
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="groups" nzRequired>角色</nz-form-label>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="group" nzRequired>角色</nz-form-label>
     <nz-form-control [nzSm]="14" [nzXs]="24">
-      <nz-select formControlName="groups" style="width: 100%;">
+      <nz-select formControlName="group" style="width: 100%;">
         <nz-option *ngFor="let g of groups" nzLabel="{{g.name}}" nzValue="{{g.id}}"></nz-option>
       </nz-select>
-      <nz-form-explain *ngIf="validateForm.get('groups').dirty && validateForm.get('groups').errors">选择类别!</nz-form-explain>
+      <nz-form-explain *ngIf="validateForm.get('group').dirty && validateForm.get('group').errors">选择类别!</nz-form-explain>
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
