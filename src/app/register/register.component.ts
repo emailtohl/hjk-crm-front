@@ -8,7 +8,7 @@ import {
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Config } from '../config';
-import { Group, Csrf, User } from '../shared/dto';
+import { Group, User } from '../shared/dto';
 import { NzMessageService } from 'ng-zorro-antd';
 import { InitData } from '../shared/init.data';
 
@@ -19,6 +19,7 @@ import { InitData } from '../shared/init.data';
 })
 export class RegisterComponent implements OnInit {
   validateForm: FormGroup;
+  isLoading = false;
   groups: Group[] = InitData.getGroups();
 
   constructor(
@@ -51,16 +52,18 @@ export class RegisterComponent implements OnInit {
     }
     const group = this.validateForm.controls.group.value;
     this.validateForm.controls.groups.setValue([group]);
+    this.isLoading = true;
     this.httpClient.post(`${Config.backend}/users`, this.validateForm.value)
     .subscribe((data: User) => {
       const b = data.groups.every(g => g === 'CUSTOMER');
+      this.isLoading = false;
       if (b) {
         this.router.navigate(['service']);
       } else {
         this.router.navigate(['back']);
       }
     }, err => {
-      console.log(err);
+      this.isLoading = false;
       this.message.create('error', `注册失败`);
     });
   }

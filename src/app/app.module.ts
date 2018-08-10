@@ -30,8 +30,8 @@ registerLocaleData(zh);
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AppRoutingModule,
     NgZorroAntdModule,
+    AppRoutingModule,
     SharedModule
   ],
   providers: [

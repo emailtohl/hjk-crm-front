@@ -1,6 +1,7 @@
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { HttpInterceptorImpl } from './HttpInterceptorImpl';
 import { InitData } from './init.data';
 
@@ -11,6 +12,7 @@ export function InitDataFactory(initData: InitData): Function {
 @NgModule({
   imports: [
     CommonModule,
+    NgZorroAntdModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorImpl, multi: true },
