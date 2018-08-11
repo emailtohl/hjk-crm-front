@@ -5,7 +5,7 @@
 import { Injectable } from '@angular/core';
 import { zip } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Csrf, Group } from './dto';
+import { Csrf, Group, Principal } from './dto';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
@@ -15,9 +15,12 @@ export class InitData {
         // 跨域携带cookie，在httpBasic下抑制浏览器弹出登录窗口
         'X-Requested-With': 'XMLHttpRequest',
     };
+    public static principal: Principal;
+    public static token: string;
+
     private static csrf: Csrf;
     private static groups: Group[];
-    private static token: string;
+
     constructor(private http: HttpClient) { }
 
     public static getCsrf(): Csrf {
@@ -36,10 +39,6 @@ export class InitData {
             group.type = g.type;
             return group;
         });
-    }
-
-    public static getToken(): string {
-        return InitData.token;
     }
 
     load(): Promise<any> {

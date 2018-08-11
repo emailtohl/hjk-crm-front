@@ -41,3 +41,20 @@ export class Csrf {
     public parameterName: string;
     public token: string;
 }
+
+export class Principal {
+    authenticated: boolean;
+    authorities: Array<any>;
+    credentials: any;
+    details: {remoteAddress: string, sessionId: string};
+    name: string;
+    principal: {
+        accountNonExpired: boolean,
+        accountNonLocked: boolean,
+        authorities: Array<any>;
+        credentialsNonExpired: boolean;
+        enabled: boolean;
+        password: string;
+        username: string;
+    };
+}

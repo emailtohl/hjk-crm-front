@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Principal } from '../shared/dto';
+import { InitData } from '../shared/init.data';
 
 @Component({
   selector: 'app-service-counter',
@@ -7,6 +9,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ServiceCounterComponent implements OnInit {
   isCollapsed = false;
+  principal: Principal = InitData.principal;
+
   constructor() { }
 
   ngOnInit() {
