@@ -5,7 +5,7 @@ import { debounceTime, filter, distinctUntilChanged, switchMap, catchError, take
  * source : https://stackoverflow.com/questions/36919011/how-to-add-debounce-time-to-an-async-validator-in-angular-2
  * Usage:
  * const validator = debouncedAsyncValidator<string>(v => {
- * return this.myService.validateMyString(v).pipe(
+ *  return this.myService.validateMyString(v).pipe(
  *      map(r => {
  *          return r.isValid ? { foo: "String not valid" } : null;
  *      })

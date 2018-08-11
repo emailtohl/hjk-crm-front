@@ -9,7 +9,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd';
 import { Csrf } from '../shared/dto';
-import { environment } from '../../environments/environment.prod';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -47,8 +47,13 @@ export class LoginComponent implements OnInit {
     const email = this.validateForm.value.email;
     const password = this.validateForm.value.password;
     const body = `email=${email}&password=${password}&${this.csrf.parameterName}=${this.csrf.token}`;
-    this.http.post(url, body, { headers: headers }).subscribe(resp => {
-      this.router.navigate(['service']);
+    this.http.post(url, body, { headers: headers }).subscribe((resp: {name: string, authorities: Array<any>, principal: {}}) => {
+      if (resp.authorities.length > 1 // 若有多个角色，那么肯定是内部人员
+        || (resp.authorities.length === 1 && resp.authorities[0].authority !== 'CUSTOMER')) {
+        this.router.navigate(['back']);
+      } else {
+        this.router.navigate(['service']);
+      }
     }, err => {
       // console.log(err);
       if (err.error && err.error.error === 'Not Found') {

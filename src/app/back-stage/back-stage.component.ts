@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BackStageComponent implements OnInit {
   isCollapsed = false;
+  isReverseArrow = false;
+  width = 200;
   constructor() { }
 
   ngOnInit() {

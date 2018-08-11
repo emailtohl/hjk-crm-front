@@ -7,7 +7,7 @@ import { zip } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Csrf, Group } from './dto';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment.prod';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class InitData {
