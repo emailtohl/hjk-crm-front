@@ -5,11 +5,11 @@ import {
   Validators,
   FormControl
 } from '@angular/forms';
-import { Config } from '../config';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd';
 import { Csrf } from '../shared/dto';
+import { environment } from '../../environments/environment.prod';
 
 @Component({
   selector: 'app-login',
@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
       password: [null, [Validators.required]],
       remember: [true]
     });
-    this.http.get(`${Config.backend}/csrf`).subscribe((data: Csrf) => {
+    this.http.get(`${environment.SERVER_URL}/csrf`).subscribe((data: Csrf) => {
       this.csrf = data;
       this.validateForm.addControl(data.parameterName, new FormControl(data.token, Validators.required));
     });
@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
         this.validateForm.controls[i].updateValueAndValidity();
       }
     }
-    const url = `${Config.backend}/login`;
+    const url = `${environment.SERVER_URL}/login`;
     const headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
     const email = this.validateForm.value.email;
     const password = this.validateForm.value.password;

@@ -3,14 +3,19 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
-  Validators
+  Validators,
+  ValidationErrors
 } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Config } from '../config';
 import { Group, User } from '../shared/dto';
 import { NzMessageService } from 'ng-zorro-antd';
 import { InitData } from '../shared/init.data';
+import { Observable, Observer } from 'rxjs';
+import { debouncedAsyncValidator } from '../shared/debouncedAsyncValidator';
+import { map } from 'rxjs/operators';
+import { environment } from '../../environments/environment.prod';
+
 
 @Component({
   selector: 'app-register',
@@ -31,7 +36,11 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
-      email: [null, [Validators.email]],
+      email: [null, [Validators.email], [debouncedAsyncValidator(v => {
+        return this.httpClient.get<boolean>(`${environment.SERVER_URL}/users/exist?email=${v}`).pipe(
+          map((b: boolean) => b ? { error: true, duplicated: true } : null),
+        );
+      })]],
       password: [null, [Validators.required, Validators.minLength(5)]],
       checkPassword: [null, [Validators.required, this.confirmationValidator]],
       group: ['CUSTOMER', [Validators.required]],
@@ -53,7 +62,7 @@ export class RegisterComponent implements OnInit {
     const group = this.validateForm.controls.group.value;
     this.validateForm.controls.groups.setValue([group]);
     this.isLoading = true;
-    this.httpClient.post(`${Config.backend}/users`, this.validateForm.value)
+    this.httpClient.post(`${environment.SERVER_URL}/users`, this.validateForm.value)
     .subscribe((data: User) => {
       const b = data.groups.every(g => g === 'CUSTOMER');
       this.isLoading = false;

@@ -7,6 +7,7 @@ import { finalize, tap } from 'rxjs/operators';
 import { NzModalService, NzMessageService } from 'ng-zorro-antd';
 import { Observable } from 'rxjs';
 import { InitData } from './init.data';
+
 // https://v6.angular.live/guide/http#intercepting-requests-and-responses
 @Injectable()
 export class HttpInterceptorImpl implements HttpInterceptor {
@@ -34,13 +35,27 @@ export class HttpInterceptorImpl implements HttpInterceptor {
             // A client-side or network error occurred. Handle it accordingly.
             this.message.create('error', 'An error occurred:' + error.error.message);
         } else {
-            // 目前后台spring security是重定向到login页面，所以解析不了401/403状态码
-            if (error.url.endsWith('login')) {
-                this.router.navigate(['login']);
-            } else {
-                // The backend returned an unsuccessful response code.
-                // The response body may contain clues as to what went wrong,
-                this.message.create('error', `Backend returned code ${error.status}, ` + `body was: ${error.error}`);
+            switch (error.status) {
+                case 200:
+                    // 后台spring security若是重定向到login页面，所以解析不了401/403状态码
+                    if (error.url.endsWith('login')) {
+                        this.router.navigate(['login']);
+                    }
+                    break;
+                case 401: // 未登录状态码
+                    this.router.navigate(['login']);
+                    break;
+                case 403:
+                    this.message.create('error', `没有执行权限`);
+                    this.router.navigate(['login']);
+                    break;
+                case 404:
+                case 500:
+                default:
+                    // The backend returned an unsuccessful response code.
+                    // The response body may contain clues as to what went wrong,
+                    this.message.create('error', `Backend returned code ${error.status}, ` + `body was: ${error.error}`);
+                    break;
             }
         }
         // return an observable with a user-facing error message

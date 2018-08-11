@@ -4,6 +4,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { HttpInterceptorImpl } from './HttpInterceptorImpl';
 import { InitData } from './init.data';
+import { BooleanPipe } from './boolean.pipe';
+import { IconPipe } from './icon.pipe';
 
 export function InitDataFactory(initData: InitData): Function {
   return () => initData.load();
@@ -19,6 +21,6 @@ export function InitDataFactory(initData: InitData): Function {
     InitData,
     { provide: APP_INITIALIZER, useFactory: InitDataFactory, deps: [InitData], multi: true },
   ],
-  declarations: []
+  declarations: [BooleanPipe, IconPipe ]
 })
 export class SharedModule { }

@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./service-counter.component.css']
 })
 export class ServiceCounterComponent implements OnInit {
-
+  isCollapsed = false;
   constructor() { }
 
   ngOnInit() {
