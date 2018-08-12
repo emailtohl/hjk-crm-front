@@ -1,24 +1,23 @@
-import { Injectable, Injector } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
-import { finalize, tap } from 'rxjs/operators';
-import { NzModalService, NzMessageService } from 'ng-zorro-antd';
+import { catchError } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
+import { NzMessageService } from 'ng-zorro-antd';
 import { Observable } from 'rxjs';
-import { InitData } from './init.data';
+import { SecurityService } from './security.service';
 
 // https://v6.angular.live/guide/http#intercepting-requests-and-responses
 @Injectable()
 export class HttpInterceptorImpl implements HttpInterceptor {
-
     constructor(private router: Router, private message: NzMessageService) {
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const newReq = req.clone({
             withCredentials: true,
-            setHeaders: InitData.headers
+            setHeaders: SecurityService.headers,
         });
         return next.handle(newReq)
             .pipe(
@@ -46,7 +45,7 @@ export class HttpInterceptorImpl implements HttpInterceptor {
                     this.router.navigate(['login']);
                     break;
                 case 403:
-                    this.message.create('error', `没有执行权限`);
+                    this.message.create('error', `没有执行权限，请切换有权限账号登录`);
                     this.router.navigate(['login']);
                     break;
                 case 404:

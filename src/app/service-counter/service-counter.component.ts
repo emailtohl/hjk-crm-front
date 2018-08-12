@@ -11,7 +11,8 @@ export class ServiceCounterComponent implements OnInit {
   isCollapsed = false;
   principal: Principal = InitData.principal;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

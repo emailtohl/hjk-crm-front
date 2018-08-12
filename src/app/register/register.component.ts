@@ -23,14 +23,16 @@ import { environment } from '../../environments/environment';
 export class RegisterComponent implements OnInit {
   validateForm: FormGroup;
   isLoading = false;
-  groups: Group[] = InitData.getGroups();
+  groups: Group[];
 
   constructor(
     private fb: FormBuilder,
     private httpClient: HttpClient,
     private router: Router,
     private message: NzMessageService,
-  ) { }
+  ) {
+    this.groups = InitData.getGroups();
+  }
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
