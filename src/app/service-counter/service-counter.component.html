@@ -3,37 +3,31 @@
     <div class="logo">
     </div>
     <ul nz-menu [nzTheme]="'dark'" [nzMode]="isCollapsed?'vertical':'inline'">
-      <li nz-menu-item>
+      <li nz-menu-item routerLink="/service/carousel" >
         <span>
           <i class="anticon anticon-user"></i>
-          <span class="nav-text">nav 1</span>
+          <span class="nav-text">首页</span>
         </span>
       </li>
-      <li nz-menu-item>
+      <li nz-menu-item routerLink="/service/invoice/list">
+        <span>
+          <i class="anticon anticon-user"></i>
+          <span class="nav-text">发票申请列表</span>
+        </span>
+      </li>
+      <li nz-menu-item routerLink="/service/invoice/apply" >
         <span>
           <i class="anticon anticon-video-camera"></i>
-          <span class="nav-text">nav 2</span>
-        </span>
-      </li>
-      <li nz-menu-item>
-        <span>
-          <i class="anticon anticon-upload"></i>
-          <span class="nav-text">nav 3</span>
-        </span>
-      </li>
-      <li nz-menu-item>
-        <span>
-          <i class="anticon anticon-user"></i>
-          <span class="nav-text">nav 4</span>
+          <span class="nav-text">发票申请</span>
         </span>
       </li>
     </ul>
   </nz-sider>
   <nz-layout>
-    <nz-header style="background: #fff; padding:0;">{{principal?.name}}</nz-header>
+    <nz-header style="background: #fff; padding:0;"><div class="logo">{{principal?.name}}</div></nz-header>
     <nz-content style="margin:24px 16px 0;">
       <div style="padding:24px; background: #fff; min-height: 360px;">
-        Content
+        <router-outlet></router-outlet>
       </div>
     </nz-content>
     <nz-footer style="text-align: center;">HJK</nz-footer>

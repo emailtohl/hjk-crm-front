@@ -13,6 +13,7 @@ import { RegisterComponent } from './register/register.component';
 import { ServiceCounterComponent } from './service-counter/service-counter.component';
 import { BackStageComponent } from './back-stage/back-stage.component';
 import { SharedModule } from './shared/shared.module';
+import { CarouselComponent } from './service-counter/carousel/carousel.component';
 
 registerLocaleData(zh);
 
@@ -22,7 +23,8 @@ registerLocaleData(zh);
     LoginComponent,
     RegisterComponent,
     ServiceCounterComponent,
-    BackStageComponent
+    BackStageComponent,
+    CarouselComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,7 +34,7 @@ registerLocaleData(zh);
     HttpClientModule,
     NgZorroAntdModule,
     AppRoutingModule,
-    SharedModule
+    SharedModule,
   ],
   providers: [
     { provide: NZ_I18N, useValue: zh_CN },
