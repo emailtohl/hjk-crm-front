@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'list', pathMatch: 'full' },
   { path: 'apply', component: MyOrganizationApplyComponent },
   { path: 'list', component: MyOrganizationListComponent },
-  { path: 'detail', component: MyOrganizationDetailComponent },
+  { path: 'detail/:id', component: MyOrganizationDetailComponent },
 ];
 
 @NgModule({

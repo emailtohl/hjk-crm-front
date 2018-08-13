@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Principal } from '../shared/dto';
 import { InitData } from '../shared/init.data';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-service-counter',
@@ -17,4 +18,11 @@ export class ServiceCounterComponent implements OnInit {
   ngOnInit() {
   }
 
+  getUserPicture(): string {
+    if (!this.principal) {
+      return '';
+    }
+    const id = this.principal.name.split(':')[0];
+    return `${environment.SERVER_URL}/users/userPicture/${id}`;
+  }
 }

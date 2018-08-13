@@ -24,7 +24,10 @@
     </ul>
   </nz-sider>
   <nz-layout>
-    <nz-header style="background: #fff; padding:0;"><div class="logo">您好：{{principal?.name?.split(':')[1]}}</div></nz-header>
+    <nz-header style="background: #fff; padding:0;">
+      <div class="logo">您好：{{principal?.name?.split(':')[1]}}</div>
+      <!-- <nz-avatar nzIcon="anticon anticon-user" nzSrc="{{getUserPicture()}}"></nz-avatar> -->
+    </nz-header>
     <nz-content style="margin:24px 16px 0;">
       <div style="padding:24px; background: #fff; min-height: 360px;">
         <router-outlet></router-outlet>

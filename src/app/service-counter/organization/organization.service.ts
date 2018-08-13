@@ -27,4 +27,8 @@ export class OrganizationService {
   public myRegisterOrganization(): Observable<Array<any>> {
     return this.httpClient.get<Array<any>>(`${environment.SERVER_URL}/organization/myRegisterOrganization`);
   }
+
+  public delete(id: number): Observable<any> {
+    return this.httpClient.delete<any>(`${environment.SERVER_URL}/organization/${id}`);
+  }
 }
