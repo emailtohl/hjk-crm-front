@@ -15,7 +15,8 @@ const routes: Routes = [
     path: 'service', component: ServiceCounterComponent, children: [
       { path: '', redirectTo: 'carousel', pathMatch: 'full' },
       { path: 'carousel', component: CarouselComponent },
-      // 懒加载的InvoiceModule不能在APPModule中import
+      // 懒加载的Module不能在APPModule中import
+      { path: 'organization', loadChildren: './service-counter/organization/organization.module#OrganizationModule' },
       { path: 'invoice', loadChildren: './service-counter/invoice/invoice.module#InvoiceModule' },
     ]
   },

@@ -2,7 +2,7 @@ import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
-import { HttpInterceptorImpl } from './httpInterceptorImpl';
+import { HttpInterceptorImpl } from './HttpInterceptorImpl';
 import { InitData } from './init.data';
 import { BooleanPipe } from './boolean.pipe';
 import { IconPipe } from './icon.pipe';
