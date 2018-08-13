@@ -23,4 +23,8 @@ export class OrganizationService {
   public create(organization): Observable<any> {
     return this.httpClient.post(`${environment.SERVER_URL}/organization`, organization);
   }
+
+  public myRegisterOrganization(): Observable<Array<any>> {
+    return this.httpClient.get<Array<any>>(`${environment.SERVER_URL}/organization/myRegisterOrganization`);
+  }
 }
