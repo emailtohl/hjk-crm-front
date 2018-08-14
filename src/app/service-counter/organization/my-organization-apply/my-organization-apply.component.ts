@@ -6,11 +6,12 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SecurityService } from '../../../shared/security.service';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { debouncedAsyncValidator } from '../../../shared/debouncedAsyncValidator';
 import { OrganizationService } from '../organization.service';
 import { NzMessageService, UploadFile } from 'ng-zorro-antd';
 import { environment } from '../../../../environments/environment';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-my-organization-apply',
@@ -63,10 +64,24 @@ export class MyOrganizationApplyComponent implements OnInit {
     this.previewVisible = true;
   }
 
-  // removeFile = (file: UploadFile) => {
-  //   console.log(file);
-  //   return false;
-  // }
+  removeFile = (file: UploadFile): (boolean | Observable<boolean>) => {
+    if (file.response instanceof Array) {
+      for (const resp of file.response) {
+        return this.organizationService.deleteFile(resp.id).pipe(
+          map(r => {
+            return true;
+          }),
+          catchError(err => {
+            this.message.create('warning', '该文件删除失败');
+            return of(false);
+          })
+        );
+      }
+    } else {
+      this.message.create('warning', '该文件删除失败');
+      return false;
+    }
+  }
 
   submitForm = ($event, value) => {
     const credentials = [];
@@ -87,7 +102,7 @@ export class MyOrganizationApplyComponent implements OnInit {
     const copy = JSON.parse(JSON.stringify(value));
     copy.credentials = credentials;
     this.organizationService.create(copy).subscribe(data => {
-      this.message.create('success', '请等待审批成功后再生效！');
+      this.message.create('success', '公司信息注册成功，等我们检查后，方可使用！');
       this.router.navigate(['/service/organization/list']);
     });
   }

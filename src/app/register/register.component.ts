@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Group, User } from '../shared/dto';
+import { Group, User } from '../shared/entities';
 import { NzMessageService } from 'ng-zorro-antd';
 import { InitData } from '../shared/init.data';
 import { debouncedAsyncValidator } from '../shared/debouncedAsyncValidator';

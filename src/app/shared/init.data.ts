@@ -5,7 +5,7 @@
 import { Injectable } from '@angular/core';
 import { zip } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Csrf, Group, Principal } from './dto';
+import { Csrf, Group, Principal } from './entities';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 

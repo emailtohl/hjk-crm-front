@@ -21,6 +21,7 @@ export function InitDataFactory(initData: InitData): Function {
     InitData,
     { provide: APP_INITIALIZER, useFactory: InitDataFactory, deps: [InitData], multi: true },
   ],
-  declarations: [ BooleanPipe, IconPipe ]
+  declarations: [ BooleanPipe, IconPipe ],
+  exports: [BooleanPipe, IconPipe]
 })
 export class SharedModule { }

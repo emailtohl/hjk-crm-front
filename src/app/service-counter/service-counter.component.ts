@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Principal } from '../shared/dto';
+import { Principal } from '../shared/entities';
 import { InitData } from '../shared/init.data';
 import { environment } from '../../environments/environment';
 

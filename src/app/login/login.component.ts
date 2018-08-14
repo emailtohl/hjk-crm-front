@@ -8,7 +8,7 @@ import {
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd';
-import { Principal, Csrf } from '../shared/dto';
+import { Principal, Csrf } from '../shared/entities';
 import { environment } from '../../environments/environment';
 import { InitData } from '../shared/init.data';
 import { SecurityService } from '../shared/security.service';

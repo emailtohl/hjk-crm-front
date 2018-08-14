@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { Organization } from './entities';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class OrganizationService {
     return this.httpClient.get<boolean>(`${environment.SERVER_URL}/organization/isAccountExist`, { params: params });
   }
 
-  public create(organization): Observable<any> {
+  public create(organization: Organization): Observable<any> {
     return this.httpClient.post(`${environment.SERVER_URL}/organization`, organization);
   }
 
@@ -30,5 +31,13 @@ export class OrganizationService {
 
   public delete(id: number): Observable<any> {
     return this.httpClient.delete<any>(`${environment.SERVER_URL}/organization/${id}`);
+  }
+
+  public deleteFile(id: number): Observable<any> {
+    return this.httpClient.delete<any>(`${environment.SERVER_URL}/files/${id}`);
+  }
+
+  public getDetail(id: number): Observable<Organization> {
+    return this.httpClient.get<Organization>(`${environment.SERVER_URL}/organization/${id}`);
   }
 }

@@ -1,20 +1,18 @@
-<div class="clearfix">
-  <nz-upload
-    nzAction="{{uploadUrl}}"
-    nzListType="picture-card"
-    [(nzFileList)]="fileList"
-    [nzShowButton]="fileList.length < 3"
-    <!-- [nzRemove]="removeFile($event)" -->
-    [nzPreview]="handlePreview">
+<div nz-row>
+  <div nz-col nzOffset="4">
+    <nz-upload nzAction="{{uploadUrl}}" nzListType="picture-card" [(nzFileList)]="fileList" [nzShowButton]="fileList.length < 3"
+      [nzRemove]="removeFile" [nzPreview]="handlePreview">
       <i class="anticon anticon-plus"></i>
       <div class="ant-upload-text">上传凭证</div>
-  </nz-upload>
-  <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null" (nzOnCancel)="previewVisible=false">
-    <ng-template #modalContent>
-      <img [src]="previewImage" [ngStyle]="{ 'width': '100%' }" />
-    </ng-template>
-  </nz-modal>
+    </nz-upload>
+    <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null" (nzOnCancel)="previewVisible=false">
+      <ng-template #modalContent>
+        <img [src]="previewImage" [ngStyle]="{ 'width': '100%' }" />
+      </ng-template>
+    </nz-modal>
+  </div>
 </div>
+
 <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm($event,validateForm.value)">
   <nz-form-item>
     <nz-form-label [nzSpan]="7" nzRequired>公司名称</nz-form-label>

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { zip } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Csrf } from './dto';
+import { Csrf } from './entities';
 import { environment } from '../../environments/environment';
 
 @Injectable({
