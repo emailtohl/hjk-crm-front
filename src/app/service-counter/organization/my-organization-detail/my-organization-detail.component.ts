@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { OrganizationService } from '../organization.service';
 import { NzMessageService } from 'ng-zorro-antd';
 import { Organization } from '../entities';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-my-organization-detail',
@@ -30,6 +31,10 @@ export class MyOrganizationDetailComponent implements OnInit {
       this.data = data;
       console.log(data);
     });
+  }
+
+  credentialUrl(id: string): string {
+    return `${environment.SERVER_URL}/files/${id}`;
   }
 
 }

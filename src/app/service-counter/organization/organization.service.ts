@@ -40,4 +40,5 @@ export class OrganizationService {
   public getDetail(id: number): Observable<Organization> {
     return this.httpClient.get<Organization>(`${environment.SERVER_URL}/organization/${id}`);
   }
+
 }

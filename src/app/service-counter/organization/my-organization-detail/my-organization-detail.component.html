@@ -1,10 +1,47 @@
-<nz-table>
-  <tbody>
-    <tr>
-      <td>公司名</td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-  </tbody>
-</nz-table>
+<nz-card [nzBordered]="false" nzTitle="公司注册详情" [nzExtra]="extraTemplate">
+  <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 8, xl: 8, xxl: 8 }">
+    <div nz-col nzSpan="6"><b>公司名</b><span>{{data?.name}}</span></div>
+    <div nz-col nzSpan="6"><b>地址</b><span>{{data?.address}}</span></div>
+    <div nz-col nzSpan="6"><b>电话</b><span>{{data?.telephone}}</span></div>
+    <div nz-col nzSpan="6"><b>纳税号</b><span>{{data?.taxNumber}}</span></div>
+  </div>
+  <div nz-row style="margin-top: 20px;">
+    <div nz-col nzSpan="6"><b>开户行</b><span>{{data?.depositBank}}</span></div>
+    <div nz-col nzSpan="6"><b>开户行账号</b><span>{{data?.account}}</span></div>
+    <div nz-col nzSpan="6"><b>联系人</b><span>{{data?.principal}}</span></div>
+    <div nz-col nzSpan="6"><b>联系人电话</b><span>{{data?.principalPhone}}</span></div>
+  </div>
+  <div nz-row style="margin-top: 20px;">
+    <div nz-col nzSpan="6"><b>收件地址</b><span>{{data?.deliveryAddress}}</span></div>
+    <div nz-col nzSpan="6"><b>联系人电话</b><span>{{data?.principalPhone}}</span></div>
+    <div nz-col nzSpan="6"><b>创建时间</b><span>{{data?.createDate}}</span></div>
+    <div nz-col nzSpan="6"><b>修改时间</b><span>{{data?.modifyDate}}</span></div>
+  </div>
+  <div nz-row style="margin-top: 20px;">
+    <div nz-col nzSpan="6"><b>客户源</b><span>{{data?.receiver}}</span></div>
+    <div nz-col nzSpan="6"><b>是否有效</b><span>{{data?.pass | booleanPipe}}</span></div>
+    <div nz-col nzSpan="12"><b>备注</b><span>{{data?.remark}}</span></div>
+  </div>
+</nz-card>
+
+<div nz-row>
+  <div nz-col nzSpan="8" *ngFor="let item of data?.credentials">
+    <nz-card nzHoverable style="width:240px" [nzCover]="coverTemplate">
+      <nz-card-meta nzTitle="Europe Street beat" nzDescription="{{item.filename}}"></nz-card-meta>
+    </nz-card>
+    <ng-template #coverTemplate>
+      <img alt="{{item.mimeType}}" [src]="credentialUrl(item.id)" />
+    </ng-template>
+  </div>
+</div>
+
+<ng-template #extraTemplate>
+  <a>编辑</a>
+</ng-template>
+
+
+<nz-card  [nzBordered]="false" nzTitle="流程状态" >
+  <p>Card content</p>
+  <p>Card content</p>
+  <p>Card content</p>
+</nz-card>
