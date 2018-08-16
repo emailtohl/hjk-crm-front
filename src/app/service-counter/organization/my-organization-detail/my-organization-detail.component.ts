@@ -12,6 +12,7 @@ import { environment } from '../../../../environments/environment';
 })
 export class MyOrganizationDetailComponent implements OnInit {
   id: number;
+  current = 0;
   data: Organization;
 
   constructor(
@@ -30,6 +31,17 @@ export class MyOrganizationDetailComponent implements OnInit {
     this.organizationService.getDetail(this.id).subscribe((data: Organization) => {
       this.data = data;
       console.log(data);
+        if (data.pass) {
+          this.current = 2;
+        } else if (data.flow.taskDefinitionKey) {
+          if ('administration_audit' === data.flow.taskDefinitionKey) {
+            if (!data.flow.taskAssignee) {
+              this.current = 0;
+            } else {
+              this.current = 1;
+            }
+          }
+        }
     });
   }
 
