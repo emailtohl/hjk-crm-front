@@ -49,4 +49,8 @@ export class MyOrganizationDetailComponent implements OnInit {
     return `${environment.SERVER_URL}/files/${id}`;
   }
 
+  userUrl(id: string): string {
+    return `${environment.SERVER_URL}/users/userPicture/${id}`;
+  }
+
 }

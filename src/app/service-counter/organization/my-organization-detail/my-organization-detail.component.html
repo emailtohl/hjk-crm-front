@@ -60,7 +60,7 @@
     <nz-list [nzDataSource]="data?.flow?.checks" [nzRenderItem]="item" [nzItemLayout]="'horizontal'">
       <ng-template #item let-item>
         <nz-list-item>
-          <nz-list-item-meta [nzTitle]="nzTitle" nzAvatar="{{credentialUrl(item.checkerId)}}" nzDescription="{{item.checkComment}}">
+          <nz-list-item-meta [nzTitle]="nzTitle" nzAvatar="{{userUrl(item.checkerId)}}" nzDescription="{{item.checkComment}}">
             <ng-template #nzTitle>
               <a href="">{{item.checkerName}}</a>
             </ng-template>
