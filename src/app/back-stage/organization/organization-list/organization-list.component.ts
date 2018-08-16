@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./organization-list.component.css']
 })
 export class OrganizationListComponent implements OnInit {
-  data = {};
+  data = [];
   constructor() { }
 
   ngOnInit() {

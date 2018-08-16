@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../environments/environment';
 import { Organization } from './entities';
+import { Paging } from '../shared/paging';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,11 @@ import { Organization } from './entities';
 export class OrganizationService {
 
   constructor(private httpClient: HttpClient) { }
+
+  public query(param: string): Observable<Paging<Organization>> {
+    const params: HttpParams = new HttpParams().set('query', param);
+    return this.httpClient.get<Paging<Organization>>(`${environment.SERVER_URL}/organization/query`, { params: params });
+  }
 
   public isTaxNumberExist(taxNumber: string): Observable<boolean> {
     const params: HttpParams = new HttpParams().set('taxNumber', taxNumber);
@@ -41,4 +47,11 @@ export class OrganizationService {
     return this.httpClient.get<Organization>(`${environment.SERVER_URL}/organization/${id}`);
   }
 
+  public getByProcessInstanceId(processInstanceId: string): Observable<Organization> {
+    return this.httpClient.get<Organization>(`${environment.SERVER_URL}/organization/processInstanceId/${processInstanceId}`);
+  }
+
+  public claim(taskId: string): Observable<Organization> {
+    return this.httpClient.post<Organization>(`${environment.SERVER_URL}/organization/claim`, {taskId: taskId});
+  }
 }

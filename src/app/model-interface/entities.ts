@@ -1,4 +1,4 @@
-import { Flow } from '../../shared/entities';
+import { Flow } from '../shared/entities';
 
 export class Organization {
     // 公司名

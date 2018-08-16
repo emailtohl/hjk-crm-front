@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { OrganizationService } from '../organization.service';
 import { NzMessageService } from 'ng-zorro-antd';
-import { Organization } from '../entities';
 import { environment } from '../../../../environments/environment';
+import { OrganizationService } from '../../../model-interface/organization.service';
+import { Organization } from '../../../model-interface/entities';
+import { SecurityService } from '../../../shared/security.service';
 
 @Component({
   selector: 'app-my-organization-detail',
@@ -16,6 +17,7 @@ export class MyOrganizationDetailComponent implements OnInit {
   data: Organization;
 
   constructor(
+    private securityService: SecurityService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private organizationService: OrganizationService,
@@ -23,6 +25,7 @@ export class MyOrganizationDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.securityService.refresh();
     this.id = this.activatedRoute.snapshot.params['id'];
     this.getDetail();
   }
@@ -30,7 +33,6 @@ export class MyOrganizationDetailComponent implements OnInit {
   getDetail() {
     this.organizationService.getDetail(this.id).subscribe((data: Organization) => {
       this.data = data;
-      console.log(data);
         if (data.pass) {
           this.current = 2;
         } else if (data.flow.taskDefinitionKey) {

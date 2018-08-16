@@ -11,7 +11,7 @@ import { OrganizationDetailComponent } from './organization-detail/organization-
 const routes: Routes = [
   { path: '', redirectTo: 'list', pathMatch: 'full' },
   { path: 'list', component: OrganizationListComponent },
-  { path: 'detail/:id', component: OrganizationDetailComponent },
+  { path: 'detail/processInstanceId/:processInstanceId/taskId/:taskId', component: OrganizationDetailComponent },
 ];
 
 @NgModule({

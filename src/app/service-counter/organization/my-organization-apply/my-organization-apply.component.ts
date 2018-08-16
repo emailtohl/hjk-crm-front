@@ -8,10 +8,10 @@ import { Router } from '@angular/router';
 import { SecurityService } from '../../../shared/security.service';
 import { map, catchError } from 'rxjs/operators';
 import { debouncedAsyncValidator } from '../../../shared/debouncedAsyncValidator';
-import { OrganizationService } from '../organization.service';
 import { NzMessageService, UploadFile } from 'ng-zorro-antd';
 import { environment } from '../../../../environments/environment';
 import { Observable, of } from 'rxjs';
+import { OrganizationService } from '../../../model-interface/organization.service';
 
 @Component({
   selector: 'app-my-organization-apply',

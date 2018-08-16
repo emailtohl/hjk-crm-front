@@ -93,8 +93,10 @@ export class Flow {
     public taskId: string;
     // 任务的名字
     public taskName: string;
-    // 当前任务是否被签收
+    // 当前任务签收人id
     public taskAssignee: string;
+    // 当前任务签收人名字
+    public taskAssigneeName: string;
     // 当前所在的活动id
     public taskDefinitionKey: string;
     // 下一个活动id

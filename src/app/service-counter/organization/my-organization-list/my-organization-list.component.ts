@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { OrganizationService } from '../organization.service';
 import { Router } from '@angular/router';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { SecurityService } from '../../../shared/security.service';
+import { OrganizationService } from '../../../model-interface/organization.service';
 
 @Component({
   selector: 'app-my-organization-list',
