@@ -43,4 +43,8 @@ export class SecurityService {
   public getPrincipal(): Observable<Principal> {
     return this.http.get<Principal>(`${environment.SERVER_URL}/principal`);
   }
+
+  public logout(): Observable<void> {
+    return this.http.post<void>(`${environment.SERVER_URL}/logout`, {});
+  }
 }

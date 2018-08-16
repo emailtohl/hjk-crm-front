@@ -3,6 +3,7 @@ import { environment } from '../../environments/environment';
 import { Principal } from '../shared/entities';
 import { SecurityService } from '../shared/security.service';
 import { InitData } from '../shared/init.data';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-service-counter',
@@ -10,14 +11,22 @@ import { InitData } from '../shared/init.data';
   styleUrls: ['./service-counter.component.css']
 })
 export class ServiceCounterComponent implements OnInit {
-  isCollapsed = false;
+  principal: Principal = new Principal();
+  icon: string;
   allGroups: Set<string>;
-  principal: Principal;
   isEmployee = false;
 
-  constructor(securityService: SecurityService) {
-    securityService.getPrincipal().subscribe((principal: Principal) => {
+  constructor(
+    private securityService: SecurityService,
+    private router: Router
+  ) {
+  }
+
+  ngOnInit() {
+    this.securityService.getPrincipal().subscribe((principal: Principal) => {
       this.principal = principal;
+      const id = this.principal.name.split(':')[0];
+      this.icon = `${environment.SERVER_URL}/users/userPicture/${id}`;
       this.isEmployee = principal.authorities.every(value => this.allGroups.has(value.authority) || this.allGroups.has(value));
     });
     this.allGroups = new Set(InitData.getGroups().map(g => g.id));
@@ -25,15 +34,7 @@ export class ServiceCounterComponent implements OnInit {
     this.allGroups.delete('CUSTOMER');
   }
 
-  ngOnInit() {
+  logout() {
+    this.securityService.logout().subscribe(data => this.router.navigate(['login']));
   }
-
-  getUserPicture(): string {
-    if (!this.principal) {
-      return '';
-    }
-    const id = this.principal.name.split(':')[0];
-    return `${environment.SERVER_URL}/users/userPicture/${id}`;
-  }
-
 }

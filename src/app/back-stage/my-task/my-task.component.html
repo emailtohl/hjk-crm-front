@@ -1,3 +1,24 @@
-<p>
-  my-task works!
-</p>
+<nz-table #basicTable [nzData]="todoTasks">
+  <thead>
+    <tr>
+      <th>申请人</th>
+      <th>流程号</th>
+      <th>流程类型</th>
+      <th>任务名</th>
+      <th>创建时间</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of basicTable.data">
+      <td>{{data.applyUserName}}</td>
+      <td>{{data.flowNum}}</td>
+      <td>{{data.flowType}}</td>
+      <td>{{data.taskName}}</td>
+      <td>{{data.createDate}}</td>
+      <td>
+        <a (click)="getDetail(data.id)">详情</a>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>

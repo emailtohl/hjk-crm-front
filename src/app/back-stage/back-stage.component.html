@@ -1,8 +1,8 @@
 <nz-layout>
-  <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzWidth]="width" [nzReverseArrow]="isReverseArrow">
+  <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzCollapsedWidth]="0" [nzBreakpoint]="'lg'">
     <div class="logo">
     </div>
-    <ul nz-menu [nzTheme]="'dark'" [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed">
+    <ul nz-menu [nzTheme]="'dark'" [nzMode]="isCollapsed?'vertical':'inline'">
       <li nz-menu-item routerLink="/back/my-task" routerLinkActive="ant-menu-item-selected">
         <span>
           <i class="anticon anticon-file"></i>
@@ -40,13 +40,19 @@
   </nz-sider>
   <nz-layout>
     <nz-header style="background: #fff; padding:0;">
-      <div class="logo">您好：{{principal?.name?.split(':')[1]}}</div>
+      <div class="logo" style="display: inline;">
+        您好：{{principal?.name?.split(':')[1]}}
+        <nz-avatar nzIcon="anticon anticon-user" nzSrc="{{icon}}"></nz-avatar>
+      </div>
+      <div class="logo" style="display: inline; margin-left: 30px;">
+        <a (click)="logout()"><i class="anticon anticon-logout"></i></a>
+      </div>
     </nz-header>
-    <nz-content style="margin:0 16px;">
+    <nz-content style="margin:24px 16px 0;">
       <div style="padding:24px; background: #fff; min-height: 360px;">
         <router-outlet></router-outlet>
       </div>
     </nz-content>
-    <nz-footer style="text-align: center;">HJK ©2018</nz-footer>
+    <nz-footer style="text-align: center;">HJK ©2017 develop by hl</nz-footer>
   </nz-layout>
 </nz-layout>
