@@ -51,7 +51,6 @@ export class LoginComponent implements OnInit {
     const password = this.validateForm.value.password;
     const body = `email=${email}&password=${password}&${SecurityService.csrf.parameterName}=${SecurityService.csrf.token}`;
     this.http.post(url, body, { headers: headers }).subscribe((resp: Principal) => {
-      InitData.principal = resp;
       // 后台在登录后可能会切换sessionId
       this.securityService.refresh();
 

@@ -14,6 +14,7 @@ import { ServiceCounterComponent } from './service-counter/service-counter.compo
 import { BackStageComponent } from './back-stage/back-stage.component';
 import { SharedModule } from './shared/shared.module';
 import { CarouselComponent } from './service-counter/carousel/carousel.component';
+import { MyTaskComponent } from './back-stage/my-task/my-task.component';
 
 registerLocaleData(zh);
 
@@ -24,6 +25,7 @@ registerLocaleData(zh);
     RegisterComponent,
     ServiceCounterComponent,
     BackStageComponent,
+    MyTaskComponent,
     CarouselComponent,
   ],
   imports: [

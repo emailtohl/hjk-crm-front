@@ -6,6 +6,7 @@ import { RegisterComponent } from './register/register.component';
 import { ServiceCounterComponent } from './service-counter/service-counter.component';
 import { BackStageComponent } from './back-stage/back-stage.component';
 import { CarouselComponent } from './service-counter/carousel/carousel.component';
+import { MyTaskComponent } from './back-stage/my-task/my-task.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'service', pathMatch: 'full' },
@@ -20,7 +21,12 @@ const routes: Routes = [
       { path: 'invoice', loadChildren: './service-counter/invoice/invoice.module#InvoiceModule' },
     ]
   },
-  { path: 'back', component: BackStageComponent },
+  { path: 'back', component: BackStageComponent, children: [
+    { path: '', redirectTo: 'my-task', pathMatch: 'full' },
+    { path: 'my-task', component: MyTaskComponent },
+    // 懒加载的Module不能在APPModule中import
+    { path: 'organization', loadChildren: './back-stage/organization/organization.module#OrganizationModule' },
+  ] },
 ];
 
 @NgModule({

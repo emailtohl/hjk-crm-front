@@ -3,10 +3,26 @@
     <div class="logo">
     </div>
     <ul nz-menu [nzTheme]="'dark'" [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed">
+      <li nz-menu-item routerLink="/back/my-task" routerLinkActive="ant-menu-item-selected">
+        <span>
+          <i class="anticon anticon-file"></i>
+          <span class="nav-text">查看任务</span>
+        </span>
+      </li>
+      <li nz-submenu>
+        <span title>
+          <i class="anticon anticon-team"></i>
+          <span class="nav-text">公司信息</span>
+        </span>
+        <ul>
+          <li nz-menu-item routerLink="/back/organization/list" routerLinkActive="ant-menu-item-selected">列表</li>
+          <li nz-menu-item routerLink="/back/organization/detail/:id" routerLinkActive="ant-menu-item-selected">详情</li>
+        </ul>
+      </li>
       <li nz-submenu>
         <span title>
           <i class="anticon anticon-user"></i>
-          <span class="nav-text">User</span>
+          <span class="nav-text">用户信息</span>
         </span>
         <ul>
           <li nz-menu-item>Tom</li>
@@ -14,35 +30,21 @@
           <li nz-menu-item>Alex</li>
         </ul>
       </li>
-      <li nz-submenu>
-        <span title>
-          <i class="anticon anticon-team"></i>
-          <span class="nav-text">Team</span>
-        </span>
-        <ul>
-          <li nz-menu-item>Team 1</li>
-          <li nz-menu-item>Team 2</li>
-        </ul>
-      </li>
-      <li nz-menu-item>
+      <li nz-menu-item [routerLink]="['/service']" routerLinkActive="ant-menu-item-selected">
         <span>
-          <i class="anticon anticon-file"></i>
-          <span class="nav-text">File</span>
+          <i class="anticon anticon-rollback"></i>
+          <span class="nav-text">查看前台</span>
         </span>
       </li>
     </ul>
   </nz-sider>
   <nz-layout>
     <nz-header style="background: #fff; padding:0;">
-      <i class="anticon anticon-rollback" [routerLink]="['/service']"></i>
+      <div class="logo">您好：{{principal?.name?.split(':')[1]}}</div>
     </nz-header>
     <nz-content style="margin:0 16px;">
-      <nz-breadcrumb style="margin:16px 0;">
-        <nz-breadcrumb-item>User</nz-breadcrumb-item>
-        <nz-breadcrumb-item>Bill</nz-breadcrumb-item>
-      </nz-breadcrumb>
       <div style="padding:24px; background: #fff; min-height: 360px;">
-        Bill is a cat.
+        <router-outlet></router-outlet>
       </div>
     </nz-content>
     <nz-footer style="text-align: center;">HJK ©2018</nz-footer>

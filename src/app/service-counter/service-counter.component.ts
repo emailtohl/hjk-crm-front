@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Principal } from '../shared/entities';
-import { InitData } from '../shared/init.data';
 import { environment } from '../../environments/environment';
+import { Principal } from '../shared/entities';
+import { SecurityService } from '../shared/security.service';
+import { InitData } from '../shared/init.data';
 
 @Component({
   selector: 'app-service-counter',
@@ -10,9 +11,18 @@ import { environment } from '../../environments/environment';
 })
 export class ServiceCounterComponent implements OnInit {
   isCollapsed = false;
-  principal: Principal = InitData.principal;
+  allGroups: Set<string>;
+  principal: Principal;
+  isEmployee = false;
 
-  constructor() {
+  constructor(securityService: SecurityService) {
+    securityService.getPrincipal().subscribe((principal: Principal) => {
+      this.principal = principal;
+      this.isEmployee = principal.authorities.every(value => this.allGroups.has(value.authority) || this.allGroups.has(value));
+    });
+    this.allGroups = new Set(InitData.getGroups().map(g => g.id));
+    this.allGroups.add('ADMIN');
+    this.allGroups.delete('CUSTOMER');
   }
 
   ngOnInit() {
@@ -25,4 +35,5 @@ export class ServiceCounterComponent implements OnInit {
     const id = this.principal.name.split(':')[0];
     return `${environment.SERVER_URL}/users/userPicture/${id}`;
   }
+
 }

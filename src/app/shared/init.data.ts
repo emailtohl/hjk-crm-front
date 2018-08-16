@@ -5,13 +5,12 @@
 import { Injectable } from '@angular/core';
 import { zip } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Csrf, Group, Principal } from './entities';
+import { Csrf, Group } from './entities';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
 @Injectable()
 export class InitData {
-    public static principal: Principal;
     private static groups: Group[];
 
     constructor(private http: HttpClient) { }

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { zip } from 'rxjs';
+import { zip, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Csrf } from './entities';
+import { Csrf, Principal } from './entities';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -38,5 +38,9 @@ export class SecurityService {
       SecurityService.headers['X-Auth-Token'] = token;
     }, () => { }, () => { })
     ;
+  }
+
+  public getPrincipal(): Observable<Principal> {
+    return this.http.get<Principal>(`${environment.SERVER_URL}/principal`);
   }
 }
