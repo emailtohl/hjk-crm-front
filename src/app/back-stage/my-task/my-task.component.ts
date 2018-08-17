@@ -21,7 +21,6 @@ export class MyTaskComponent implements OnInit {
   ngOnInit() {
     this.httpClient.get<Array<Flow>>(`${environment.SERVER_URL}/todoTasks`).subscribe((data: Array<Flow>) => {
       this.todoTasks = data;
-      console.log(data);
     });
   }
 
