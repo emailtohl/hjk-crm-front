@@ -36,7 +36,7 @@
 </div>
 
 <ng-template #extraTemplate>
-  <a style="margin-right: 30px;">编辑</a>
+  <a style="margin-right: 30px;" routerLink="/back/organization/edit/{{businessKey}}">编辑</a>
   <a style="margin-right: 30px;" (click)="isVisible = true" *ngIf="isCheck()">审核</a>
   <a (click)="claim()" *ngIf="isTaskAssignee()">签收</a>
 </ng-template>
