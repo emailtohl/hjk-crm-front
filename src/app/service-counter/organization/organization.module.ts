@@ -8,12 +8,14 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { MyOrganizationApplyComponent } from './my-organization-apply/my-organization-apply.component';
 import { MyOrganizationListComponent } from './my-organization-list/my-organization-list.component';
 import { MyOrganizationDetailComponent } from './my-organization-detail/my-organization-detail.component';
+import { MyOrganizationEditComponent } from './my-organization-edit/my-organization-edit.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'list', pathMatch: 'full' },
   { path: 'apply', component: MyOrganizationApplyComponent },
   { path: 'list', component: MyOrganizationListComponent },
   { path: 'detail/:id', component: MyOrganizationDetailComponent },
+  { path: 'edit/:id', component: MyOrganizationEditComponent },
 ];
 
 @NgModule({
@@ -30,7 +32,8 @@ const routes: Routes = [
   declarations: [
     MyOrganizationApplyComponent,
     MyOrganizationListComponent,
-    MyOrganizationDetailComponent
+    MyOrganizationDetailComponent,
+    MyOrganizationEditComponent
   ]
 })
 export class OrganizationModule { }

@@ -23,14 +23,12 @@ import { debounceTime, filter, distinctUntilChanged, switchMap, catchError, take
  */
 function debouncedAsyncValidator<T>(
     remoteValidation: (v: T) => Observable<ValidationErrors | null>,
-    ignore: T = null,
     remoteError: ValidationErrors = { remote: 'Unhandled error occurred.' },
     debounceMs = 800
 ): AsyncValidatorFn {
     const values = new BehaviorSubject<T>(null);
     const validity$ = values.pipe(
         debounceTime(debounceMs),
-        filter((v: T) => v !== ignore),
         distinctUntilChanged(),
         switchMap(remoteValidation),
         catchError(() => of(remoteError)),

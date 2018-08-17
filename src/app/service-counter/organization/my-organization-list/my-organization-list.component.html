@@ -1,32 +1,38 @@
-<nz-table #basicTable [nzData]="dataSet">
-  <thead>
-    <tr>
-      <th>公司名</th>
-      <th>税号</th>
-      <th>开户行</th>
-      <th>账号</th>
-      <th>联系人</th>
-      <th>联系人电话</th>
-      <th>收票地址</th>
-      <th>已检查</th>
-      <th>操作</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let data of basicTable.data">
-      <td>{{data.name}}</td>
-      <td>{{data.taxNumber}}</td>
-      <td>{{data.depositBank}}</td>
-      <td>{{data.account}}</td>
-      <td>{{data.principal}}</td>
-      <td>{{data.principalPhone}}</td>
-      <td>{{data.deliveryAddress}}</td>
-      <td>{{data.pass | booleanPipe}}</td>
-      <td>
-        <a (click)="getDetail(data.id)">详情</a>
-        <nz-divider nzType="vertical"></nz-divider>
-        <a (click)="delete(data.id)">删除</a>
-      </td>
-    </tr>
-  </tbody>
-</nz-table>
+<nz-breadcrumb style="margin-bottom:16px;">
+  <nz-breadcrumb-item>公司信息</nz-breadcrumb-item>
+  <nz-breadcrumb-item>列表</nz-breadcrumb-item>
+</nz-breadcrumb>
+<div style="padding:24px; background: #fff; min-height: 360px;">
+  <nz-table #basicTable [nzData]="dataSet">
+    <thead>
+      <tr>
+        <th>公司名</th>
+        <th>税号</th>
+        <th>开户行</th>
+        <th>账号</th>
+        <th>联系人</th>
+        <th>联系人电话</th>
+        <th>收票地址</th>
+        <th>已检查</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>{{data.name}}</td>
+        <td>{{data.taxNumber}}</td>
+        <td>{{data.depositBank}}</td>
+        <td>{{data.account}}</td>
+        <td>{{data.principal}}</td>
+        <td>{{data.principalPhone}}</td>
+        <td>{{data.deliveryAddress}}</td>
+        <td>{{data.pass | booleanPipe}}</td>
+        <td>
+          <a (click)="getDetail(data.id)">详情</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a (click)="delete(data.id)">删除</a>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>

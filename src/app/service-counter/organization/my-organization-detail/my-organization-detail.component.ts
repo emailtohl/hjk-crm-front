@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { NzMessageService } from 'ng-zorro-antd';
+import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { environment } from '../../../../environments/environment';
 import { OrganizationService } from '../../../model-interface/organization.service';
 import { Organization } from '../../../model-interface/entities';
 import { SecurityService } from '../../../shared/security.service';
-import { Flow } from '../../../back-stage/my-task/entities';
+import { Flow, Principal } from '../../../shared/entities';
 
 @Component({
   selector: 'app-my-organization-detail',
@@ -14,6 +14,8 @@ import { Flow } from '../../../back-stage/my-task/entities';
 })
 export class MyOrganizationDetailComponent implements OnInit {
   id: number;
+  principal: Principal;
+  flow: Flow; // 是否处于流程中的标识
   data: Organization;
 
   constructor(
@@ -22,10 +24,12 @@ export class MyOrganizationDetailComponent implements OnInit {
     private router: Router,
     private organizationService: OrganizationService,
     private message: NzMessageService,
+    private modalService: NzModalService,
   ) { }
 
   ngOnInit() {
     this.securityService.refresh();
+    this.securityService.getPrincipal().subscribe((principal: Principal) => this.principal = principal);
     this.id = this.activatedRoute.snapshot.params['id'];
     this.getDetail();
   }
@@ -33,20 +37,25 @@ export class MyOrganizationDetailComponent implements OnInit {
   getDetail() {
     this.organizationService.getDetail(this.id).subscribe((data: Organization) => {
       this.data = data;
+      if (data.flows instanceof Array) {
+        this.flow = data.flows.find(flow => flow.taskId != null);
+      }
     });
   }
 
   getCurrent(flow: Flow) {
     if (this.data.pass) {
       return 2;
-    } else if (flow.taskDefinitionKey) {
-      if ('administration_audit' === flow.taskDefinitionKey) {
+    }
+    switch (flow.taskDefinitionKey) {
+      case 'administration_audit':
         if (!flow.taskAssignee) {
           return 0;
         } else {
           return 1;
         }
-      }
+      case 'modifyApply':
+        return 0;
     }
   }
 
@@ -58,4 +67,22 @@ export class MyOrganizationDetailComponent implements OnInit {
     return `${environment.SERVER_URL}/users/userPicture/${id}`;
   }
 
+  showInvalid(): boolean {
+    if (!this.flow || !this.principal) {
+      return false;
+    }
+    return this.flow.applyUserId === this.principal.name.split(':')[0];
+  }
+
+  invalid() {
+    this.modalService.confirm({
+      nzTitle  : '<i>你确定要取消检查吗?</i>',
+      nzContent: '<b>取消后，此注册信息不能使用！</b>',
+      nzOnOk   : () => {
+        this.organizationService.check(this.flow.taskId, false, '').subscribe(data => {
+          this.router.navigate(['/service/organization/list']);
+        });
+      }
+    });
+  }
 }

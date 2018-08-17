@@ -75,6 +75,8 @@ export class Check {
 }
 
 export class Flow {
+    // 业务主键
+    public businessKey: string;
     // 关联Activiti的流程id
     public processInstanceId: string;
     // 表单号

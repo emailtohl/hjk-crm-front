@@ -25,10 +25,10 @@ export class MyTaskComponent implements OnInit {
     });
   }
 
-  getDetail(processInstanceId: string, taskId: string, type: string): void {
+  getDetail(businessKey: string, taskId: string, type: string): void {
     switch (type) {
       case 'ORGANIZATION':
-        this.router.navigate([`/back/organization/detail/processInstanceId`, processInstanceId, 'taskId', taskId]);
+        this.router.navigate([`/back/organization/detail/businessKey`, businessKey, 'taskId', taskId]);
         break;
 
     }

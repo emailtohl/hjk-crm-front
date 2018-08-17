@@ -31,6 +31,10 @@ export class OrganizationService {
     return this.httpClient.post(`${environment.SERVER_URL}/organization`, organization);
   }
 
+  public update(id: number, organization: Organization): Observable<any> {
+    return this.httpClient.put(`${environment.SERVER_URL}/organization/${id}`, organization);
+  }
+
   public myRegisterOrganization(): Observable<Array<any>> {
     return this.httpClient.get<Array<any>>(`${environment.SERVER_URL}/organization/myRegisterOrganization`);
   }
@@ -47,11 +51,16 @@ export class OrganizationService {
     return this.httpClient.get<Organization>(`${environment.SERVER_URL}/organization/${id}`);
   }
 
-  public getByProcessInstanceId(processInstanceId: string): Observable<Organization> {
-    return this.httpClient.get<Organization>(`${environment.SERVER_URL}/organization/processInstanceId/${processInstanceId}`);
+  public getOrganization(businessKey: string): Observable<Organization> {
+    return this.httpClient.get<Organization>(`${environment.SERVER_URL}/organization/${businessKey}`);
   }
 
   public claim(taskId: string): Observable<Organization> {
     return this.httpClient.post<Organization>(`${environment.SERVER_URL}/organization/claim`, {taskId: taskId});
+  }
+
+  public check(taskId: string, checkApproved: boolean, checkComment: string): Observable<void> {
+    return this.httpClient.post<void>(`${environment.SERVER_URL}/organization/check`,
+      {taskId: taskId, checkApproved: checkApproved, checkComment: checkComment});
   }
 }

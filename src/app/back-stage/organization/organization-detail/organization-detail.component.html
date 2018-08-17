@@ -30,15 +30,15 @@
       <nz-card-meta nzTitle="Europe Street beat" nzDescription="{{item.filename}}"></nz-card-meta>
     </nz-card>
     <ng-template #coverTemplate>
-      <img alt="{{item.mimeType}}" [src]="credentialUrl(item.id)" />
+      <img alt="{{item.mimeType}}" [src]="credentialUrl(item.id)" (click)="download(item.id)"/>
     </ng-template>
   </div>
 </div>
 
 <ng-template #extraTemplate>
   <a style="margin-right: 30px;">编辑</a>
-  <a style="margin-right: 30px;" (click)="check()" *ngIf="isTaskAssignee()">审核</a>
-  <a (click)="claim()" *ngIf="taskId">签收</a>
+  <a style="margin-right: 30px;" (click)="isVisible = true" *ngIf="isCheck()">审核</a>
+  <a (click)="claim()" *ngIf="isTaskAssignee()">签收</a>
 </ng-template>
 
 <nz-card *ngFor="let x of data?.flows; let i = index;" [nzBordered]="false" nzTitle="流程详情 {{i + 1}}">
@@ -59,7 +59,7 @@
     <div nz-col nzSpan="12"><b>流程状态</b><span>{{x.taskName}}</span></div>
     <div nz-col nzSpan="12"><b>处理人</b><span>{{x.taskAssigneeName ? x.taskAssigneeName : '无'}}</span></div>
   </div>
-
+  <nz-divider nzText="检查历史" nzOrientation="left" style="margin-top: 20px;"></nz-divider>
   <nz-list [nzDataSource]="x.checks" [nzRenderItem]="item" [nzItemLayout]="'horizontal'">
     <ng-template #item let-item>
       <nz-list-item>
@@ -72,3 +72,12 @@
     </ng-template>
   </nz-list>
 </nz-card>
+
+<nz-modal [(nzVisible)]="isVisible" nzTitle="核对公司注册信息" (nzOnCancel)="isVisible = false" (nzOnOk)="check()" [nzOkLoading]="isOkLoading">
+  <nz-radio-group [(ngModel)]="checkApproved">
+    <label nz-radio nzValue="true">同意</label>
+    <label nz-radio nzValue="false" style="margin-left: 20px;">不同意</label>
+  </nz-radio-group>
+  <textarea style="margin-top: 30px;" nz-input [(ngModel)]="checkComment" placeholder="填写意见" [nzAutosize]="{ minRows: 2, maxRows: 6 }">
+  </textarea>
+</nz-modal>
