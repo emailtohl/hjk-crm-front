@@ -39,25 +39,25 @@
   <a>编辑</a>
 </ng-template>
 
-<nz-card  [nzBordered]="false" nzTitle="流程状态" >
-  <nz-steps [nzCurrent]="current">
-    <nz-step nzTitle="Register" nzDescription="成功注册公司信息"></nz-step>
-    <nz-step nzTitle="Waiting" nzDescription="处理中"></nz-step>
-    <nz-step nzTitle="End" nzDescription="可以使用"></nz-step>
-  </nz-steps>
-</nz-card>
-
-<nz-card  [nzBordered]="false" nzTitle="流程详情" >
+<nz-card *ngFor="let x of data?.flows; let i = index;" [nzBordered]="false" nzTitle="流程详情 {{i + 1}}" >
+    <nz-card  [nzBordered]="false" nzTitle="流程状态" >
+      <nz-steps [nzCurrent]="getCurrent(x)">
+        <nz-step nzTitle="Register" nzDescription="成功注册公司信息"></nz-step>
+        <nz-step nzTitle="Waiting" nzDescription="处理中"></nz-step>
+        <nz-step nzTitle="End" nzDescription="可以使用"></nz-step>
+      </nz-steps>
+    </nz-card>
+  
     <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 8, xl: 8, xxl: 8 }">
-      <div nz-col nzSpan="12"><b>注册人</b><span>{{data?.flow?.applyUserName}}</span></div>
-      <div nz-col nzSpan="12"><b>注册号</b><span>{{data?.flow?.flowNum}}</span></div>
+      <div nz-col nzSpan="12"><b>注册人</b><span>{{x.applyUserName}}</span></div>
+      <div nz-col nzSpan="12"><b>注册号</b><span>{{x.flowNum}}</span></div>
     </div>
     <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 8, xl: 8, xxl: 8 }" style="margin-top: 20px;">
-      <div nz-col nzSpan="12"><b>流程状态</b><span>{{data?.flow?.taskName}}</span></div>
-      <div nz-col nzSpan="12"><b>处理人</b><span>{{data?.flow?.taskAssigneeName ? data?.flow?.taskAssigneeName : '无'}}</span></div>
+      <div nz-col nzSpan="12"><b>流程状态</b><span>{{x.taskName}}</span></div>
+      <div nz-col nzSpan="12"><b>处理人</b><span>{{x.taskAssigneeName ? x.taskAssigneeName : '无'}}</span></div>
     </div>
 
-    <nz-list [nzDataSource]="data?.flow?.checks" [nzRenderItem]="item" [nzItemLayout]="'horizontal'">
+    <nz-list [nzDataSource]="x.checks" [nzRenderItem]="item" [nzItemLayout]="'horizontal'">
       <ng-template #item let-item>
         <nz-list-item>
           <nz-list-item-meta [nzTitle]="nzTitle" nzAvatar="{{userUrl(item.checkerId)}}" nzDescription="{{item.checkComment}}">

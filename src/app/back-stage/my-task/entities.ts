@@ -1,30 +1,48 @@
 export class Flow {
-    processInstanceId: string;
+    // 业务主键
+    public businessKey: string;
+    // 关联Activiti的流程id
+    public processInstanceId: string;
     // 表单号
-    flowNum: string;
+    public flowNum: string;
     // 流程类型
-    flowType: string;
+    public flowType: string;
     // 申请人id
-    applyUserId: string;
+    public applyUserId: string;
     // 申请人姓名
-    applyUserName: string;
+    public applyUserName: string;
     // 历史的审核信息
-    checks = new Set<Check>();
+    public checks = new Set<Check>();
+
+    // 当前任务id
+    public taskId: string;
+    // 任务的名字
+    public taskName: string;
+    // 当前任务签收人的ID
+    public taskAssignee: string;
+    // 当前任务签收人的名字
+    public taskAssigneeName: string;
+    // 当前所在的活动id
+    public taskDefinitionKey: string;
+    // 下一个活动id
+    public nextActivityId: string;
+    // 下一个活动id
+    public nextActivityName: string;
 }
 
 export class Check {
     // 所处节点
-    taskDefinitionKey: string;
+    public taskDefinitionKey: string;
     // 所审核的任务名
-    taskName: string;
+    public taskName: string;
     // 审核人id
-    checkerId: string;
+    public checkerId: string;
     // 审核人姓名
-    checkerName: string;
+    public checkerName: string;
     // 审核是否通过
-    checkApproved: boolean;
+    public checkApproved: boolean;
     // 审核意见
-    checkComment: string;
+    public checkComment: string;
     // 审核时间
-    checkTime: string;
+    public checkTime: string;
 }

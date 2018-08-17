@@ -29,5 +29,5 @@ export class Organization {
     pass: boolean;
 
     // 与流程相关的信息
-    flow: Flow;
+    flows: Array<Flow> = [];
 }

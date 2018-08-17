@@ -5,7 +5,7 @@ import { environment } from '../../../../environments/environment';
 import { OrganizationService } from '../../../model-interface/organization.service';
 import { Organization } from '../../../model-interface/entities';
 import { SecurityService } from '../../../shared/security.service';
-import { Principal } from '../../../shared/entities';
+import { Principal, Flow } from '../../../shared/entities';
 
 @Component({
   selector: 'app-organization-detail',
@@ -15,7 +15,6 @@ import { Principal } from '../../../shared/entities';
 export class OrganizationDetailComponent implements OnInit, OnDestroy {
   processInstanceId: string;
   taskId: string;
-  current = 0;
   principal: Principal;
   data: Organization;
   confirmModal: NzModalRef;
@@ -48,18 +47,21 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
   getDetail() {
     this.organizationService.getByProcessInstanceId(this.processInstanceId).subscribe((data: Organization) => {
       this.data = data;
-      if (data.pass) {
-        this.current = 2;
-      } else if (data.flow.taskDefinitionKey) {
-        if ('administration_audit' === data.flow.taskDefinitionKey) {
-          if (!data.flow.taskAssignee) {
-            this.current = 0;
-          } else {
-            this.current = 1;
-          }
+    });
+  }
+
+  getCurrent(flow: Flow) {
+    if (this.data.pass) {
+      return 2;
+    } else if (flow.taskDefinitionKey) {
+      if ('administration_audit' === flow.taskDefinitionKey) {
+        if (!flow.taskAssignee) {
+          return 0;
+        } else {
+          return 1;
         }
       }
-    });
+    }
   }
 
   claim() {
@@ -67,17 +69,6 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
       this.message.create('success', '签收成功');
       this.data = data;
       console.log(data);
-      if (data.pass) {
-        this.current = 2;
-      } else if (data.flow.taskDefinitionKey) {
-        if ('administration_audit' === data.flow.taskDefinitionKey) {
-          if (!data.flow.taskAssignee) {
-            this.current = 0;
-          } else {
-            this.current = 1;
-          }
-        }
-      }
     });
   }
 
@@ -90,8 +81,9 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
   }
 
   isTaskAssignee(): boolean {
-    if (this.principal && this.principal.name && this.data && this.data.flow) {
-      return this.principal.name.split(':')[0] === this.data.flow.taskAssignee;
+    if (this.principal && this.principal.name && this.data && this.data.flows instanceof Array) {
+      const userId = this.principal.name.split(':')[0];
+      return this.data.flows.every(flow => flow.taskAssignee === userId);
     } else {
       return false;
     }

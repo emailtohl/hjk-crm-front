@@ -5,6 +5,7 @@ import { environment } from '../../../../environments/environment';
 import { OrganizationService } from '../../../model-interface/organization.service';
 import { Organization } from '../../../model-interface/entities';
 import { SecurityService } from '../../../shared/security.service';
+import { Flow } from '../../../back-stage/my-task/entities';
 
 @Component({
   selector: 'app-my-organization-detail',
@@ -13,7 +14,6 @@ import { SecurityService } from '../../../shared/security.service';
 })
 export class MyOrganizationDetailComponent implements OnInit {
   id: number;
-  current = 0;
   data: Organization;
 
   constructor(
@@ -33,18 +33,21 @@ export class MyOrganizationDetailComponent implements OnInit {
   getDetail() {
     this.organizationService.getDetail(this.id).subscribe((data: Organization) => {
       this.data = data;
-        if (data.pass) {
-          this.current = 2;
-        } else if (data.flow.taskDefinitionKey) {
-          if ('administration_audit' === data.flow.taskDefinitionKey) {
-            if (!data.flow.taskAssignee) {
-              this.current = 0;
-            } else {
-              this.current = 1;
-            }
-          }
-        }
     });
+  }
+
+  getCurrent(flow: Flow) {
+    if (this.data.pass) {
+      return 2;
+    } else if (flow.taskDefinitionKey) {
+      if ('administration_audit' === flow.taskDefinitionKey) {
+        if (!flow.taskAssignee) {
+          return 0;
+        } else {
+          return 1;
+        }
+      }
+    }
   }
 
   credentialUrl(id: string): string {
