@@ -11,9 +11,7 @@
         <th>开户行</th>
         <th>账号</th>
         <th>联系人</th>
-        <th>联系人电话</th>
-        <th>收票地址</th>
-        <th>已检查</th>
+        <th>已生效</th>
         <th>操作</th>
       </tr>
     </thead>
@@ -24,8 +22,6 @@
         <td>{{data.depositBank}}</td>
         <td>{{data.account}}</td>
         <td>{{data.principal}}</td>
-        <td>{{data.principalPhone}}</td>
-        <td>{{data.deliveryAddress}}</td>
         <td>{{data.pass | booleanPipe}}</td>
         <td>
           <a (click)="getDetail(data.id)">详情</a>

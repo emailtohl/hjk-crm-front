@@ -24,6 +24,7 @@ export class MyOrganizationApplyComponent implements OnInit {
   fileList = [];
   previewImage = '';
   previewVisible = false;
+  isLoading = false;
 
   constructor(
     private fb: FormBuilder,
@@ -101,10 +102,12 @@ export class MyOrganizationApplyComponent implements OnInit {
     }
     const copy = JSON.parse(JSON.stringify(value));
     copy.credentials = credentials;
+    this.isLoading = true;
     this.organizationService.create(copy).subscribe(data => {
       this.message.create('success', '公司信息注册成功，等我们检查后，方可使用！');
       this.router.navigate(['/service/organization/list']);
-    });
+      this.isLoading = false;
+    }, err => this.isLoading = false);
   }
 
   resetForm(e: MouseEvent): void {

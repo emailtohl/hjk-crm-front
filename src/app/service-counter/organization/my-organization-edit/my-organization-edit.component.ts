@@ -28,6 +28,7 @@ export class MyOrganizationEditComponent implements OnInit {
   fileList = [];
   previewImage = '';
   previewVisible = false;
+  isLoading = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -131,10 +132,12 @@ export class MyOrganizationEditComponent implements OnInit {
     }
     const copy = JSON.parse(JSON.stringify(value));
     copy.credentials = credentials;
+    this.isLoading = true;
     this.organizationService.update(this.id, copy).subscribe(data => {
       this.message.create('success', '公司信息修改成功！');
+      this.isLoading = false;
       this.router.navigate(['/service/organization/list']);
-    });
+    }, err => this.isLoading = false);
   }
 
   resetForm(e: MouseEvent): void {

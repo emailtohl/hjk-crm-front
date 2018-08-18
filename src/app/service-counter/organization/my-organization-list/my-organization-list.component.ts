@@ -10,7 +10,7 @@ import { OrganizationService } from '../../../model-interface/organization.servi
   styleUrls: ['./my-organization-list.component.css']
 })
 export class MyOrganizationListComponent implements OnInit {
-  dataSet: Array<any>;
+  dataSet: Array<any> = [];
   constructor(
     private organizationService: OrganizationService,
     private securityService: SecurityService,

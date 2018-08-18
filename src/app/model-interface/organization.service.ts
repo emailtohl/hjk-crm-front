@@ -12,8 +12,8 @@ export class OrganizationService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public query(param: string): Observable<Paging<Organization>> {
-    const params: HttpParams = new HttpParams().set('query', param);
+  public search(param: {query: string, pageNumber: number}): Observable<Paging<Organization>> {
+    const params: HttpParams = new HttpParams().set('query', param.query).set('pageNumber', `${param.pageNumber}`);
     return this.httpClient.get<Paging<Organization>>(`${environment.SERVER_URL}/organization/query`, { params: params });
   }
 
@@ -59,7 +59,7 @@ export class OrganizationService {
     return this.httpClient.post<Organization>(`${environment.SERVER_URL}/organization/claim`, {taskId: taskId});
   }
 
-  public check(taskId: string, checkApproved: boolean, checkComment: string): Observable<void> {
+  public check(taskId: string, checkApproved: boolean, checkComment: string = ''): Observable<void> {
     return this.httpClient.post<void>(`${environment.SERVER_URL}/organization/check`,
       {taskId: taskId, checkApproved: checkApproved, checkComment: checkComment});
   }

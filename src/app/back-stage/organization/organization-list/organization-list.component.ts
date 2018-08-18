@@ -12,7 +12,8 @@ import { Paging } from '../../../shared/paging';
   styleUrls: ['./organization-list.component.css']
 })
 export class OrganizationListComponent implements OnInit {
-  page: Paging<Organization>;
+  query: string;
+  page: Paging<Organization> = new Paging();
 
   constructor(
     private organizationService: OrganizationService,
@@ -28,7 +29,7 @@ export class OrganizationListComponent implements OnInit {
   }
 
   loadData() {
-    this.organizationService.query('').subscribe(data => {
+    this.organizationService.search({query: this.query, pageNumber: this.page.pageNumber}).subscribe(data => {
       this.page = data;
       console.log(data);
     });
@@ -55,4 +56,7 @@ export class OrganizationListComponent implements OnInit {
     });
   }
 
+  pageIndexChange(pageNumber) {
+    this.loadData();
+  }
 }

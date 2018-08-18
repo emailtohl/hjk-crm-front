@@ -1,4 +1,24 @@
-<nz-table #basicTable [nzData]="dataSet?.content">
+<nz-breadcrumb style="margin-bottom:16px;">
+  <nz-breadcrumb-item>公司信息</nz-breadcrumb-item>
+  <nz-breadcrumb-item>列表</nz-breadcrumb-item>
+</nz-breadcrumb>
+<div style="padding:24px; background: #fff; min-height: 360px;">
+  <div nz-row>
+    <div nz-col col-6 col-offset-6>
+      <nz-input-group nzSearch [nzSuffix]="suffixIconButton">
+        <input type="text" nz-input placeholder="input search text" [(ngModel)]="query">
+      </nz-input-group>
+      <ng-template #suffixIconButton>
+        <button nz-button nzType="primary" nzSearch>
+          <i class="anticon anticon-search"></i>
+        </button>
+      </ng-template>
+    </div>
+  </div>
+{{query}}
+{{page | json}}
+  <nz-table #basicTable [nzData]="page.content" [nzFrontPagination]="false" [nzTotal]="page.totalElements" [nzPageIndex]="page.pageNumber"
+    [nzPageSize]="page.pageSize" (nzPageIndexChange)="pageIndexChange($event)">
     <thead>
       <tr>
         <th>公司名</th>
@@ -6,9 +26,7 @@
         <th>开户行</th>
         <th>账号</th>
         <th>联系人</th>
-        <th>联系人电话</th>
-        <th>收票地址</th>
-        <th>已检查</th>
+        <th>已生效</th>
         <th>操作</th>
       </tr>
     </thead>
@@ -19,8 +37,6 @@
         <td>{{data.depositBank}}</td>
         <td>{{data.account}}</td>
         <td>{{data.principal}}</td>
-        <td>{{data.principalPhone}}</td>
-        <td>{{data.deliveryAddress}}</td>
         <td>{{data.pass | booleanPipe}}</td>
         <td>
           <a (click)="getDetail(data.id)">详情</a>
@@ -30,3 +46,4 @@
       </tr>
     </tbody>
   </nz-table>
+</div>
