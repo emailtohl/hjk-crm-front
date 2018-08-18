@@ -6,7 +6,7 @@
   <div nz-row>
     <div nz-col nzSpan="8" nzOffset="16" style="margin-bottom: 20px;">
       <nz-input-group nzSearch [nzSuffix]="suffixIconButton">
-        <input type="text" nz-input placeholder="input search text" [(ngModel)]="query">
+        <input type="text" nz-input placeholder="input search text" [(ngModel)]="query" (keyup)="keyupSearch($event.target.value)">
       </nz-input-group>
       <ng-template #suffixIconButton>
         <button nz-button nzType="primary" nzSearch (click)="loadData()">

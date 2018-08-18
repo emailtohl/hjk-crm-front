@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { throwError, of } from 'rxjs';
+import { catchError, mergeMap } from 'rxjs/operators';
 import { finalize } from 'rxjs/operators';
 import { NzMessageService } from 'ng-zorro-antd';
 import { Observable } from 'rxjs';
@@ -19,14 +19,19 @@ export class HttpInterceptorImpl implements HttpInterceptor {
             withCredentials: true,
             setHeaders: SecurityService.headers,
         });
-        return next.handle(newReq)
-            .pipe(
-                catchError(this.handleError),
-                // Log when response observable either completes or errors
-                finalize(() => {
-                })
-            )
-            ;
+        return next.handle(newReq).pipe(
+            mergeMap((event: Observable<HttpEvent<any>>) => {
+                if (event instanceof HttpResponse) {
+                    console.log(event);
+                }
+                return of(event);
+            }),
+            catchError(this.handleError),
+            // Log when response observable either completes or errors
+            finalize(() => {
+            })
+        )
+        ;
     }
 
     private handleError = (error: HttpErrorResponse) => {

@@ -3,17 +3,17 @@
     <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email">电子邮箱</nz-form-label>
     <nz-form-control [nzSm]="14" [nzXs]="24">
       <input nz-input formControlName="email" id="email">
-        <nz-form-explain *ngIf="validateForm.get('email').dirty && validateForm.get('email').errors || validateForm.get('email').pending">
-          <ng-container *ngIf="validateForm.get('email').hasError('required')">
-            请输入电子邮箱!
-          </ng-container>
-          <ng-container *ngIf="validateForm.get('email').hasError('duplicated')">
-            该邮箱已注册!
-          </ng-container>
-          <ng-container *ngIf="validateForm.get('email').pending">
-            Validating...
-          </ng-container>
-        </nz-form-explain>
+      <nz-form-explain *ngIf="validateForm.get('email').dirty && validateForm.get('email').errors || validateForm.get('email').pending">
+        <ng-container *ngIf="validateForm.get('email').hasError('required')">
+          请输入电子邮箱!
+        </ng-container>
+        <ng-container *ngIf="validateForm.get('email').hasError('duplicated')">
+          该邮箱已注册!
+        </ng-container>
+        <ng-container *ngIf="validateForm.get('email').pending">
+          校验中...
+        </ng-container>
+      </nz-form-explain>
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
@@ -77,6 +77,14 @@
           </nz-select>
         </ng-template>
         <input formControlName="cellPhone" id="'cellPhone'" nz-input>
+        <nz-form-explain *ngIf="validateForm.get('cellPhone').dirty && validateForm.get('cellPhone').errors || validateForm.get('cellPhone').pending">
+            <ng-container *ngIf="validateForm.get('cellPhone').hasError('duplicated')">
+              该邮箱已注册!
+            </ng-container>
+            <ng-container *ngIf="validateForm.get('cellPhone').pending">
+              校验中...
+            </ng-container>
+          </nz-form-explain>
       </nz-input-group>
     </nz-form-control>
   </nz-form-item>

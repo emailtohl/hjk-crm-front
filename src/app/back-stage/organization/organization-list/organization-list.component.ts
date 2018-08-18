@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable, Subject, Subscription, of } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap, tap, catchError } from 'rxjs/operators';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { SecurityService } from '../../../shared/security.service';
 import { OrganizationService } from '../../../model-interface/organization.service';
@@ -11,10 +13,15 @@ import { Paging } from '../../../shared/paging';
   templateUrl: './organization-list.component.html',
   styleUrls: ['./organization-list.component.css']
 })
-export class OrganizationListComponent implements OnInit {
+export class OrganizationListComponent implements OnInit, OnDestroy {
   query = '';
   page: Paging<Organization> = new Paging();
   loading = false;
+
+  withRefresh = false;
+  private searchText$ = new Subject<string>();
+  private queryResult$: Observable<Paging<Organization>| Paging<{}>>;
+  private subscription: Subscription;
 
   constructor(
     private organizationService: OrganizationService,
@@ -25,19 +32,47 @@ export class OrganizationListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.loadData();
     this.securityService.refresh();
-  }
+    this.loadData();
 
-  loadData() {
-    this.organizationService.search({query: this.query, pageNumber: this.page.pageNumber}).subscribe(data => {
-      this.page = data;
-      console.log(data);
+    this.queryResult$ = this.searchText$.pipe(
+      debounceTime(1000),
+      distinctUntilChanged(),
+      tap(query => this.query = query),
+      switchMap(query => {
+        this.loading = true;
+        return this.organizationService.search({query: query, pageNumber: this.page.pageNumber});
+      }),
+      catchError(err => {
+        this.loading = true;
+        return of(new Paging());
+      }),
+    );
+    this.subscription = this.queryResult$.subscribe((page: Paging<Organization>) => {
+      this.loading = false;
+      this.page = page;
     });
   }
 
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  keyupSearch(query: string) {
+    this.searchText$.next(query);
+  }
+
+  loadData() {
+    this.loading = true;
+    this.organizationService.search({query: this.query, pageNumber: this.page.pageNumber}).subscribe(data => {
+      this.page = data;
+      this.loading = false;
+      console.log(data);
+    }, err => this.loading = false);
+  }
+
   getDetail(id: number): void {
-    this.router.navigate(['service/organization/detail/businessKey', id, 'taskId', 0]);
+    this.router.navigate(['back/organization/detail/businessKey', id, 'taskId', 0]);
   }
 
   delete(id: number): void {
