@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./service-counter.component.css']
 })
 export class ServiceCounterComponent implements OnInit {
+  isCollapsed = false;
   principal: Principal = new Principal();
   icon: string;
   allGroups: Set<string>;

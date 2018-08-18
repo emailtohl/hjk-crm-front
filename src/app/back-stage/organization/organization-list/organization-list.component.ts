@@ -12,8 +12,9 @@ import { Paging } from '../../../shared/paging';
   styleUrls: ['./organization-list.component.css']
 })
 export class OrganizationListComponent implements OnInit {
-  query: string;
+  query = '';
   page: Paging<Organization> = new Paging();
+  loading = false;
 
   constructor(
     private organizationService: OrganizationService,
@@ -36,7 +37,7 @@ export class OrganizationListComponent implements OnInit {
   }
 
   getDetail(id: number): void {
-    this.router.navigate(['service/organization/detail', id]);
+    this.router.navigate(['service/organization/detail/businessKey', id, 'taskId', 0]);
   }
 
   delete(id: number): void {

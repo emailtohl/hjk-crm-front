@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./back-stage.component.css']
 })
 export class BackStageComponent implements OnInit {
+  isCollapsed = false;
   principal: Principal = new Principal();
   icon: string;
   allGroups: Set<string>;

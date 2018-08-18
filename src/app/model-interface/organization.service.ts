@@ -14,7 +14,7 @@ export class OrganizationService {
 
   public search(param: {query: string, pageNumber: number}): Observable<Paging<Organization>> {
     const params: HttpParams = new HttpParams().set('query', param.query).set('pageNumber', `${param.pageNumber}`);
-    return this.httpClient.get<Paging<Organization>>(`${environment.SERVER_URL}/organization/query`, { params: params });
+    return this.httpClient.get<Paging<Organization>>(`${environment.SERVER_URL}/organization/search`, { params: params });
   }
 
   public isTaxNumberExist(taxNumber: string): Observable<boolean> {

@@ -1,24 +1,30 @@
-<nz-table #basicTable [nzData]="todoTasks">
-  <thead>
-    <tr>
-      <th>申请人</th>
-      <th>流程号</th>
-      <th>类别</th>
-      <th>任务名</th>
-      <th>创建时间</th>
-      <th>操作</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let data of basicTable.data">
-      <td>{{data.applyUserName}}</td>
-      <td>{{data.flowNum}}</td>
-      <td>{{flowTypeMap.get(data.flowType)}}</td>
-      <td>{{data.taskName}}</td>
-      <td>{{data.createDate}}</td>
-      <td>
-        <a (click)="getDetail(data.businessKey, data.taskId, data.flowType)">详情</a>
-      </td>
-    </tr>
-  </tbody>
-</nz-table>
+<nz-breadcrumb style="margin-bottom:16px;">
+  <nz-breadcrumb-item>查看任务</nz-breadcrumb-item>
+  <nz-breadcrumb-item>列表</nz-breadcrumb-item>
+</nz-breadcrumb>
+<div style="padding:24px; background: #fff; min-height: 360px;">
+  <nz-table #basicTable [nzData]="todoTasks">
+    <thead>
+      <tr>
+        <th>申请人</th>
+        <th>流程号</th>
+        <th>类别</th>
+        <th>任务名</th>
+        <th>创建时间</th>
+        <th nzWidth="120px">操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>{{data.applyUserName}}</td>
+        <td>{{data.flowNum}}</td>
+        <td>{{flowTypeMap.get(data.flowType)}}</td>
+        <td>{{data.taskName}}</td>
+        <td>{{data.createDate}}</td>
+        <td>
+          <a (click)="getDetail(data.businessKey, data.taskId, data.flowType)">详情</a>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>
