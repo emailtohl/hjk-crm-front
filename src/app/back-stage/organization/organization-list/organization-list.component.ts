@@ -7,6 +7,7 @@ import { SecurityService } from '../../../shared/security.service';
 import { OrganizationService } from '../../../model-interface/organization.service';
 import { Organization } from '../../../model-interface/entities';
 import { Paging } from '../../../shared/paging';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-organization-list',
@@ -93,6 +94,11 @@ export class OrganizationListComponent implements OnInit, OnDestroy {
   }
 
   pageIndexChange(pageNumber) {
+    this.page.pageNumber = pageNumber;
     this.loadData();
+  }
+
+  exportExcel() {
+    window.open(`${environment.SERVER_URL}/organization/export`);
   }
 }
