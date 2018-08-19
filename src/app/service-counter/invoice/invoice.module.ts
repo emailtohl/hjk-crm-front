@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'list', pathMatch: 'full' },
   { path: 'list', component: MyInvoiceListComponent },
   { path: 'apply', component: MyInvoiceApplyComponent },
-  { path: 'detail', component: MyInvoiceDetailComponent },
+  { path: 'detail/:id', component: MyInvoiceDetailComponent },
 ];
 
 @NgModule({

@@ -1,126 +1,49 @@
-<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm($event,validateForm.value)">
-  <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired>公司名称</nz-form-label>
-    <nz-form-control [nzSpan]="12" nzHasFeedback>
-      <input nz-input formControlName="organization" placeholder="输入公司或组织名">
-      <nz-form-explain *ngIf="validateForm.get('organization').dirty && validateForm.get('organization').errors">
-        <ng-container *ngIf="validateForm.get('organization').hasError('required')">
-          请输入公司或组织名!
-        </ng-container>
-      </nz-form-explain>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired>地址</nz-form-label>
-    <nz-form-control [nzSpan]="12" nzHasFeedback>
-      <input nz-input formControlName="organizationAddress" placeholder="输入公司或组织所在地">
-      <nz-form-explain *ngIf="validateForm.get('organizationAddress').dirty && validateForm.get('organizationAddress').errors">
-        <ng-container *ngIf="validateForm.get('organizationAddress').hasError('required')">
-          请输入公司或组织所在地!
-        </ng-container>
-      </nz-form-explain>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired>电话</nz-form-label>
-    <nz-form-control [nzSpan]="12" nzHasFeedback>
-      <input nz-input formControlName="telephone" placeholder="输入公司或组织电话">
-      <nz-form-explain *ngIf="validateForm.get('telephone').dirty && validateForm.get('telephone').errors">
-        <ng-container *ngIf="validateForm.get('telephone').hasError('required')">
-          请输入公司或组织电话!
-        </ng-container>
-      </nz-form-explain>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired>纳税人识别号</nz-form-label>
-    <nz-form-control [nzSpan]="12" nzHasFeedback>
-      <input nz-input formControlName="taxNumber" placeholder="请输入纳税人识别号" type="text">
-      <nz-form-explain *ngIf="validateForm.get('taxNumber').dirty&&validateForm.get('taxNumber').errors || validateForm.get('taxNumber').pending">
-        <ng-container *ngIf="validateForm.get('taxNumber').hasError('required')">
-          请输入纳税人识别号!
-        </ng-container>
-        <ng-container *ngIf="validateForm.get('taxNumber').hasError('duplicated')">
-          该纳税人识别号已注册!
-        </ng-container>
-        <ng-container *ngIf="validateForm.get('taxNumber').pending">
-          Validating...
-        </ng-container>
-      </nz-form-explain>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired>开户银行</nz-form-label>
-    <nz-form-control [nzSpan]="12" nzHasFeedback>
-      <input nz-input formControlName="depositBank" placeholder="请输入开户银行" type="text">
-      <nz-form-explain *ngIf="validateForm.get('depositBank').dirty&&validateForm.get('depositBank').errors">
-        <ng-container *ngIf="validateForm.get('depositBank').hasError('required')">
-          请输入开户银行!
-        </ng-container>
-      </nz-form-explain>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired>账号</nz-form-label>
-    <nz-form-control [nzSpan]="12" nzHasFeedback>
-      <input nz-input formControlName="account" placeholder="请输入开户行账号" type="text">
-      <nz-form-explain *ngIf="validateForm.get('account').dirty&&validateForm.get('account').errors || validateForm.get('account').pending">
-        <ng-container *ngIf="validateForm.get('account').hasError('required')">
-          请输入开户行账号!
-        </ng-container>
-        <ng-container *ngIf="validateForm.get('account').hasError('duplicated')">
-          该开户行账号已注册!
-        </ng-container>
-        <ng-container *ngIf="validateForm.get('account').pending">
-          Validating...
-        </ng-container>
-      </nz-form-explain>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired>联系人</nz-form-label>
-    <nz-form-control [nzSpan]="12" nzHasFeedback>
-      <input nz-input formControlName="principal" placeholder="请输入联系人" type="text">
-      <nz-form-explain *ngIf="validateForm.get('principal').dirty&&validateForm.get('principal').errors">
-        <ng-container *ngIf="validateForm.get('principal').hasError('required')">
-          请输入联系人!
-        </ng-container>
-      </nz-form-explain>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired>联系电话</nz-form-label>
-    <nz-form-control [nzSpan]="12" nzHasFeedback>
-      <input nz-input formControlName="principalPhone" placeholder="请输入联系人电话" type="text">
-      <nz-form-explain *ngIf="validateForm.get('principalPhone').dirty&&validateForm.get('principalPhone').errors">
-        <ng-container *ngIf="validateForm.get('principalPhone').hasError('required')">
-          请输入联系人!
-        </ng-container>
-      </nz-form-explain>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="7">收票地址</nz-form-label>
-    <nz-form-control [nzSpan]="12" nzHasFeedback>
-      <input nz-input formControlName="deliveryAddress" placeholder="若不填则收票地址为公司地址" type="text">
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="7">备注</nz-form-label>
-    <nz-form-control [nzSpan]="12" nzHasFeedback>
-      <input nz-input formControlName="remark" placeholder="备注信息" type="text">
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="7">客户源</nz-form-label>
-    <nz-form-control [nzSpan]="12" nzHasFeedback>
-      <input nz-input formControlName="receiver" placeholder="对接市场人员姓名" type="text">
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-control [nzOffset]="7" [nzSpan]="12">
-      <button nz-button nzType="primary" [disabled]="!validateForm.valid">Submit</button>
-      <button nz-button (click)="resetForm($event)">Reset</button>
-    </nz-form-control>
-  </nz-form-item>
-</form>
+<nz-breadcrumb style="margin-bottom:16px;">
+  <nz-breadcrumb-item>开票</nz-breadcrumb-item>
+  <nz-breadcrumb-item>新申请</nz-breadcrumb-item>
+</nz-breadcrumb>
+<div style="padding:24px; background: #fff; min-height: 360px;">
+  <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm($event,validateForm.value)">
+    <nz-form-item formGroupName="organization">
+      <nz-form-label [nzSpan]="7" nzRequired>选择开票公司</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzHasFeedback>
+        <nz-select nzPlaceHolder="" formControlName="id">
+          <nz-option *ngFor="let option of organizations" [nzLabel]="option.name" [nzValue]="option.id">
+          </nz-option>
+        </nz-select>
+        <nz-form-explain *ngIf="validateForm.get('organization').get('id').dirty && validateForm.get('organization').get('id').errors">
+          <ng-container *ngIf="validateForm.get('organization').get('id').hasError('required')">
+            请输入公司或组织名!
+          </ng-container>
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>选择开票类型</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzHasFeedback>
+        <nz-select nzPlaceHolder="" formControlName="type">
+          <nz-option [nzLabel]="'普票'" [nzValue]="'ORDINARY'"></nz-option>
+          <nz-option [nzLabel]="'专票'" [nzValue]="'SPECIAL'"></nz-option>
+        </nz-select>
+        <nz-form-explain *ngIf="validateForm.get('type').dirty && validateForm.get('type').errors">
+          <ng-container *ngIf="validateForm.get('type').hasError('required')">
+            请输入开票类型!
+          </ng-container>
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7">备注</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzHasFeedback>
+        <textarea formControlName="remark" nz-input rows="2" placeholder="write any thing"></textarea>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control [nzOffset]="7" [nzSpan]="12">
+        <button nz-button nzType="primary" [disabled]="!validateForm.valid" [nzLoading]="isLoading">Submit</button>
+        <button nz-button (click)="resetForm($event)">Reset</button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</div>
+

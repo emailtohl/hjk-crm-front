@@ -9,17 +9,25 @@
           <span class="nav-text">首页</span>
         </span>
       </li>
-      <li nz-menu-item routerLink="/service/organization/list" routerLinkActive="ant-menu-item-selected">
-        <span>
+      <li nz-submenu>
+        <span title>
           <i class="anticon anticon-scan"></i>
           <span class="nav-text">公司信息</span>
         </span>
+        <ul>
+          <li nz-menu-item routerLink="/service/organization/list" routerLinkActive="ant-menu-item-selected">注册列表</li>
+          <li nz-menu-item routerLink="/service/organization/apply" routerLinkActive="ant-menu-item-selected">新注册</li>
+        </ul>
       </li>
-      <li nz-menu-item routerLink="/service/organization/apply" routerLinkActive="ant-menu-item-selected">
-        <span>
-          <i class="anticon anticon-environment-o"></i>
-          <span class="nav-text">注册公司</span>
+      <li nz-submenu>
+        <span title>
+          <i class="anticon anticon-plus-circle"></i>
+          <span class="nav-text">开票</span>
         </span>
+        <ul>
+          <li nz-menu-item routerLink="/service/invoice/list" routerLinkActive="ant-menu-item-selected">申请列表</li>
+          <li nz-menu-item routerLink="/service/invoice/apply" routerLinkActive="ant-menu-item-selected">新申请</li>
+        </ul>
       </li>
       <li *ngIf="isEmployee" nz-menu-item routerLink="/back/my-task" routerLinkActive="ant-menu-item-selected">
         <span>

@@ -4,11 +4,14 @@ import {
   FormGroup,
   Validators
 } from '@angular/forms';
-import { InvoiceService } from '../invoice.service';
 import { Router } from '@angular/router';
 import { SecurityService } from '../../../shared/security.service';
 import { map } from 'rxjs/operators';
 import { debouncedAsyncValidator } from '../../../shared/debouncedAsyncValidator';
+import { InvoiceService } from '../../../model-interface/invoice.service';
+import { OrganizationService } from '../../../model-interface/organization.service';
+import { Organization } from '../../../model-interface/entities';
+import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-my-invoice-apply',
@@ -16,35 +19,26 @@ import { debouncedAsyncValidator } from '../../../shared/debouncedAsyncValidator
   styleUrls: ['./my-invoice-apply.component.css']
 })
 export class MyInvoiceApplyComponent implements OnInit {
+  organizations: Array<Organization> = [];
   validateForm: FormGroup;
+  isLoading = false;
 
   constructor(
+    securityService: SecurityService,
+    organizationService: OrganizationService,
     private fb: FormBuilder,
     private invoiceService: InvoiceService,
     private router: Router,
-    private securityService: SecurityService,
+    private message: NzMessageService
   ) {
-    this.securityService.refresh();
+    securityService.refresh();
+    organizationService.myRegisterOrganization().subscribe((data: Array<Organization>) => {
+      this.organizations = data.filter(organization => organization.pass);
+    });
     this.validateForm = this.fb.group({
-      organization: ['', [Validators.required]],
-      organizationAddress: ['', [Validators.required]],
-      telephone: ['', [Validators.required]],
-      taxNumber: ['', [Validators.required], [debouncedAsyncValidator<string>(v => {
-        return this.invoiceService.isTaxNumberExist(v).pipe(
-          map((b: boolean) => b ? { error: true, duplicated: true } : null),
-        );
-      })]],
-      depositBank: ['', [Validators.required]],
-      account: ['', [Validators.required], [debouncedAsyncValidator<string>(v => {
-        return this.invoiceService.isAccountExist(v).pipe(
-          map((b: boolean) => b ? { error: true, duplicated: true } : null),
-        );
-      })]],
-      principal: ['', [Validators.required]],
-      principalPhone: ['', [Validators.required]],
-      deliveryAddress: [''],
+      organization: this.fb.group({id: ['', [Validators.required]]}),
+      type: ['', [Validators.required]],
       remark: [''],
-      receiver: [''],
     });
   }
 
@@ -59,8 +53,14 @@ export class MyInvoiceApplyComponent implements OnInit {
         this.validateForm.controls[key].updateValueAndValidity();
       }
     }
-    this.invoiceService.create(value).subscribe(data => {
+    this.isLoading = true;
+    this.invoiceService.start(value).subscribe(data => {
+      this.isLoading = false;
+      this.message.create('success', '创建成功');
       this.router.navigate(['/service/invoice/list']);
+    }, err => {
+      this.isLoading = false;
+      this.message.create('error', '创建失败');
     });
   }
 

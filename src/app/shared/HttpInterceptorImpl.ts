@@ -22,7 +22,7 @@ export class HttpInterceptorImpl implements HttpInterceptor {
         return next.handle(newReq).pipe(
             mergeMap((event: Observable<HttpEvent<any>>) => {
                 if (event instanceof HttpResponse) {
-                    console.log(event);
+                    // console.log(event);
                 }
                 return of(event);
             }),
@@ -54,11 +54,12 @@ export class HttpInterceptorImpl implements HttpInterceptor {
                     this.router.navigate(['login']);
                     break;
                 case 404:
+                    break;
                 case 500:
                 default:
                     // The backend returned an unsuccessful response code.
                     // The response body may contain clues as to what went wrong,
-                    this.message.create('error', `Backend returned code ${error.status}, ` + `body was: ${error.error}`);
+                    console.log('error', `Backend returned code ${error.status}, ` + `body was: ${error.error}`);
                     break;
             }
         }

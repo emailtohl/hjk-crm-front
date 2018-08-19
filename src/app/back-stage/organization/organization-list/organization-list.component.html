@@ -42,7 +42,7 @@
         <td>
           <a (click)="getDetail(data.id)">详情</a>
           <nz-divider nzType="vertical"></nz-divider>
-          <a (click)="delete(data.id)">删除</a>
+          <a (click)="delete(data.id)" *ngIf="!data.pass">删除</a>
         </td>
       </tr>
     </tbody>

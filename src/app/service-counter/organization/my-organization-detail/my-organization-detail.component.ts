@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { NzMessageService, NzModalService } from 'ng-zorro-antd';
+import { NzModalService } from 'ng-zorro-antd';
 import { environment } from '../../../../environments/environment';
 import { OrganizationService } from '../../../model-interface/organization.service';
 import { Organization } from '../../../model-interface/entities';
@@ -23,7 +23,6 @@ export class MyOrganizationDetailComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private organizationService: OrganizationService,
-    private message: NzMessageService,
     private modalService: NzModalService,
   ) { }
 
@@ -49,11 +48,7 @@ export class MyOrganizationDetailComponent implements OnInit {
     }
     switch (flow.taskDefinitionKey) {
       case 'administration_audit':
-        if (!flow.taskAssignee) {
-          return 0;
-        } else {
-          return 1;
-        }
+        return 1;
       case 'modifyApply':
         return 0;
     }

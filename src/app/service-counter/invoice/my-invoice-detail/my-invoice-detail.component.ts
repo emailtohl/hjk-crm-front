@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { InvoiceService } from '../../../model-interface/invoice.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Invoice } from '../../../model-interface/entities';
 
 @Component({
   selector: 'app-my-invoice-detail',
@@ -6,10 +9,40 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./my-invoice-detail.component.css']
 })
 export class MyInvoiceDetailComponent implements OnInit {
+  id: number;
+  data: Invoice;
 
-  constructor() { }
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private invoiceService: InvoiceService,
+    private router: Router,
+  ) { }
 
   ngOnInit() {
+    this.id = this.activatedRoute.snapshot.params['id'];
+    this.getDetail();
+  }
+
+  getDetail() {
+    this.invoiceService.getDetail(this.id).subscribe((data: Invoice) => {
+      this.data = data;
+      console.log(data);
+    });
+  }
+
+  getCurrent() {
+    if (!this.data || !this.data.flow) {
+      return 0;
+    }
+    if (!this.data.flow.pass != null) {
+      return 3;
+    }
+    switch (this.data.flow.taskDefinitionKey) {
+      case 'finance_handle':
+        return 1;
+      case 'foreign_handle':
+        return 2;
+    }
   }
 
 }

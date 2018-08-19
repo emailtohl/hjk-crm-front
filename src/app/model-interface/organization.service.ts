@@ -27,20 +27,20 @@ export class OrganizationService {
     return this.httpClient.get<boolean>(`${environment.SERVER_URL}/organization/isAccountExist`, { params: params });
   }
 
-  public create(organization: Organization): Observable<any> {
-    return this.httpClient.post(`${environment.SERVER_URL}/organization`, organization);
+  public create(organization: Organization): Observable<Organization> {
+    return this.httpClient.post<Organization>(`${environment.SERVER_URL}/organization`, organization);
   }
 
-  public update(id: number, organization: Organization): Observable<any> {
-    return this.httpClient.put(`${environment.SERVER_URL}/organization/${id}`, organization);
+  public update(id: number, organization: Organization): Observable<Organization> {
+    return this.httpClient.put<Organization>(`${environment.SERVER_URL}/organization/${id}`, organization);
   }
 
-  public myRegisterOrganization(): Observable<Array<any>> {
-    return this.httpClient.get<Array<any>>(`${environment.SERVER_URL}/organization/myRegisterOrganization`);
+  public myRegisterOrganization(): Observable<Array<Organization>> {
+    return this.httpClient.get<Array<Organization>>(`${environment.SERVER_URL}/organization/myRegisterOrganization`);
   }
 
-  public delete(id: number): Observable<any> {
-    return this.httpClient.delete<any>(`${environment.SERVER_URL}/organization/${id}`);
+  public delete(id: number): Observable<void> {
+    return this.httpClient.delete<void>(`${environment.SERVER_URL}/organization/${id}`);
   }
 
   public deleteFile(id: number): Observable<any> {

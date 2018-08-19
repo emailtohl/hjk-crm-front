@@ -89,6 +89,8 @@ export class Flow {
     public applyUserName: string;
     // 历史的审核信息
     public checks: Array<Check> = [];
+    // 是否成功完成还是终止
+    public pass: Boolean;
 
     /* 下面与过程中的状态有关，不做存储 */
     // 当前任务id

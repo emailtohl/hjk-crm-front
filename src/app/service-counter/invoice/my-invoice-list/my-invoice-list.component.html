@@ -1,3 +1,30 @@
-<p>
-  my-invoice-list works!
-</p>
+<nz-breadcrumb style="margin-bottom:16px;">
+  <nz-breadcrumb-item>开票</nz-breadcrumb-item>
+  <nz-breadcrumb-item>申请列表</nz-breadcrumb-item>
+</nz-breadcrumb>
+<div style="padding:24px; background: #fff; min-height: 360px;">
+  <nz-table #basicTable [nzData]="invoices">
+    <thead>
+      <tr>
+        <th>公司名</th>
+        <th>税号</th>
+        <th>发票类型</th>
+        <th>收件地址</th>
+        <th>申请日期</th>
+        <th nzWidth="120px">操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>{{data.organization.name}}</td>
+        <td>{{data.organization.taxNumber}}</td>
+        <td>{{data.type}}</td>
+        <td>{{data.organization.deliveryAddress}}</td>
+        <td>{{data.createDate}}</td>
+        <td>
+          <a (click)="getDetail(data.id)">详情</a>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>

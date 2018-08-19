@@ -61,11 +61,7 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
     }
     switch (flow.taskDefinitionKey) {
       case 'administration_audit':
-        if (!flow.taskAssignee) {
-          return 0;
-        } else {
-          return 1;
-        }
+        return 1;
       case 'modifyApply':
         return 0;
     }
@@ -124,6 +120,9 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
    * 审核
    */
   check() {
+    if (this.checkApproved == null) {
+      return;
+    }
     this.isOkLoading = true;
     this.organizationService.check(this.taskId, this.checkApproved, this.checkComment).subscribe(data => {
       this.isVisible = false;
