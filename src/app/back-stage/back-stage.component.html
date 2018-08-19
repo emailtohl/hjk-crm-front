@@ -5,19 +5,25 @@
     <ul nz-menu [nzTheme]="'dark'" [nzMode]="isCollapsed?'vertical':'inline'">
       <li nz-menu-item routerLink="/back/my-task" routerLinkActive="ant-menu-item-selected">
         <span>
-          <i class="anticon anticon-file"></i>
+          <i class="anticon anticon-select"></i>
           <span class="nav-text">查看任务</span>
         </span>
       </li>
       <li nz-menu-item routerLink="/back/organization/list" routerLinkActive="ant-menu-item-selected">
         <span>
-          <i class="anticon anticon-file"></i>
+          <i class="anticon anticon-phone"></i>
           <span class="nav-text">公司信息</span>
+        </span>
+      </li>
+      <li nz-menu-item routerLink="/back/invoice/list" routerLinkActive="ant-menu-item-selected">
+        <span>
+          <i class="anticon anticon-pay-circle"></i>
+          <span class="nav-text">开票信息</span>
         </span>
       </li>
       <li nz-menu-item  routerLinkActive="ant-menu-item-selected">
         <span>
-          <i class="anticon anticon-file"></i>
+          <i class="anticon anticon-user"></i>
           <span class="nav-text">用户信息</span>
         </span>
       </li>

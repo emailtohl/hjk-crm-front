@@ -26,6 +26,7 @@ const routes: Routes = [
     { path: 'my-task', component: MyTaskComponent },
     // 懒加载的Module不能在APPModule中import
     { path: 'organization', loadChildren: './back-stage/organization/organization.module#OrganizationModule' },
+    { path: 'invoice', loadChildren: './back-stage/invoice/invoice.module#InvoiceModule' },
   ] },
 ];
 

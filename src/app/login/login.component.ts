@@ -66,6 +66,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['login']);
       } else {
         this.message.create('error', `登录失败`);
+        this.securityService.refresh();
       }
     });
   }
