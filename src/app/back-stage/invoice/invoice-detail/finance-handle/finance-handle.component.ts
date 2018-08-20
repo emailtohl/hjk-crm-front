@@ -7,10 +7,7 @@ import {
 } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SecurityService } from '../../../../shared/security.service';
-import { map, catchError } from 'rxjs/operators';
-import { NzMessageService, UploadFile, NzModalService } from 'ng-zorro-antd';
-import { environment } from '../../../../../environments/environment';
-import { Observable, of } from 'rxjs';
+import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { InvoiceService } from '../../../../model-interface/invoice.service';
 import { Principal } from '../../../../shared/entities';
 
@@ -56,7 +53,7 @@ export class FinanceHandleComponent implements OnInit {
 
   numberValidator = (control: FormControl): { [s: string]: boolean } => {
     if (!control.value) {
-      return { required: true };
+      return null;
     } else if (!this.numberPattern.test(control.value)) {
       return { notNumber: true, error: true };
     }

@@ -1,3 +1,83 @@
-<p>
-  foreign-handle works!
-</p>
+<nz-breadcrumb style="margin-bottom:16px;">
+  <nz-breadcrumb-item>任务</nz-breadcrumb-item>
+  <nz-breadcrumb-item><a (click)="backToDetail()">详情</a></nz-breadcrumb-item>
+  <nz-breadcrumb-item>外务审核</nz-breadcrumb-item>
+</nz-breadcrumb>
+<div style="padding:24px; background: #fff; min-height: 360px;">
+  <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm($event,validateForm.value)">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>发票编号</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzHasFeedback>
+        <input nz-input formControlName="invoiceNumber" placeholder="输入发票编号">
+        <nz-form-explain *ngIf="validateForm.get('invoiceNumber').dirty && validateForm.get('invoiceNumber').errors">
+          <ng-container *ngIf="validateForm.get('invoiceNumber').hasError('required')">
+            请输入发票编号!
+          </ng-container>
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>开票时间</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzHasFeedback>
+        <nz-date-picker formControlName="ticketTime" [nzStyle]="{width: '158%'}"></nz-date-picker>
+        <nz-form-explain *ngIf="validateForm.get('ticketTime').dirty && validateForm.get('ticketTime').errors">
+          <ng-container *ngIf="validateForm.get('ticketTime').hasError('required')">
+            请输入开票时间!
+          </ng-container>
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>开票内容</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzHasFeedback>
+        <input nz-input formControlName="content" placeholder="输入开票内容">
+        <nz-form-explain *ngIf="validateForm.get('content').dirty && validateForm.get('content').errors">
+          <ng-container *ngIf="validateForm.get('content').hasError('required')">
+            请输入开票内容!
+          </ng-container>
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7">快递公司</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzHasFeedback>
+        <input nz-input formControlName="expressCompany" placeholder="请输入快递公司" type="text">
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7">快递单号</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzHasFeedback>
+        <input nz-input formControlName="expressNumber" placeholder="请输入快递单号" type="text">
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7">快递费</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzHasFeedback>
+        <input nz-input formControlName="expressFee" placeholder="输入快递费">
+        <nz-form-explain *ngIf="validateForm.get('expressFee').dirty && validateForm.get('expressFee').errors">
+          <ng-container *ngIf="validateForm.get('expressFee').hasError('notNumber')">
+            请输入正确的金额!
+          </ng-container>
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7">垫付款</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzHasFeedback>
+        <input nz-input formControlName="paymentOn" placeholder="输入垫付款">
+        <nz-form-explain *ngIf="validateForm.get('paymentOn').dirty && validateForm.get('paymentOn').errors">
+          <ng-container *ngIf="validateForm.get('paymentOn').hasError('notNumber')">
+            请输入正确的金额!
+          </ng-container>
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control [nzOffset]="7" [nzSpan]="12">
+        <button nz-button nzType="primary" [disabled]="!validateForm.valid" [nzLoading]="isLoading">提交</button>
+        <button nz-button type="button" nzType="primary" [nzLoading]="isLoading" style="margin-left: 50px;" (click)="abort()">终止</button>
+        <button nz-button type="button" style="margin-left: 50px;" (click)="backToDetail()">返回</button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</div>
