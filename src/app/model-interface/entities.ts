@@ -1,5 +1,35 @@
 import { Flow, BaseEntity } from '../shared/entities';
 
+export class User extends BaseEntity {
+    // 身份类型
+    public identityType: string;
+    public idNumber: string;
+    public name: string;
+    // 可存储第三方昵称
+    public nickname: string;
+    // 编号
+    public serialNumber: string;
+    // 唯一识别、不能为空
+    public email: string;
+    public cellPhone: string;
+    public password: string;
+    public enabled: boolean;
+    public accountNonExpired: boolean;
+    public credentialsNonExpired: boolean;
+    public accountNonLocked: boolean;
+    // 最后一次登录时间
+    public lastLogin: string;
+    // 最后更改密码时间
+    public lastChangeCredentials: string;
+    public address: string;
+    public birthday: string;
+    public age: number;
+    public gender: string;
+    public image: { id: number };
+    public description: string;
+    public groups = new Set<string>();
+}
+
 export class Organization extends BaseEntity {
     // 公司名
     name: string;

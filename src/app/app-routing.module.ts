@@ -27,6 +27,7 @@ const routes: Routes = [
     // 懒加载的Module不能在APPModule中import
     { path: 'organization', loadChildren: './back-stage/organization/organization.module#OrganizationModule' },
     { path: 'invoice', loadChildren: './back-stage/invoice/invoice.module#InvoiceModule' },
+    { path: 'user', loadChildren: './back-stage/user/user.module#UserModule' },
   ] },
 ];
 

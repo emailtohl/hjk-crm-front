@@ -32,6 +32,10 @@ export class BackStageComponent implements OnInit {
     this.allGroups.add('ADMIN');
   }
 
+  isAdmin(): boolean {
+    return Principal.getUserGroups(this.principal).has('ADMIN');
+  }
+
   logout() {
     this.securityService.logout().subscribe(data => this.router.navigate(['login']));
   }

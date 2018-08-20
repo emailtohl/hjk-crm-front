@@ -1,0 +1,87 @@
+<nz-breadcrumb style="margin-bottom:16px;">
+  <nz-breadcrumb-item>用户信息</nz-breadcrumb-item>
+  <nz-breadcrumb-item>详情</nz-breadcrumb-item>
+</nz-breadcrumb>
+<div style="padding:24px; background: #fff; min-height: 360px;">
+  <nz-card [nzBordered]="false" nzTitle="用户详情" [nzExtra]="extraTemplate">
+    <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 8, xl: 8, xxl: 8 }">
+      <div nz-col nzSpan="6">
+        <b>用户名</b>
+        <span>{{data?.name}}</span>
+      </div>
+      <div nz-col nzSpan="6">
+        <b>昵称</b>
+        <span>{{data?.nickname}}</span>
+      </div>
+      <div nz-col nzSpan="6">
+        <b>证件类型</b>
+        <span>{{data?.identityType}}</span>
+      </div>
+      <div nz-col nzSpan="6">
+        <b>证件号</b>
+        <span>{{data?.idNumber}}</span>
+      </div>
+    </div>
+    <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 8, xl: 8, xxl: 8 }" style="margin-top: 20px;">
+      <div nz-col nzSpan="6">
+        <b>邮箱</b>
+        <span>{{data?.email}}</span>
+      </div>
+      <div nz-col nzSpan="6">
+        <b>手机</b>
+        <span>{{data?.cellPhone}}</span>
+      </div>
+      <div nz-col nzSpan="6">
+        <b>生日</b>
+        <span>{{data?.birthday}}</span>
+      </div>
+      <div nz-col nzSpan="6">
+        <b>年龄</b>
+        <span>{{data?.age}}</span>
+      </div>
+    </div>
+    <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 8, xl: 8, xxl: 8 }" style="margin-top: 20px;">
+      <div nz-col nzSpan="6">
+        <b>已启用</b>
+        <span>{{data?.enabled | booleanPipe}}</span>
+      </div>
+      <div nz-col nzSpan="6">
+        <b>未过期</b>
+        <span>{{data?.accountNonExpired | booleanPipe}}</span>
+      </div>
+      <div nz-col nzSpan="6">
+        <b>未锁定</b>
+        <span>{{data?.accountNonLocked | booleanPipe}}</span>
+      </div>
+      <div nz-col nzSpan="6">
+        <b>密码有效</b>
+        <span>{{data?.credentialsNonExpired | booleanPipe}}</span>
+      </div>
+    </div>
+    <div nz-row style="margin-top: 20px;">
+      <div nz-col nzSpan="6">
+        <b>地址</b>
+        <span>{{data?.address}}</span>
+      </div>
+      <div nz-col nzSpan="6">
+        <b>性别</b>
+        <span>{{data?.gender}}</span>
+      </div>
+      <div nz-col nzSpan="6">
+        <b>备注</b>
+        <span>{{data?.description}}</span>
+      </div>
+      <div nz-col nzSpan="6">
+        <b>角色</b>
+        <span>{{data?.groups}}</span>
+      </div>
+    </div>
+  </nz-card>
+
+  <ng-template #extraTemplate>
+    <a style="margin-right: 30px;" *ngIf="isEnable()" (click)="disable()">禁用</a>
+    <a style="margin-right: 30px;" *ngIf="!isEnable()" (click)="enable()">启用</a>
+    <a style="margin-right: 30px;" (click)="resetPassword()">重置密码</a>
+    <a (click)="isVisible = true">选择分组</a>
+  </ng-template>
+</div>

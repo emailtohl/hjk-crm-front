@@ -21,7 +21,7 @@
           <span class="nav-text">开票信息</span>
         </span>
       </li>
-      <li nz-menu-item  routerLinkActive="ant-menu-item-selected">
+      <li nz-menu-item *ngIf="isAdmin()" [routerLink]="['/back/user/list']" routerLinkActive="ant-menu-item-selected">
         <span>
           <i class="anticon anticon-user"></i>
           <span class="nav-text">用户信息</span>

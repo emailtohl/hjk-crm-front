@@ -51,7 +51,6 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
   getDetail() {
     this.organizationService.getOrganization(this.businessKey).subscribe((data: Organization) => {
       this.data = data;
-      console.log(data);
     });
   }
 

@@ -73,15 +73,17 @@ export class Principal {
         return arr[1] ? arr[1] : '';
     }
 
-    public static getUserGroups(principal: Principal): Array<string> {
+    public static getUserGroups(principal: Principal): Set<string> {
+        const groups = new Set<string>();
         if (!principal.name) {
-            return [];
+            return groups;
         }
         const arr = principal.name.split(':');
         if (!arr[2]) {
-            return [];
+            return groups;
         }
-        return arr[2].split(',');
+        arr[2].split(',').forEach(group => groups.add(group));
+        return groups;
     }
 }
 
