@@ -39,6 +39,12 @@
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>快递时间</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzHasFeedback>
+        <nz-date-picker formControlName="expressTime" [nzStyle]="{width: '158%'}"></nz-date-picker>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
       <nz-form-label [nzSpan]="7">快递公司</nz-form-label>
       <nz-form-control [nzSpan]="12" nzHasFeedback>
         <input nz-input formControlName="expressCompany" placeholder="请输入快递公司" type="text">

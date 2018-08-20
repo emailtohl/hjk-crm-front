@@ -30,8 +30,6 @@ export class BackStageComponent implements OnInit {
     });
     this.allGroups = new Set(InitData.getGroups().map(g => g.id));
     this.allGroups.add('ADMIN');
-    console.log(this.principal);
-    console.log(this.allGroups);
   }
 
   logout() {

@@ -45,6 +45,7 @@ export class ForeignHandleComponent implements OnInit {
       invoiceNumber: [null, [Validators.required]],
       ticketTime: [null, [Validators.required]],
       content: [null, [Validators.required]],
+      expressTime: [null],
       expressCompany: [null],
       expressNumber: [null],
       expressFee: [null, [this.numberValidator]],
