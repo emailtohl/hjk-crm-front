@@ -38,8 +38,8 @@ export class InvoiceService {
     return this.httpClient.get<Invoice>(`${environment.SERVER_URL}/invoice/processInstanceId/${processInstanceId}`);
   }
 
-  public claim(taskId: string): Observable<Invoice> {
-    const params: HttpParams = new HttpParams().set('taskId', taskId);
+  public claim(taskId: string | number): Observable<Invoice> {
+    const params: HttpParams = new HttpParams().set('taskId', `${taskId}`);
     return this.httpClient.post<Invoice>(`${environment.SERVER_URL}/invoice/claim`, null, { params: params });
   }
 

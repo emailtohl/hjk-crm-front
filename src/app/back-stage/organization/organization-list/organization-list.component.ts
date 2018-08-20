@@ -34,6 +34,7 @@ export class OrganizationListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.securityService.refresh();
+    this.page.pageNumber = 0;
     this.loadData();
 
     this.queryResult$ = this.searchText$.pipe(

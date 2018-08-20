@@ -14,7 +14,7 @@ import { Principal, Flow } from '../../../shared/entities';
 })
 export class OrganizationDetailComponent implements OnInit, OnDestroy {
   businessKey: string;
-  taskId: string;
+  taskId: string | number;
   isVisible = false;
   isOkLoading = false;
   checkApproved: boolean;
@@ -90,7 +90,7 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
    * 是否能签收
    */
   isTaskAssignee(): boolean {
-    if (!this.taskId) { // 不是任务进来的，就不能签收
+    if (this.taskId === '0' || this.taskId === 0) { // 不是任务进来的，就不能签收
       return false;
     }
     if (this.principal && this.principal.name && this.data && this.data.flows instanceof Array) {
@@ -104,7 +104,7 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
    * 是否能审核
    */
   isCheck(): boolean {
-    if (!this.taskId) { // 不是任务进来的，就不能签收
+    if (this.taskId === '0' || this.taskId === 0) { // 不是任务进来的，就不能签收
       return false;
     }
     if (this.principal && this.principal.name && this.data && this.data.flows instanceof Array) {

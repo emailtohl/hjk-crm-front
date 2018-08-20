@@ -55,11 +55,11 @@ export class OrganizationService {
     return this.httpClient.get<Organization>(`${environment.SERVER_URL}/organization/${businessKey}`);
   }
 
-  public claim(taskId: string): Observable<Organization> {
+  public claim(taskId: string | number): Observable<Organization> {
     return this.httpClient.post<Organization>(`${environment.SERVER_URL}/organization/claim`, {taskId: taskId});
   }
 
-  public check(taskId: string, checkApproved: boolean, checkComment: string = ''): Observable<void> {
+  public check(taskId: string | number, checkApproved: boolean, checkComment: string = ''): Observable<void> {
     return this.httpClient.post<void>(`${environment.SERVER_URL}/organization/check`,
       {taskId: taskId, checkApproved: checkApproved, checkComment: checkComment});
   }

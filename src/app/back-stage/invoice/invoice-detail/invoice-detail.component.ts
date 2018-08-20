@@ -14,7 +14,7 @@ import { Principal } from '../../../shared/entities';
 })
 export class InvoiceDetailComponent implements OnInit {
   id: number;
-  taskId: string;
+  taskId: string | number;
   data: Invoice;
   isOkLoading = false;
   checkApproved: boolean;
@@ -71,7 +71,7 @@ export class InvoiceDetailComponent implements OnInit {
    * 是否能签收
    */
   isTaskAssignee(): boolean {
-    if (!this.taskId) { // 不是任务进来的，就不能签收
+    if (this.taskId === '0' || this.taskId === 0) { // 不是任务进来的，就不能签收
       return false;
     }
     if (this.principal && this.principal.name && this.data && this.data.flow) {
@@ -85,7 +85,7 @@ export class InvoiceDetailComponent implements OnInit {
    * 是否能审核
    */
   isCheck(): boolean {
-    if (!this.taskId) { // 不是任务进来的，就不能签收
+    if (this.taskId === '0' || this.taskId === 0) { // 不是任务进来的，就不能签收
       return false;
     }
     if (this.principal && this.principal.name && this.data && this.data.flow) {
