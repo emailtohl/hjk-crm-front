@@ -1,6 +1,6 @@
-import { Flow } from '../shared/entities';
+import { Flow, BaseEntity } from '../shared/entities';
 
-export class Organization {
+export class Organization extends BaseEntity {
     // 公司名
     name: string;
     // 税号
@@ -32,7 +32,7 @@ export class Organization {
     flows: Array<Flow> = [];
 }
 
-export class Invoice {
+export class Invoice extends BaseEntity {
     public type: string;
     // 开票公司
     public organization: Organization;

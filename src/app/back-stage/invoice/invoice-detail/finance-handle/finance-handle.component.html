@@ -1,0 +1,83 @@
+<nz-breadcrumb style="margin-bottom:16px;">
+  <nz-breadcrumb-item>任务</nz-breadcrumb-item>
+  <nz-breadcrumb-item><a (click)="backToDetail()">详情</a></nz-breadcrumb-item>
+  <nz-breadcrumb-item>财务审核</nz-breadcrumb-item>
+</nz-breadcrumb>
+<div style="padding:24px; background: #fff; min-height: 360px;">
+  <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm($event,validateForm.value)">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>收款金额</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzHasFeedback>
+        <input nz-input formControlName="income" placeholder="输入收款金额">
+        <nz-form-explain *ngIf="validateForm.get('income').dirty && validateForm.get('income').errors">
+          <ng-container *ngIf="validateForm.get('income').hasError('required')">
+            请输入收款金额!
+          </ng-container>
+          <ng-container *ngIf="validateForm.get('income').hasError('notNumber')">
+            请输入正确的金额!
+          </ng-container>
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>收款时间</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzHasFeedback>
+        <nz-date-picker formControlName="receiveTime" [nzStyle]="{width: '158%'}"></nz-date-picker>
+        <nz-form-explain *ngIf="validateForm.get('receiveTime').dirty && validateForm.get('receiveTime').errors">
+          <ng-container *ngIf="validateForm.get('receiveTime').hasError('required')">
+            请输入收款时间!
+          </ng-container>
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>开票金额</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzHasFeedback>
+        <input nz-input formControlName="ticketfee" placeholder="输入开票金额">
+        <nz-form-explain *ngIf="validateForm.get('ticketfee').dirty && validateForm.get('ticketfee').errors">
+          <ng-container *ngIf="validateForm.get('ticketfee').hasError('required')">
+            请输入开票金额!
+          </ng-container>
+          <ng-container *ngIf="validateForm.get('ticketfee').hasError('notNumber')">
+            请输入正确的金额!
+          </ng-container>
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7">差旅费扣除</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzHasFeedback>
+        <input nz-input formControlName="deduct" placeholder="输入差旅费扣除">
+        <nz-form-explain *ngIf="validateForm.get('deduct').dirty && validateForm.get('deduct').errors">
+          <ng-container *ngIf="validateForm.get('deduct').hasError('notNumber')">
+            请输入正确的金额!
+          </ng-container>
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7">税金</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzHasFeedback>
+        <input nz-input formControlName="tax" placeholder="输入税金">
+        <nz-form-explain *ngIf="validateForm.get('tax').dirty && validateForm.get('tax').errors">
+          <ng-container *ngIf="validateForm.get('tax').hasError('notNumber')">
+            请输入正确的金额!
+          </ng-container>
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7">明细</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzHasFeedback>
+        <input nz-input formControlName="detail" placeholder="请输入明细" type="text">
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control [nzOffset]="7" [nzSpan]="12">
+        <button nz-button nzType="primary" [disabled]="!validateForm.valid" [nzLoading]="isLoading">提交</button>
+        <button nz-button type="button" nzType="primary" [nzLoading]="isLoading" style="margin-left: 50px;" (click)="abort()">终止</button>
+        <button nz-button type="button" style="margin-left: 50px;" (click)="backToDetail()">返回</button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</div>

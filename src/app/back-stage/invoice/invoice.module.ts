@@ -7,11 +7,15 @@ import { SharedModule } from '../../shared/shared.module';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { InvoiceListComponent } from './invoice-list/invoice-list.component';
 import { InvoiceDetailComponent } from './invoice-detail/invoice-detail.component';
+import { FinanceHandleComponent } from './invoice-detail/finance-handle/finance-handle.component';
+import { ForeignHandleComponent } from './invoice-detail/foreign-handle/foreign-handle.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'list', pathMatch: 'full' },
   { path: 'list', component: InvoiceListComponent },
   { path: 'detail/businessKey/:businessKey/taskId/:taskId', component: InvoiceDetailComponent },
+  { path: 'finance_handle/businessKey/:businessKey/taskId/:taskId', component: FinanceHandleComponent },
+  { path: 'foreign_handle/businessKey/:businessKey/taskId/:taskId', component: ForeignHandleComponent },
 ];
 
 @NgModule({
@@ -27,7 +31,9 @@ const routes: Routes = [
   exports: [RouterModule],
   declarations: [
     InvoiceDetailComponent,
-    InvoiceListComponent
+    InvoiceListComponent,
+    FinanceHandleComponent,
+    ForeignHandleComponent
   ]
 })
 export class InvoiceModule { }

@@ -29,7 +29,8 @@ export class MyTaskComponent implements OnInit {
       case 'ORGANIZATION':
         this.router.navigate([`/back/organization/detail/businessKey`, businessKey, 'taskId', taskId]);
         break;
-
+        case 'INVOICE':
+        this.router.navigate([`/back/invoice/detail/businessKey`, businessKey, 'taskId', taskId]);
     }
   }
 }

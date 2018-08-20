@@ -1,3 +1,209 @@
-<p>
-  invoice-detail works!
-</p>
+<nz-breadcrumb style="margin-bottom:16px;">
+  <nz-breadcrumb-item>开票</nz-breadcrumb-item>
+  <nz-breadcrumb-item>详情</nz-breadcrumb-item>
+</nz-breadcrumb>
+<div style="padding:24px; background: #fff; min-height: 360px;">
+  <nz-card [nzBordered]="false" nzTitle="申请详情" [nzExtra]="extraTemplate">
+    <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 8, xl: 8, xxl: 8 }">
+      <div nz-col nzSpan="8">
+        <b>发票类型</b>
+        <span>{{data?.type === 'ORDINARY' ? '普票' : data?.type === 'SPECIAL' ? '专票' : data?.type}}</span>
+      </div>
+      <div nz-col nzSpan="8">
+        <b>提交时间</b>
+        <span>{{data?.createDate}}</span>
+      </div>
+      <div nz-col nzSpan="8">
+        <b>客户备注</b>
+        <span>{{data?.remark}}</span>
+      </div>
+    </div>
+    <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 8, xl: 8, xxl: 8 }">
+      <div nz-col nzSpan="8">
+        <b>收款时间</b>
+        <span>{{data?.receiveTime}}</span>
+      </div>
+      <div nz-col nzSpan="8">
+        <b>收款金额</b>
+        <span>{{data?.income}}</span>
+      </div>
+      <div nz-col nzSpan="8">
+        <b>差旅费</b>
+        <span>{{data?.deduct}}</span>
+      </div>
+    </div>
+    <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 8, xl: 8, xxl: 8 }">
+      <div nz-col nzSpan="8">
+        <b>开票金额</b>
+        <span>{{data?.ticketfee}}</span>
+      </div>
+      <div nz-col nzSpan="8">
+        <b>税金</b>
+        <span>{{data?.tax}}</span>
+      </div>
+      <div nz-col nzSpan="8">
+        <b>开票金额</b>
+        <span>{{data?.detail}}</span>
+      </div>
+    </div>
+    <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 8, xl: 8, xxl: 8 }">
+      <div nz-col nzSpan="8">
+        <b>开票时间</b>
+        <span>{{data?.ticketTime}}</span>
+      </div>
+      <div nz-col nzSpan="8">
+        <b>开票内容</b>
+        <span>{{data?.content}}</span>
+      </div>
+      <div nz-col nzSpan="8">
+        <b>发票编号</b>
+        <span>{{data?.invoiceNumber}}</span>
+      </div>
+    </div>
+    <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 8, xl: 8, xxl: 8 }">
+      <div nz-col nzSpan="8">
+        <b>快递公司</b>
+        <span>{{data?.expressCompany}}</span>
+      </div>
+      <div nz-col nzSpan="8">
+        <b>快递单号</b>
+        <span>{{data?.expressNumber}}</span>
+      </div>
+      <div nz-col nzSpan="8">
+        <b>快递费</b>
+        <span>{{data?.expressFee}}</span>
+      </div>
+    </div>
+    <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 8, xl: 8, xxl: 8 }">
+      <div nz-col nzSpan="8">
+        <b>垫付款</b>
+        <span>{{data?.paymentOn}}</span>
+      </div>
+      <div nz-col nzSpan="8">
+        <b>备注</b>
+        <span>{{data?.remark}}</span>
+      </div>
+    </div>
+  </nz-card>
+
+  <nz-card [nzBordered]="false" nzTitle="公司注册详情">
+    <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 8, xl: 8, xxl: 8 }">
+      <div nz-col nzSpan="6">
+        <b>公司名</b>
+        <span>{{data?.organization?.name}}</span>
+      </div>
+      <div nz-col nzSpan="6">
+        <b>地址</b>
+        <span>{{data?.organization?.address}}</span>
+      </div>
+      <div nz-col nzSpan="6">
+        <b>电话</b>
+        <span>{{data?.organization?.telephone}}</span>
+      </div>
+      <div nz-col nzSpan="6">
+        <b>纳税号</b>
+        <span>{{data?.organization?.taxNumber}}</span>
+      </div>
+    </div>
+    <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 8, xl: 8, xxl: 8 }" style="margin-top: 20px;">
+      <div nz-col nzSpan="6">
+        <b>开户行</b>
+        <span>{{data?.organization?.depositBank}}</span>
+      </div>
+      <div nz-col nzSpan="6">
+        <b>账号</b>
+        <span>{{data?.organization?.account}}</span>
+      </div>
+      <div nz-col nzSpan="6">
+        <b>联系人</b>
+        <span>{{data?.organization?.principal}}</span>
+      </div>
+      <div nz-col nzSpan="6">
+        <b>联系人电话</b>
+        <span>{{data?.organization?.principalPhone}}</span>
+      </div>
+    </div>
+    <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 8, xl: 8, xxl: 8 }" style="margin-top: 20px;">
+      <div nz-col nzSpan="6">
+        <b>收件地址</b>
+        <span>{{data?.organization?.deliveryAddress}}</span>
+      </div>
+      <div nz-col nzSpan="6">
+        <b>联系人电话</b>
+        <span>{{data?.organization?.principalPhone}}</span>
+      </div>
+      <div nz-col nzSpan="6">
+        <b>创建时间</b>
+        <span>{{data?.organization?.createDate}}</span>
+      </div>
+      <div nz-col nzSpan="6">
+        <b>修改时间</b>
+        <span>{{data?.organization?.modifyDate}}</span>
+      </div>
+    </div>
+    <div nz-row style="margin-top: 20px;">
+      <div nz-col nzSpan="6">
+        <b>客户源</b>
+        <span>{{data?.organization?.receiver}}</span>
+      </div>
+      <div nz-col nzSpan="6">
+        <b>是否有效</b>
+        <span>{{data?.organization?.pass | booleanPipe}}</span>
+      </div>
+      <div nz-col nzSpan="12">
+        <b>备注</b>
+        <span>{{data?.organization?.remark}}</span>
+      </div>
+    </div>
+  </nz-card>
+
+  <nz-card [nzBordered]="false" nzTitle="流程详情">
+    <nz-card [nzBordered]="false" nzTitle="流程状态">
+      <nz-steps [nzCurrent]="getCurrent()">
+        <nz-step nzTitle="submit" nzDescription="成功提交申请"></nz-step>
+        <nz-step nzTitle="finance handle" nzDescription="财务核对中"></nz-step>
+        <nz-step nzTitle="foreign handle" nzDescription="外务处理中"></nz-step>
+        <nz-step nzTitle="End" nzDescription="结束"></nz-step>
+      </nz-steps>
+    </nz-card>
+
+    <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 8, xl: 8, xxl: 8 }">
+      <div nz-col nzSpan="12">
+        <b>申请人</b>
+        <span>{{data?.flow?.applyUserName}}</span>
+      </div>
+      <div nz-col nzSpan="12">
+        <b>流程号</b>
+        <span>{{data?.flow?.flowNum}}</span>
+      </div>
+    </div>
+    <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 8, xl: 8, xxl: 8 }" style="margin-top: 20px;">
+      <div nz-col nzSpan="12">
+        <b>流程状态</b>
+        <span>{{data?.flow?.taskName}}</span>
+      </div>
+      <div nz-col nzSpan="12">
+        <b>处理人</b>
+        <span>{{data?.flow?.taskAssigneeName ? data?.flow?.taskAssigneeName : '无'}}</span>
+      </div>
+    </div>
+    <nz-divider nzText="处理历史" nzOrientation="left" style="margin-top: 20px;"></nz-divider>
+    <nz-list [nzDataSource]="data?.flow?.checks" [nzRenderItem]="item" [nzItemLayout]="'horizontal'">
+      <ng-template #item let-item>
+        <nz-list-item>
+          <nz-list-item-meta [nzTitle]="nzTitle" nzAvatar="{{userUrl(item.checkerId)}}" nzDescription="{{item.checkComment}}">
+            <ng-template #nzTitle>
+              <a href="">{{item.checkerName}}</a>
+            </ng-template>
+          </nz-list-item-meta>
+        </nz-list-item>
+      </ng-template>
+    </nz-list>
+  </nz-card>
+</div>
+
+
+<ng-template #extraTemplate>
+  <a style="margin-right: 30px;" (click)="goCheck()" *ngIf="isCheck()">审核</a>
+  <a (click)="claim()" *ngIf="isTaskAssignee()">签收</a>
+</ng-template>

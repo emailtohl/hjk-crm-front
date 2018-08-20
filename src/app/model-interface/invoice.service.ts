@@ -39,12 +39,12 @@ export class InvoiceService {
   }
 
   public claim(taskId: string): Observable<Invoice> {
-    return this.httpClient.post<Invoice>(`${environment.SERVER_URL}/invoice/claim`, { taskId: taskId });
+    const params: HttpParams = new HttpParams().set('taskId', taskId);
+    return this.httpClient.post<Invoice>(`${environment.SERVER_URL}/invoice/claim`, null, { params: params });
   }
 
   public check(taskId: string, checkApproved: boolean, invoice: any): Observable<void> {
-    invoice.taskId = taskId;
-    invoice.checkApproved = checkApproved;
-    return this.httpClient.post<void>(`${environment.SERVER_URL}/invoice/check`, invoice);
+    const params: HttpParams = new HttpParams().set('taskId', taskId).set('checkApproved', `${checkApproved}`);
+    return this.httpClient.post<void>(`${environment.SERVER_URL}/invoice/check`, invoice, {params: params});
   }
 }

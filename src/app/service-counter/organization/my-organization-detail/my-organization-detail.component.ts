@@ -66,7 +66,7 @@ export class MyOrganizationDetailComponent implements OnInit {
     if (!this.flow || !this.principal) {
       return false;
     }
-    return this.flow.applyUserId === this.principal.name.split(':')[0];
+    return this.flow.applyUserId === Principal.getUserId(this.principal);
   }
 
   invalid() {

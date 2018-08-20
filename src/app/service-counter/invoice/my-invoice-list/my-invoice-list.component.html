@@ -8,9 +8,10 @@
       <tr>
         <th>公司名</th>
         <th>税号</th>
-        <th>发票类型</th>
+        <th nzWidth="60px">类型</th>
         <th>收件地址</th>
         <th>申请日期</th>
+        <th>结果</th>
         <th nzWidth="120px">操作</th>
       </tr>
     </thead>
@@ -18,9 +19,10 @@
       <tr *ngFor="let data of basicTable.data">
         <td>{{data.organization.name}}</td>
         <td>{{data.organization.taxNumber}}</td>
-        <td>{{data.type}}</td>
+        <td>{{data.type === 'ORDINARY' ? '普票' : data.type === 'SPECIAL' ? '专票' : data.type}}</td>
         <td>{{data.organization.deliveryAddress}}</td>
         <td>{{data.createDate}}</td>
+        <td>{{data.flow?.pass == null ? '未完成' : data.flow?.pass === true ? '已完成' : '终止' }}</td>
         <td>
           <a (click)="getDetail(data.id)">详情</a>
         </td>

@@ -188,7 +188,7 @@
       </div>
     </div>
     <nz-divider nzText="处理历史" nzOrientation="left" style="margin-top: 20px;"></nz-divider>
-    <nz-list [nzDataSource]="data?.checks" [nzRenderItem]="item" [nzItemLayout]="'horizontal'">
+    <nz-list [nzDataSource]="data?.flow?.checks" [nzRenderItem]="item" [nzItemLayout]="'horizontal'">
       <ng-template #item let-item>
         <nz-list-item>
           <nz-list-item-meta [nzTitle]="nzTitle" nzAvatar="{{userUrl(item.checkerId)}}" nzDescription="{{item.checkComment}}">

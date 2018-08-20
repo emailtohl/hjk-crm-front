@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from '../../../../environments/environment';
 import { InvoiceService } from '../../../model-interface/invoice.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Invoice } from '../../../model-interface/entities';
@@ -26,15 +27,18 @@ export class MyInvoiceDetailComponent implements OnInit {
   getDetail() {
     this.invoiceService.getDetail(this.id).subscribe((data: Invoice) => {
       this.data = data;
-      console.log(data);
     });
+  }
+
+  userUrl(id: string): string {
+    return `${environment.SERVER_URL}/users/userPicture/${id}`;
   }
 
   getCurrent() {
     if (!this.data || !this.data.flow) {
       return 0;
     }
-    if (!this.data.flow.pass != null) {
+    if (this.data.flow.pass != null) {
       return 3;
     }
     switch (this.data.flow.taskDefinitionKey) {

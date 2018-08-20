@@ -71,7 +71,6 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
     this.organizationService.claim(this.taskId).subscribe((data: Organization) => {
       this.message.create('success', '签收成功');
       this.data = data;
-      console.log(data);
     });
   }
 
@@ -109,7 +108,7 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
       return false;
     }
     if (this.principal && this.principal.name && this.data && this.data.flows instanceof Array) {
-      const userId = this.principal.name.split(':')[0];
+      const userId = Principal.getUserId(this.principal);
       return this.data.flows.find(flow => flow.taskAssignee === userId) ? true : false; // 只有在本人正是签收人的情况下才开放
     } else {
       return false;

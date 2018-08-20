@@ -57,6 +57,32 @@ export class Principal {
         password: string;
         username: string;
     };
+
+    public static getUserId(principal: Principal): string {
+        if (!principal.name) {
+            return '';
+        }
+        return principal.name.split(':')[0];
+    }
+
+    public static getUserName(principal: Principal): string {
+        if (!principal.name) {
+            return '';
+        }
+        const arr = principal.name.split(':');
+        return arr[1] ? arr[1] : '';
+    }
+
+    public static getUserGroups(principal: Principal): Array<string> {
+        if (!principal.name) {
+            return [];
+        }
+        const arr = principal.name.split(':');
+        if (!arr[2]) {
+            return [];
+        }
+        return arr[2].split(',');
+    }
 }
 
 export class Check {
