@@ -4,6 +4,8 @@ import { Principal } from '../shared/entities';
 import { InitData } from '../shared/init.data';
 import { SecurityService } from '../shared/security.service';
 import { Router } from '@angular/router';
+import { NzModalService } from 'ng-zorro-antd';
+import { UpdateMyPasswordComponent } from '../shared/update-my-password/update-my-password.component';
 
 @Component({
   selector: 'app-back-stage',
@@ -18,7 +20,8 @@ export class BackStageComponent implements OnInit {
 
   constructor(
     private securityService: SecurityService,
-    private router: Router
+    private router: Router,
+    private modalService: NzModalService
   ) {
   }
 
@@ -38,5 +41,16 @@ export class BackStageComponent implements OnInit {
 
   logout() {
     this.securityService.logout().subscribe(data => this.router.navigate(['login']));
+  }
+
+  openUpdateMyPasswordModal() {
+    const modal = this.modalService.create({
+      nzTitle: '修改密码',
+      nzContent: UpdateMyPasswordComponent,
+      nzComponentParams: {
+        id: Principal.getUserId(this.principal),
+      },
+      nzFooter: null
+    });
   }
 }

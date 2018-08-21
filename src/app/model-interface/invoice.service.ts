@@ -43,8 +43,9 @@ export class InvoiceService {
     return this.httpClient.post<Invoice>(`${environment.SERVER_URL}/invoice/claim`, null, { params: params });
   }
 
-  public check(taskId: string, checkApproved: boolean, invoice: any): Observable<void> {
-    const params: HttpParams = new HttpParams().set('taskId', taskId).set('checkApproved', `${checkApproved}`);
+  public check(taskId: string, checkApproved: boolean, checkComment: string, invoice: any): Observable<void> {
+    const params: HttpParams = new HttpParams().set('taskId', taskId).set('checkApproved', `${checkApproved}`)
+    .set('checkComment', checkComment);
     return this.httpClient.post<void>(`${environment.SERVER_URL}/invoice/check`, invoice, {params: params});
   }
 }

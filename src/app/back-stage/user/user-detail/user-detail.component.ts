@@ -2,10 +2,11 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NzMessageService, NzModalService, NzModalRef } from 'ng-zorro-antd';
 import { environment } from '../../../../environments/environment';
-import { UserService } from '../../../model-interface/User.service';
 import { User } from '../../../model-interface/entities';
 import { SecurityService } from '../../../shared/security.service';
 import { Principal, Flow } from '../../../shared/entities';
+import { UserService } from '../../../model-interface/user.service';
+import { InitData } from '../../../shared/init.data';
 
 @Component({
   selector: 'app-user-detail',
@@ -18,6 +19,9 @@ export class UserDetailComponent implements OnInit {
   data: User;
   isVisible = false;
   tplModal: NzModalRef;
+  listOfOption = InitData.getGroups();
+  listOfSelectedValue = [];
+  groupMap = new Map();
 
   constructor(
     private securityService: SecurityService,
@@ -29,6 +33,10 @@ export class UserDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    for (const g of this.listOfOption) {
+      this.groupMap.set(g.id, g.name);
+    }
+    this.groupMap.set('ADMIN', '管理员');
     this.securityService.refresh();
     this.securityService.getPrincipal().subscribe((data: Principal) => {
       this.principal = data;
@@ -42,6 +50,13 @@ export class UserDetailComponent implements OnInit {
       this.data = data;
       console.log(data);
     });
+  }
+
+  showGroups(groups: Array<string>): string {
+    if (!(groups instanceof Array)) {
+      return '';
+    }
+    return groups.map(groupId => this.groupMap.get(groupId)).join(',');
   }
 
   isEnable(): boolean {
@@ -68,9 +83,24 @@ export class UserDetailComponent implements OnInit {
   }
 
   disable(): void {
+    if (Principal.getUserGroups(this.principal).has('ADMIN')) {
+      this.message.create('warning', '不能将管理员账号禁用了');
+      return;
+    }
     this.userService.enable(this.data.id, false).subscribe(data => {
       this.data.enabled = false;
       this.message.create('success', '该账号已禁用');
+    });
+  }
+
+  selectGroups(): void {
+    this.userService.setGroupIds(Number.parseInt(Principal.getUserId(this.principal)), this.listOfSelectedValue)
+    .subscribe(data => {
+      this.message.create('success', '设置成功');
+      this.isVisible = false;
+    }, err => {
+      this.isVisible = false;
+      this.message.create('error', '设置失败');
     });
   }
 }

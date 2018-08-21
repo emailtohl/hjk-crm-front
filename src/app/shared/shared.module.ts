@@ -6,6 +6,8 @@ import { HttpInterceptorImpl } from './httpInterceptorImpl';
 import { InitData } from './init.data';
 import { BooleanPipe } from './boolean.pipe';
 import { IconPipe } from './icon.pipe';
+import { UpdateMyPasswordComponent } from './update-my-password/update-my-password.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 export function InitDataFactory(initData: InitData): Function {
   return () => initData.load();
@@ -15,13 +17,16 @@ export function InitDataFactory(initData: InitData): Function {
   imports: [
     CommonModule,
     NgZorroAntdModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorImpl, multi: true },
     InitData,
     { provide: APP_INITIALIZER, useFactory: InitDataFactory, deps: [InitData], multi: true },
   ],
-  declarations: [ BooleanPipe, IconPipe ],
-  exports: [BooleanPipe, IconPipe]
+  declarations: [ BooleanPipe, IconPipe, UpdateMyPasswordComponent ],
+  entryComponents: [UpdateMyPasswordComponent],
+  exports: [BooleanPipe, IconPipe, UpdateMyPasswordComponent]
 })
 export class SharedModule { }

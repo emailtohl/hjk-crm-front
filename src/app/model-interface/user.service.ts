@@ -32,4 +32,8 @@ export class UserService {
   public enable(id: number, enabled: boolean): Observable<void> {
     return this.httpClient.post<void>(`${environment.SERVER_URL}/users/enable`, {id: id, enabled: enabled});
   }
+
+  public setGroupIds(id: number, groups: Array<string>) {
+    return this.httpClient.post<void>(`${environment.SERVER_URL}/users/${id}/groups`, groups);
+  }
 }

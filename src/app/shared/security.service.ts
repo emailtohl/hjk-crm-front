@@ -47,4 +47,8 @@ export class SecurityService {
   public logout(): Observable<void> {
     return this.http.post<void>(`${environment.SERVER_URL}/logout`, {});
   }
+
+  public updateMyPassword(form: {id: number, oldPassword: string, newPassword: string}): Observable<void> {
+    return this.http.post<void>(`${environment.SERVER_URL}/users/updateMyPassword`, form);
+  }
 }

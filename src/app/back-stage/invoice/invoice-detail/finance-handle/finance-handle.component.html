@@ -75,9 +75,21 @@
     <nz-form-item>
       <nz-form-control [nzOffset]="7" [nzSpan]="12">
         <button nz-button nzType="primary" [disabled]="!validateForm.valid" [nzLoading]="isLoading">提交</button>
-        <button nz-button type="button" nzType="primary" [nzLoading]="isLoading" style="margin-left: 50px;" (click)="abort()">终止</button>
+        <button nz-button type="button" nzType="danger" style="margin-left: 50px;" (click)="openAbortModal(tplTitle, tplContent, tplFooter)">终止</button>
         <button nz-button type="button" style="margin-left: 50px;" (click)="backToDetail()">返回</button>
       </nz-form-control>
     </nz-form-item>
   </form>
 </div>
+
+<ng-template #tplTitle>
+  <span>警告！</span>
+</ng-template>
+<ng-template #tplContent>
+  <p><b style="color: red;">请确认是否终止该申请！</b></p>
+  <div><input nz-input placeholder="终止理由" [(ngModel)]="checkComment"></div>
+</ng-template>
+<ng-template #tplFooter>
+  <button nz-button nzType="dashed" (click)="cancelAbort()" style="margin-right: 20px;">取消</button>
+  <button nz-button nzType="danger" (click)="abort()" [nzLoading]="tplModalButtonLoading">终止</button>
+</ng-template>

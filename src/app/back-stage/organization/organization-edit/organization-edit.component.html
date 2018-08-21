@@ -6,7 +6,7 @@
     <div nz-row>
       <div nz-col nzOffset="4">
         <nz-upload nzAction="{{uploadUrl}}" nzListType="picture-card" [(nzFileList)]="fileList" [nzShowButton]="fileList.length < 3"
-          [nzRemove]="removeFile" [nzPreview]="handlePreview">
+          [nzRemove]="removeFile" [nzPreview]="handlePreview" [nzSize]="5120" [nzFileType]="'image/png,image/jpeg,image/gif,image/bmp'">
           <i class="anticon anticon-plus"></i>
           <div class="ant-upload-text">上传凭证</div>
         </nz-upload>

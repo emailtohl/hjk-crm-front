@@ -5,9 +5,9 @@ import { debounceTime, distinctUntilChanged, switchMap, tap, catchError } from '
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { environment } from '../../../../environments/environment';
 import { SecurityService } from '../../../shared/security.service';
-import { UserService } from '../../../model-interface/User.service';
 import { User } from '../../../model-interface/entities';
 import { Paging } from '../../../shared/paging';
+import { UserService } from '../../../model-interface/user.service';
 
 @Component({
   selector: 'app-user-list',

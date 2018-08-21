@@ -73,7 +73,7 @@
       </div>
       <div nz-col nzSpan="6">
         <b>角色</b>
-        <span>{{data?.groups}}</span>
+        <span>{{showGroups(data?.groups)}}</span>
       </div>
     </div>
   </nz-card>
@@ -85,3 +85,9 @@
     <a (click)="isVisible = true">选择分组</a>
   </ng-template>
 </div>
+
+<nz-modal [(nzVisible)]="isVisible" nzTitle="选择分组" (nzOnCancel)="isVisible = false" (nzOnOk)="selectGroups()">
+  <nz-select style="width: 100%" nzMode="multiple" nzPlaceHolder="请选择" [(ngModel)]="listOfSelectedValue">
+    <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
+  </nz-select>
+</nz-modal>

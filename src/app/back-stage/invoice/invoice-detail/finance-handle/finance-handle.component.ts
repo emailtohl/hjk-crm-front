@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -6,8 +6,8 @@ import {
   FormControl
 } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { NzMessageService, NzModalService, NzModalRef } from 'ng-zorro-antd';
 import { SecurityService } from '../../../../shared/security.service';
-import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { InvoiceService } from '../../../../model-interface/invoice.service';
 import { Principal } from '../../../../shared/entities';
 
@@ -21,6 +21,9 @@ export class FinanceHandleComponent implements OnInit {
   taskId: string;
   principal: Principal = new Principal();
   validateForm: FormGroup;
+  tplModal: NzModalRef;
+  tplModalButtonLoading = false;
+  checkComment = '';
   isLoading = false;
   numberPattern = /^[\d\-]+(\.\d+)?$/;
 
@@ -67,25 +70,34 @@ export class FinanceHandleComponent implements OnInit {
     this.router.navigate(['/back/my-task']);
   }
 
-  abort() {
-    this.modalService.confirm({
-      nzTitle: '警告！',
-      nzContent: '<b style="color: red;">请确认是否终止该申请！</b>',
-      nzOkText: '是',
-      nzOkType: 'danger',
-      nzOnOk: () => {
-        this.invoiceService.check(this.taskId, false, {}).subscribe(data => {
-          this.isLoading = false;
-          this.message.create('success', '提交成功');
-          this.backToMyTaskList();
-        }, err => {
-          this.isLoading = false;
-          this.message.create('error', '提交失败');
-        });
-      },
-      nzCancelText: '否',
-      nzOnCancel: () => {}
+  openAbortModal(tplTitle: TemplateRef<{}>, tplContent: TemplateRef<{}>, tplFooter: TemplateRef<{}>): void {
+    this.tplModal = this.modalService.create({
+      nzTitle: tplTitle,
+      nzContent: tplContent,
+      nzFooter: tplFooter,
+      nzMaskClosable: true,
+      nzClosable: true,
     });
+  }
+
+  abort() {
+    this.tplModalButtonLoading = true;
+    this.invoiceService.check(this.taskId, false, this.checkComment, {}).subscribe(data => {
+      this.tplModalButtonLoading = false;
+      this.message.create('success', '提交成功');
+      this.tplModal.close();
+      this.backToMyTaskList();
+    }, err => {
+      this.tplModalButtonLoading = false;
+      this.tplModal.close();
+      this.message.create('error', '提交失败');
+    });
+  }
+
+  cancelAbort() {
+    if (this.tplModal) {
+      this.tplModal.close();
+    }
   }
 
   submitForm = ($event, value) => {
@@ -97,7 +109,7 @@ export class FinanceHandleComponent implements OnInit {
       }
     }
     this.isLoading = true;
-    this.invoiceService.check(this.taskId, true, value).subscribe(data => {
+    this.invoiceService.check(this.taskId, true, '', value).subscribe(data => {
       this.isLoading = false;
       this.message.create('success', '提交成功');
       this.backToMyTaskList();
