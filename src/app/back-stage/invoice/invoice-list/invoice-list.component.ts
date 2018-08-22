@@ -7,6 +7,7 @@ import { Paging } from '../../../shared/paging';
 import { environment } from '../../../../environments/environment';
 import { Invoice } from '../../../model-interface/entities';
 import { InvoiceService } from '../../../model-interface/invoice.service';
+import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-invoice-list',
@@ -19,22 +20,35 @@ export class InvoiceListComponent implements OnInit, OnDestroy {
   loading = false;
 
   withRefresh = false;
-  private searchText$ = new Subject<string>();
-  private queryResult$: Observable<Paging<Invoice>| Paging<{}>>;
+  private searchText$: Subject<string>;
   private subscription: Subscription;
 
   constructor(
     private invoiceService: InvoiceService,
     private securityService: SecurityService,
-    private router: Router,
+    private router: Router
   ) { }
 
   ngOnInit() {
     this.securityService.refresh();
     this.page.pageNumber = 0;
     this.loadData();
+    this.createQueryStream();
+  }
 
-    this.queryResult$ = this.searchText$.pipe(
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  createQueryStream = () => {
+    if (this.searchText$) {
+      this.searchText$.complete();
+    }
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+    this.searchText$ = new Subject<string>();
+    this.subscription = this.searchText$.pipe(
       debounceTime(1000),
       distinctUntilChanged(),
       tap(query => this.query = query),
@@ -43,18 +57,13 @@ export class InvoiceListComponent implements OnInit, OnDestroy {
         return this.invoiceService.search({query: query, pageNumber: this.page.pageNumber});
       }),
       catchError(err => {
-        this.loading = true;
+        this.loading = false;
         return of(new Paging());
       }),
-    );
-    this.subscription = this.queryResult$.subscribe((page: Paging<Invoice>) => {
+    ).subscribe((page: Paging<Invoice>) => {
       this.loading = false;
       this.page = page;
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    }, console.log, this.createQueryStream);
   }
 
   keyupSearch(query: string) {

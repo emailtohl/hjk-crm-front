@@ -21,7 +21,6 @@ export class UserListComponent implements OnInit, OnDestroy {
 
   withRefresh = false;
   private searchText$ = new Subject<string>();
-  private queryResult$: Observable<Paging<User>| Paging<{}>>;
   private subscription: Subscription;
 
   constructor(
@@ -36,8 +35,21 @@ export class UserListComponent implements OnInit, OnDestroy {
     this.securityService.refresh();
     this.page.pageNumber = 0;
     this.loadData();
+    this.createQueryStream();
+  }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
-    this.queryResult$ = this.searchText$.pipe(
+  createQueryStream = () => {
+    if (this.searchText$) {
+      this.searchText$.complete();
+    }
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+    this.searchText$ = new Subject<string>();
+    this.subscription = this.searchText$.pipe(
       debounceTime(1000),
       distinctUntilChanged(),
       tap(query => this.query = query),
@@ -46,17 +58,13 @@ export class UserListComponent implements OnInit, OnDestroy {
         return this.userService.search({query: query, pageNumber: this.page.pageNumber});
       }),
       catchError(err => {
-        this.loading = true;
+        this.loading = false;
         return of(new Paging());
       }),
-    );
-    this.subscription = this.queryResult$.subscribe((page: Paging<User>) => {
+    ).subscribe((page: Paging<User>) => {
       this.loading = false;
       this.page = page;
-    });
-  }
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    }, console.log, this.createQueryStream);
   }
 
   keyupSearch(query: string) {
