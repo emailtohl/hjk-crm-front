@@ -1,3 +1,8 @@
-<nz-carousel nzAutoPlay>
-  <div nz-carousel-content *ngFor="let index of array"><h3>{{index}}</h3></div>
-</nz-carousel>
+<nz-breadcrumb style="margin-bottom:16px;">
+  <nz-breadcrumb-item>首页</nz-breadcrumb-item>
+</nz-breadcrumb>
+<div style="padding:24px; background: #fff; min-height: 360px;">
+  <nz-carousel nzAutoPlay>
+    <div nz-carousel-content *ngFor="let index of array"><h3>{{index}}</h3></div>
+  </nz-carousel>
+</div>
