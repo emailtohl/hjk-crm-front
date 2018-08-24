@@ -21,7 +21,7 @@
         <span>记住</span>
       </label>
       <!-- <a class="login-form-forgot" class="login-form-forgot">Forgot password</a> -->
-      <button nz-button class="login-form-button" [nzType]="'primary'">登录</button>
+      <button nz-button class="login-form-button" [nzType]="'primary'" [nzLoading]="isLoading">登录</button>
       或
       <a routerLink="/register">注册账号!</a>
     </nz-form-control>

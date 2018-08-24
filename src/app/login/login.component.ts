@@ -20,6 +20,7 @@ import { SecurityService } from '../shared/security.service';
 })
 export class LoginComponent implements OnInit {
   validateForm: FormGroup;
+  isLoading = false;
 
   constructor(
     private fb: FormBuilder,
@@ -50,16 +51,16 @@ export class LoginComponent implements OnInit {
     const email = this.validateForm.value.email;
     const password = this.validateForm.value.password;
     const body = `email=${email}&password=${password}&${SecurityService.csrf.parameterName}=${SecurityService.csrf.token}`;
-    this.http.post(url, body, { headers: headers }).subscribe((resp: Principal) => {
-      // 后台在登录后可能会切换sessionId
-      this.securityService.refresh();
 
+    this.isLoading = true;
+    this.http.post(url, body, { headers: headers }).subscribe((resp: Principal) => {
       if (resp.authorities.length > 1 // 若有多个角色，那么肯定是内部人员
         || (resp.authorities.length === 1 && resp.authorities[0].authority !== 'CUSTOMER')) {
         this.router.navigate(['back']);
       } else {
         this.router.navigate(['service']);
       }
+      this.isLoading = false;
     }, err => {
       // console.log(err);
       if (err.error && err.error.error === 'Not Found') {
@@ -68,6 +69,7 @@ export class LoginComponent implements OnInit {
         this.message.create('error', `登录失败`);
         this.securityService.refresh();
       }
+      this.isLoading = false;
     });
   }
 }
