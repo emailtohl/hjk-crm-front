@@ -36,7 +36,16 @@ export class OrganizationService {
   }
 
   public myRegisterOrganization(): Observable<Array<Organization>> {
-    return this.httpClient.get<Array<Organization>>(`${environment.SERVER_URL}/organization/myRegisterOrganization`);
+    return this.httpClient.get<Array<Organization>>(`${environment.SERVER_URL}/organization/myRegisterOrganizations`);
+  }
+
+  public getMyRelationshipOrganizations(): Observable<Array<Organization>> {
+    return this.httpClient.get<Array<Organization>>(`${environment.SERVER_URL}/organization/myRelationshipOrganizations`);
+  }
+
+  public createRelationship(organizationId: number, stakeholderIds: Array<number>): Observable<void> {
+    return this.httpClient.post<void>(`${environment.SERVER_URL}/organization/relationship`,
+      { organizationId: organizationId, stakeholderIds: stakeholderIds });
   }
 
   public delete(id: number): Observable<void> {

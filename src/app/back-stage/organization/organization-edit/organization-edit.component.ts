@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
+  FormArray,
   Validators
 } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -12,7 +13,7 @@ import { NzMessageService, UploadFile } from 'ng-zorro-antd';
 import { environment } from '../../../../environments/environment';
 import { Observable, of } from 'rxjs';
 import { OrganizationService } from '../../../model-interface/organization.service';
-import { Organization } from '../../../model-interface/entities';
+import { Organization, User } from '../../../model-interface/entities';
 
 @Component({
   selector: 'app-organization-edit',
@@ -29,6 +30,8 @@ export class OrganizationEditComponent implements OnInit {
   previewImage = '';
   previewVisible = false;
   isLoading = false;
+  selectedUserIds: Array<number> = [];
+  userList: Array<User> = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -69,6 +72,7 @@ export class OrganizationEditComponent implements OnInit {
       deliveryAddress: [''],
       remark: [''],
       receiver: [''],
+      stakeholders: this.fb.array([])
     });
     this.organizationService.getDetail(this.id).subscribe((data: Organization) => {
       this.ignoreTaxNumber = data.taxNumber;
@@ -85,6 +89,14 @@ export class OrganizationEditComponent implements OnInit {
         deliveryAddress: data.deliveryAddress,
         remark: data.remark,
         receiver: data.receiver
+      });
+      const stakeholders = this.validateForm.get('stakeholders') as FormArray;
+      data.stakeholders.forEach(u => {
+        this.selectedUserIds.push(u.id);
+        this.userList.push(u);
+        stakeholders.push(this.fb.group({
+          id: [u.id, [Validators.required]],
+        }));
       });
     });
   }
@@ -110,6 +122,18 @@ export class OrganizationEditComponent implements OnInit {
       this.message.create('warning', '该文件删除失败');
       return false;
     }
+  }
+
+  relationShipChanged(ids: Array<number>) {
+    this.selectedUserIds = ids;
+    const stakeholders = this.validateForm.get('stakeholders') as FormArray;
+    const length = stakeholders.length;
+    for (let i = 0; i < length; i++) {
+      stakeholders.removeAt(0);
+    }
+    ids.forEach(id => stakeholders.push(this.fb.group({
+      id: [id, [Validators.required]],
+    })));
   }
 
   submitForm = ($event, value) => {

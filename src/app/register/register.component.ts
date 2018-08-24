@@ -7,12 +7,12 @@ import {
 } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Group, User } from '../shared/entities';
 import { NzMessageService } from 'ng-zorro-antd';
 import { InitData } from '../shared/init.data';
 import { debouncedAsyncValidator } from '../shared/debouncedAsyncValidator';
 import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import { Group, User } from '../model-interface/entities';
 
 
 @Component({
@@ -68,10 +68,9 @@ export class RegisterComponent implements OnInit {
     this.isLoading = true;
     this.httpClient.post(`${environment.SERVER_URL}/users`, this.validateForm.value)
     .subscribe((data: User) => {
-      const b = data.groups.every(g => g === 'CUSTOMER');
       this.isLoading = false;
       this.message.create('success', '账号注册成功');
-      if (b) {
+      if (data.groups.has('CUSTOMER')) {
         this.router.navigate(['service']);
       } else {
         this.router.navigate(['back']);

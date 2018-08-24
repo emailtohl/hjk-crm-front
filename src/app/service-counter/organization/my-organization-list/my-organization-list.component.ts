@@ -25,7 +25,7 @@ export class MyOrganizationListComponent implements OnInit {
   }
 
   loadData() {
-    this.organizationService.myRegisterOrganization().subscribe(data => {
+    this.organizationService.getMyRelationshipOrganizations().subscribe(data => {
       this.dataSet = data;
     });
   }

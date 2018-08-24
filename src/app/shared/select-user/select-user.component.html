@@ -1,0 +1,9 @@
+<nz-select style="width: 100%;" nzMode="multiple" [ngModel]="selectedUserIds" (ngModelChange)="selectedChange($event)" nzPlaceHolder="选择用户" nzAllowClear nzShowSearch
+  [nzServerSearch]="true" (nzOnSearch)="onSearch($event)">
+  <ng-container *ngFor="let u of userList">
+    <nz-option *ngIf="!isLoading" [nzValue]="u.id" [nzLabel]="u.email"></nz-option>
+  </ng-container>
+  <nz-option *ngIf="isLoading" nzDisabled nzCustomContent>
+    <i class="anticon anticon-loading anticon-spin loading-icon"></i> 加载数据...
+  </nz-option>
+</nz-select>

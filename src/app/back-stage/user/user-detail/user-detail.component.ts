@@ -4,7 +4,7 @@ import { NzMessageService, NzModalService, NzModalRef } from 'ng-zorro-antd';
 import { environment } from '../../../../environments/environment';
 import { User } from '../../../model-interface/entities';
 import { SecurityService } from '../../../shared/security.service';
-import { Principal, Flow } from '../../../shared/entities';
+import { Principal } from '../../../shared/entities';
 import { UserService } from '../../../model-interface/user.service';
 import { InitData } from '../../../shared/init.data';
 

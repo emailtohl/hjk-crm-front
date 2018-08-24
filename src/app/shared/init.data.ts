@@ -5,9 +5,10 @@
 import { Injectable } from '@angular/core';
 import { zip } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Csrf, Group } from './entities';
+import { Csrf } from './entities';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { Group } from '../model-interface/entities';
 
 @Injectable()
 export class InitData {

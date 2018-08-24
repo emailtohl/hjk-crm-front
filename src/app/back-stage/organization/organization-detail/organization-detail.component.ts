@@ -3,9 +3,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { NzMessageService, NzModalService, NzModalRef } from 'ng-zorro-antd';
 import { environment } from '../../../../environments/environment';
 import { OrganizationService } from '../../../model-interface/organization.service';
-import { Organization } from '../../../model-interface/entities';
+import { Organization, Flow } from '../../../model-interface/entities';
 import { SecurityService } from '../../../shared/security.service';
-import { Principal, Flow } from '../../../shared/entities';
+import { Principal } from '../../../shared/entities';
 
 @Component({
   selector: 'app-organization-detail',
@@ -52,6 +52,13 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
     this.organizationService.getOrganization(this.businessKey).subscribe((data: Organization) => {
       this.data = data;
     });
+  }
+
+  stakeholdersToString(): string {
+    if (!this.data || !(this.data.stakeholders instanceof Array)) {
+      return '';
+    }
+    return this.data.stakeholders.map(u => u.name).join(',');
   }
 
   getCurrent(flow: Flow): number {

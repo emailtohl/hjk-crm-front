@@ -1,4 +1,15 @@
-import { Flow, BaseEntity } from '../shared/entities';
+export class BaseEntity {
+    public id: number;
+    public createDate: string;
+    public modifyDate: string;
+    public version: number;
+}
+
+export class Group {
+    public id: string;
+    public name: string;
+    public type: string;
+}
 
 export class User extends BaseEntity {
     // 身份类型
@@ -29,8 +40,61 @@ export class User extends BaseEntity {
     public description: string;
     public groups = new Set<string>();
 }
+export class Check {
+    // 所处节点
+    public taskDefinitionKey: string;
+    // 所审核的任务名
+    public taskName: string;
+    // 审核人id
+    public checkerId: string;
+    // 审核是否通过
+    public checkApproved: boolean;
+    // 审核意见
+    public checkComment: string;
+    // 审核时间
+    public checkTime: string;
+}
+
+export class Flow {
+    // 业务主键
+    public businessKey: string;
+    // 关联Activiti的流程id
+    public processInstanceId: string;
+    // 表单号
+    public flowNum: string;
+    // 流程类型
+    public flowType: string;
+    // 申请人id
+    public applyUserId: string;
+    // 申请人姓名
+    public applyUserName: string;
+    // 历史的审核信息
+    public checks: Array<Check> = [];
+    // 是否成功完成还是终止
+    public pass: Boolean;
+
+    /* 下面与过程中的状态有关，不做存储 */
+    // 当前任务id
+    public taskId: string;
+    // 任务的名字
+    public taskName: string;
+    // 当前任务签收人id
+    public taskAssignee: string;
+    // 当前任务签收人名字
+    public taskAssigneeName: string;
+    // 当前所在的活动id
+    public taskDefinitionKey: string;
+    // 下一个活动id
+    public nextActivityId: string;
+    // 下一个活动id
+    public nextActivityName: string;
+}
 
 export class Organization extends BaseEntity {
+    // 创建人ID
+    creatorId: string;
+    // 创建人姓名
+    creatorName: string;
     // 公司名
     name: string;
     // 税号
@@ -50,13 +114,15 @@ export class Organization extends BaseEntity {
     // 收票地址，若不填写，则取公司所在地址
     deliveryAddress: string;
     // 上传的凭证
-    credentials: Array<any>;
+    credentials: Array<any> = [];
     // 备注
     remark: string;
     // 对接市场人员
     receiver: string;
     // 是否通过审批
     pass: boolean;
+    // 干系人，他们都可以使用本公司信息
+    stakeholders: Array<User> = [];
 
     // 与流程相关的信息
     flows: Array<Flow> = [];
@@ -81,7 +147,7 @@ export class Invoice extends BaseEntity {
     // 明细
     public detail: string;
 
-    // 下面有开票人填写
+    // 下面由开票人填写
     // 开票时间
     public ticketTime: string;
     // 开票内容
@@ -89,6 +155,8 @@ export class Invoice extends BaseEntity {
     // 发票编号
     public invoiceNumber: string;
 
+    // 快递时间
+    public expressTime: string;
     // 快递公司
     public expressCompany: string;
     // 快递单号

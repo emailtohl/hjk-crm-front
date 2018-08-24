@@ -6,9 +6,10 @@ import { HttpInterceptorImpl } from './httpInterceptorImpl';
 import { InitData } from './init.data';
 import { BooleanPipe } from './boolean.pipe';
 import { IconPipe } from './icon.pipe';
-import { UpdateMyPasswordComponent } from './update-my-password/update-my-password.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ScrollDirective } from './scroll.directive';
+import { UpdateMyPasswordComponent } from './update-my-password/update-my-password.component';
+import { SelectUserComponent } from './select-user/select-user.component';
 
 export function InitDataFactory(initData: InitData): Function {
   return () => initData.load();
@@ -26,8 +27,20 @@ export function InitDataFactory(initData: InitData): Function {
     InitData,
     { provide: APP_INITIALIZER, useFactory: InitDataFactory, deps: [InitData], multi: true },
   ],
-  declarations: [ BooleanPipe, IconPipe, UpdateMyPasswordComponent, ScrollDirective ],
-  entryComponents: [UpdateMyPasswordComponent],
-  exports: [BooleanPipe, IconPipe, UpdateMyPasswordComponent, ScrollDirective]
+  declarations: [
+    BooleanPipe,
+    IconPipe,
+    ScrollDirective,
+    UpdateMyPasswordComponent,
+    SelectUserComponent
+  ],
+  entryComponents: [UpdateMyPasswordComponent, SelectUserComponent],
+  exports: [
+    BooleanPipe,
+    IconPipe,
+    ScrollDirective,
+    UpdateMyPasswordComponent,
+    SelectUserComponent
+  ]
 })
 export class SharedModule { }

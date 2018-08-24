@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Flow } from '../../shared/entities';
+import { Flow } from '../../model-interface/entities';
 
 @Component({
   selector: 'app-my-task',

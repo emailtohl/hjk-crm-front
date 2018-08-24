@@ -17,6 +17,10 @@ export class UserService {
     return this.httpClient.get<Paging<User>>(`${environment.SERVER_URL}/users/search`, { params: params });
   }
 
+  public allUsers(): Observable<Array<User>> {
+    return this.httpClient.get<Array<User>>(`${environment.SERVER_URL}/users/allUsers`);
+  }
+
   public delete(id: number): Observable<void> {
     return this.httpClient.delete<void>(`${environment.SERVER_URL}/users/${id}`);
   }

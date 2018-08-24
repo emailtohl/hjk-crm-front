@@ -30,7 +30,7 @@ export class MyInvoiceApplyComponent implements OnInit {
     private message: NzMessageService
   ) {
     securityService.refresh();
-    organizationService.myRegisterOrganization().subscribe((data: Array<Organization>) => {
+    organizationService.getMyRelationshipOrganizations().subscribe((data: Array<Organization>) => {
       this.organizations = data.filter(organization => organization.pass);
     });
     this.validateForm = this.fb.group({

@@ -25,7 +25,11 @@
       <div nz-row style="margin-top: 20px;">
         <div nz-col nzSpan="6"><b>客户源</b><span>{{data?.receiver}}</span></div>
         <div nz-col nzSpan="6"><b>是否有效</b><span>{{data?.pass | booleanPipe}}</span></div>
-        <div nz-col nzSpan="12"><b>备注</b><span>{{data?.remark}}</span></div>
+        <div nz-col nzSpan="6"><b>创建者</b><span>{{data?.creatorName}}</span></div>
+        <div nz-col nzSpan="6"><b>备注</b><span>{{data?.remark}}</span></div>
+      </div>
+      <div nz-row style="margin-top: 20px;">
+        <div nz-col nzSpan="12"><b>干系人</b><span>{{stakeholdersToString()}}</span></div>
       </div>
     </nz-card>
     
