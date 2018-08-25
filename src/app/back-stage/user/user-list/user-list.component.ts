@@ -55,7 +55,7 @@ export class UserListComponent implements OnInit, OnDestroy {
       tap(query => this.query = query),
       switchMap(query => {
         this.loading = true;
-        return this.userService.search({query: query, pageNumber: this.page.pageNumber});
+        return this.userService.search({query: query, page: this.page.pageNumber});
       }),
       catchError(err => {
         this.loading = false;
@@ -71,9 +71,9 @@ export class UserListComponent implements OnInit, OnDestroy {
     this.searchText$.next(query);
   }
 
-  loadData() {
+  loadData(page: number = 1) {
     this.loading = true;
-    this.userService.search({query: this.query, pageNumber: this.page.pageNumber}).subscribe(data => {
+    this.userService.search({query: this.query, page: page - 1}).subscribe(data => {
       this.page = data;
       this.loading = false;
     }, err => this.loading = false);

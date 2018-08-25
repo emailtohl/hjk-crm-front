@@ -16,7 +16,7 @@
       </div>
     </div>
     <nz-table #basicTable [nzData]="page.content" [nzFrontPagination]="false" [nzTotal]="page.totalElements"
-    [nzPageIndex]="page.pageNumber + 1" [nzPageSize]="page.pageSize" [nzLoading]="loading" (nzPageSizeChange)="loadData()">
+    [nzPageIndex]="page.pageNumber + 1" (nzPageIndexChange)="loadData($event)" [nzPageSize]="page.pageSize" [nzLoading]="loading">
       <thead>
         <tr>
           <th>用户姓名</th>

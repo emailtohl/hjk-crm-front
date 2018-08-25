@@ -18,6 +18,7 @@ export class OrganizationListComponent implements OnInit, OnDestroy {
   query = '';
   page: Paging<Organization> = new Paging();
   loading = false;
+  importUrl = `${environment.SERVER_URL}/organization/batchCreate`;
 
   withRefresh = false;
   private searchText$ = new Subject<string>();
@@ -56,7 +57,7 @@ export class OrganizationListComponent implements OnInit, OnDestroy {
       tap(query => this.query = query),
       switchMap(query => {
         this.loading = true;
-        return this.organizationService.search({query: query, pageNumber: this.page.pageNumber});
+        return this.organizationService.search({query: query, page: this.page.pageNumber});
       }),
       catchError(err => {
         this.loading = false;
@@ -72,9 +73,9 @@ export class OrganizationListComponent implements OnInit, OnDestroy {
     this.searchText$.next(query);
   }
 
-  loadData() {
+  loadData(pageIndex: number = 1) {
     this.loading = true;
-    this.organizationService.search({query: this.query, pageNumber: this.page.pageNumber}).subscribe(data => {
+    this.organizationService.search({query: this.query, page: pageIndex - 1}).subscribe(data => {
       this.page = data;
       this.loading = false;
     }, err => this.loading = false);
@@ -109,4 +110,5 @@ export class OrganizationListComponent implements OnInit, OnDestroy {
   exportExcel() {
     window.open(`${environment.SERVER_URL}/organization/export`);
   }
+
 }

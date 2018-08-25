@@ -21,8 +21,8 @@ export class InvoiceService {
     return this.httpClient.post<Invoice>(`${environment.SERVER_URL}/invoice/start`, invoice);
   }
 
-  public search(param: { query: string, pageNumber: number }): Observable<Paging<Invoice>> {
-    const params: HttpParams = new HttpParams().set('query', param.query).set('pageNumber', `${param.pageNumber}`);
+  public search(param: { query: string, page: number }): Observable<Paging<Invoice>> {
+    const params: HttpParams = new HttpParams().set('query', param.query).set('page', `${param.page}`);
     return this.httpClient.get<Paging<Invoice>>(`${environment.SERVER_URL}/invoice/search`, { params: params });
   }
 
