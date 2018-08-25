@@ -38,7 +38,7 @@ export class User extends BaseEntity {
     public gender: string;
     public image: { id: number };
     public description: string;
-    public groups = new Set<string>();
+    public groups = new Array<string>();
 }
 export class Check {
     // 所处节点

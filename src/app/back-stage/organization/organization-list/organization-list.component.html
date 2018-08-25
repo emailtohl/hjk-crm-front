@@ -8,7 +8,7 @@
       <button nz-button nzType="primary" (click)="exportExcel()"><i class="anticon anticon-download"></i>导出Excel</button>
     </div>
     <div nz-col nzSpan="8">
-      <nz-upload nzAction="{{importUrl}}">
+      <nz-upload nzAction="{{importUrl}}" (nzChange)="uploadChange($event)">
         <button nz-button>
           <i class="anticon anticon-upload"></i>
           <span>导入Excel</span>

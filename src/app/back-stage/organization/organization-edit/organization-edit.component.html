@@ -1,8 +1,10 @@
 <nz-breadcrumb style="margin-bottom:16px;">
     <nz-breadcrumb-item>公司信息</nz-breadcrumb-item>
+    <nz-breadcrumb-item><a [routerLink]="['/back/organization/list']">列表</a></nz-breadcrumb-item>
+    <nz-breadcrumb-item><a [routerLink]="['/back/organization/detail/businessKey', id, 'taskId', 0]">详情</a></nz-breadcrumb-item>
     <nz-breadcrumb-item>编辑</nz-breadcrumb-item>
   </nz-breadcrumb>
-  <div style="padding:24px; background: #fff; min-height: 360px;">
+  <div style="padding:24px; background: #fff; min-height: 360px;" appScroll>
     <div nz-row>
       <div nz-col nzOffset="4">
         <nz-upload nzAction="{{uploadUrl}}" nzListType="picture-card" [(nzFileList)]="fileList" [nzShowButton]="fileList.length < 3"
@@ -143,10 +145,10 @@
           <app-select-user [userList]="userList" [selectedUserIds]="selectedUserIds" (selectedUserIdsChange)="relationShipChanged($event)"></app-select-user>
         </nz-form-control>
       </nz-form-item>
-      <nz-form-item>
+      <nz-form-item style="margin-top: 50px;">
         <nz-form-control [nzOffset]="7" [nzSpan]="12">
           <button nz-button nzType="primary" [disabled]="!validateForm.valid" [nzLoading]="isLoading">提交</button>
-          <button nz-button (click)="resetForm($event)">重置</button>
+          <button nz-button (click)="resetForm($event)" style="margin-left: 120px;">重置</button>
         </nz-form-control>
       </nz-form-item>
     </form>

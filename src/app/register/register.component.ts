@@ -36,7 +36,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
-      email: [null, [Validators.email], [debouncedAsyncValidator(v => {
+      email: [null, [Validators.required, Validators.email], [debouncedAsyncValidator(v => {
         return this.httpClient.get<boolean>(`${environment.SERVER_URL}/users/isEmailExist?email=${v}`).pipe(
           map((b: boolean) => b ? { error: true, duplicated: true } : null),
         );
@@ -70,14 +70,14 @@ export class RegisterComponent implements OnInit {
     .subscribe((data: User) => {
       this.isLoading = false;
       this.message.create('success', '账号注册成功');
-      if (data.groups.has('CUSTOMER')) {
+      if (data.groups.includes('CUSTOMER')) {
         this.router.navigate(['service']);
       } else {
         this.router.navigate(['back']);
       }
     }, err => {
       this.isLoading = false;
-      this.message.create('error', `注册失败`);
+      this.message.create('error', `注册失败，请重试`);
     });
   }
 

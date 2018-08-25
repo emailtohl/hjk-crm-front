@@ -1,5 +1,6 @@
 <nz-breadcrumb style="margin-bottom:16px;">
   <nz-breadcrumb-item>公司信息</nz-breadcrumb-item>
+  <nz-breadcrumb-item><a [routerLink]="['/back/organization/list']">列表</a></nz-breadcrumb-item>
   <nz-breadcrumb-item>详情</nz-breadcrumb-item>
 </nz-breadcrumb>
 <div style="padding:24px; background: #fff; min-height: 360px;" appScroll>
@@ -66,7 +67,7 @@
     </div>
     <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 8, xl: 8, xxl: 8 }" style="margin-top: 20px;">
       <div nz-col nzSpan="12"><b>流程状态</b><span>{{x.taskName}}</span></div>
-      <div nz-col nzSpan="12"><b>处理人</b><span>{{x.taskAssigneeName ? x.taskAssigneeName : '无'}}</span></div>
+      <div nz-col nzSpan="12"><b>处理人</b><span style="color:green">{{x.taskAssigneeName ? x.taskAssigneeName : '无'}}</span></div>
     </div>
     <nz-divider nzText="检查历史" nzOrientation="left" style="margin-top: 20px;"></nz-divider>
     <nz-list [nzDataSource]="x.checks" [nzRenderItem]="item" [nzItemLayout]="'horizontal'">

@@ -13,7 +13,7 @@ export class UserService {
   constructor(private httpClient: HttpClient) { }
 
   public search(param: {query: string, page: number}): Observable<Paging<User>> {
-    const params: HttpParams = new HttpParams().set('query', param.query).set('page', `${param.page}`);
+    const params: HttpParams = new HttpParams().set('query', param.query).set('page', `${param.page}`).set('size', '5');
     return this.httpClient.get<Paging<User>>(`${environment.SERVER_URL}/users/search`, { params: params });
   }
 

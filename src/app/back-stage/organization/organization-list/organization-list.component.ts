@@ -111,4 +111,11 @@ export class OrganizationListComponent implements OnInit, OnDestroy {
     window.open(`${environment.SERVER_URL}/organization/export`);
   }
 
+  uploadChange(event) {
+    if (event.type !== 'success') {
+      return;
+    }
+    this.message.create('success', `创建条目${event.file && event.file.response && event.file.response.count}`);
+    this.loadData();
+  }
 }

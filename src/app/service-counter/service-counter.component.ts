@@ -39,7 +39,10 @@ export class ServiceCounterComponent implements OnInit {
   }
 
   logout() {
-    this.securityService.logout().subscribe(data => this.router.navigate(['login']));
+    this.securityService.logout().subscribe(data => {
+      this.router.navigate(['login']);
+      this.securityService.refresh();
+    });
   }
 
   openUpdateMyPasswordModal() {

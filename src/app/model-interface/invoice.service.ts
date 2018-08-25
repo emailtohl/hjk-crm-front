@@ -22,7 +22,7 @@ export class InvoiceService {
   }
 
   public search(param: { query: string, page: number }): Observable<Paging<Invoice>> {
-    const params: HttpParams = new HttpParams().set('query', param.query).set('page', `${param.page}`);
+    const params: HttpParams = new HttpParams().set('query', param.query).set('page', `${param.page}`).set('size', '5');
     return this.httpClient.get<Paging<Invoice>>(`${environment.SERVER_URL}/invoice/search`, { params: params });
   }
 

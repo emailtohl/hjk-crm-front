@@ -2,7 +2,7 @@
   <nz-breadcrumb-item>开票</nz-breadcrumb-item>
   <nz-breadcrumb-item>新申请</nz-breadcrumb-item>
 </nz-breadcrumb>
-<div style="padding:24px; background: #fff; min-height: 360px;">
+<div style="padding:24px; background: #fff; min-height: 360px;" appScroll>
   <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm($event,validateForm.value)">
     <nz-form-item formGroupName="organization">
       <nz-form-label [nzSpan]="7" nzRequired>选择开票公司</nz-form-label>

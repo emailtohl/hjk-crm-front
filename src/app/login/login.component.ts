@@ -66,7 +66,7 @@ export class LoginComponent implements OnInit {
       if (err.error && err.error.error === 'Not Found') {
         this.router.navigate(['login']);
       } else {
-        this.message.create('error', `登录失败`);
+        this.message.create('error', `登录失败，请重试`);
         this.securityService.refresh();
       }
       this.isLoading = false;

@@ -1,6 +1,7 @@
 <nz-breadcrumb style="margin-bottom:16px;">
   <nz-breadcrumb-item>开票</nz-breadcrumb-item>
-  <nz-breadcrumb-item>流程详情</nz-breadcrumb-item>
+  <nz-breadcrumb-item><a [routerLink]="['/service/invoice/list']">列表</a></nz-breadcrumb-item>
+  <nz-breadcrumb-item>详情</nz-breadcrumb-item>
 </nz-breadcrumb>
 <div style="padding:24px; background: #fff; min-height: 360px;" appScroll>
   <nz-card [nzBordered]="false" nzTitle="申请详情">
@@ -190,7 +191,7 @@
       </div>
       <div nz-col nzSpan="12">
         <b>处理人</b>
-        <span>{{data?.flow?.taskAssigneeName ? data?.flow?.taskAssigneeName : '无'}}</span>
+        <span style="color:green">{{data?.flow?.taskAssigneeName ? data?.flow?.taskAssigneeName : '无'}}</span>
       </div>
     </div>
     <nz-divider nzText="处理历史" nzOrientation="left" style="margin-top: 20px;"></nz-divider>
