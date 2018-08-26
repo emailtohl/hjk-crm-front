@@ -1,7 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, Subject, Subscription, of } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap, tap, catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { environment } from '../../../../environments/environment';
 import { SecurityService } from '../../../shared/security.service';
@@ -14,15 +13,12 @@ import { Paging } from '../../../shared/paging';
   templateUrl: './organization-list.component.html',
   styleUrls: ['./organization-list.component.css']
 })
-export class OrganizationListComponent implements OnInit, OnDestroy {
+export class OrganizationListComponent implements OnInit {
   query = '';
   page: Paging<Organization> = new Paging();
   loading = false;
   importUrl = `${environment.SERVER_URL}/organization/batchCreate`;
-
   withRefresh = false;
-  private searchText$ = new Subject<string>();
-  private subscription: Subscription;
 
   constructor(
     private organizationService: OrganizationService,
@@ -36,41 +32,10 @@ export class OrganizationListComponent implements OnInit, OnDestroy {
     this.securityService.refresh();
     this.page.pageNumber = 0;
     this.loadData();
-    this.createQueryStream();
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
-
-  createQueryStream = () => {
-    if (this.searchText$) {
-      this.searchText$.complete();
-    }
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-    this.searchText$ = new Subject<string>();
-    this.subscription = this.searchText$.pipe(
-      debounceTime(1000),
-      distinctUntilChanged(),
-      tap(query => this.query = query),
-      switchMap(query => {
-        this.loading = true;
-        return this.organizationService.search({query: query, page: this.page.pageNumber});
-      }),
-      catchError(err => {
-        this.loading = false;
-        return of(new Paging());
-      }),
-    ).subscribe((page: Paging<Organization>) => {
-      this.loading = false;
-      this.page = page;
-    }, console.log, this.createQueryStream);
-  }
-
-  keyupSearch(query: string) {
-    this.searchText$.next(query);
+  search = (query: string): Observable<Paging<Organization>> => {
+    return this.organizationService.search({query: query, page: 0});
   }
 
   loadData(pageIndex: number = 1) {

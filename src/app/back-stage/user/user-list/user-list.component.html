@@ -5,14 +5,7 @@
   <div style="padding:24px; background: #fff; min-height: 360px;">
     <div nz-row style="margin-bottom: 20px;">
       <div nz-col nzSpan="8" nzOffset="16">
-        <nz-input-group nzSearch [nzSuffix]="suffixIconButton">
-          <input type="text" nz-input placeholder="搜索" [(ngModel)]="query" (keyup)="keyupSearch($event.target.value)">
-        </nz-input-group>
-        <ng-template #suffixIconButton>
-          <button nz-button nzType="primary" nzSearch (click)="loadData()">
-            <i class="anticon anticon-search"></i>
-          </button>
-        </ng-template>
+        <app-search-input [search]="search" (current)="query = $event" (loading)="loading = $event" (result)="page = $event"></app-search-input>
       </div>
     </div>
     <nz-table #basicTable [nzData]="page.content" [nzFrontPagination]="false" [nzTotal]="page.totalElements"

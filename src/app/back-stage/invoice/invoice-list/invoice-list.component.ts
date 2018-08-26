@@ -1,27 +1,23 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, Subject, Subscription, of } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap, tap, catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { SecurityService } from '../../../shared/security.service';
 import { Paging } from '../../../shared/paging';
 import { environment } from '../../../../environments/environment';
 import { Invoice } from '../../../model-interface/entities';
 import { InvoiceService } from '../../../model-interface/invoice.service';
-import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-invoice-list',
   templateUrl: './invoice-list.component.html',
   styleUrls: ['./invoice-list.component.css']
 })
-export class InvoiceListComponent implements OnInit, OnDestroy {
+export class InvoiceListComponent implements OnInit {
   query = '';
   page: Paging<Invoice> = new Paging();
   loading = false;
 
   withRefresh = false;
-  private searchText$: Subject<string>;
-  private subscription: Subscription;
 
   constructor(
     private invoiceService: InvoiceService,
@@ -33,41 +29,10 @@ export class InvoiceListComponent implements OnInit, OnDestroy {
     this.securityService.refresh();
     this.page.pageNumber = 0;
     this.loadData();
-    this.createQueryStream();
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
-
-  createQueryStream = () => {
-    if (this.searchText$) {
-      this.searchText$.complete();
-    }
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-    this.searchText$ = new Subject<string>();
-    this.subscription = this.searchText$.pipe(
-      debounceTime(1000),
-      distinctUntilChanged(),
-      tap(query => this.query = query),
-      switchMap(query => {
-        this.loading = true;
-        return this.invoiceService.search({query: query, page: this.page.pageNumber});
-      }),
-      catchError(err => {
-        this.loading = false;
-        return of(new Paging());
-      }),
-    ).subscribe((page: Paging<Invoice>) => {
-      this.loading = false;
-      this.page = page;
-    }, console.log, this.createQueryStream);
-  }
-
-  keyupSearch(query: string) {
-    this.searchText$.next(query);
+  search = (query: string): Observable<Paging<Invoice>> => {
+    return this.invoiceService.search({query: query, page: 0});
   }
 
   loadData(page: number = 1) {
@@ -75,7 +40,6 @@ export class InvoiceListComponent implements OnInit, OnDestroy {
     this.invoiceService.search({query: this.query, page: page - 1}).subscribe(data => {
       this.page = data;
       this.loading = false;
-      console.log(data);
     }, err => this.loading = false);
   }
 

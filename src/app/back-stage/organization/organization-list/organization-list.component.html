@@ -16,14 +16,7 @@
       </nz-upload>
     </div>
     <div nz-col nzSpan="8">
-      <nz-input-group nzSearch [nzSuffix]="suffixIconButton">
-        <input type="text" nz-input placeholder="搜索" [(ngModel)]="query" (keyup)="keyupSearch($event.target.value)">
-      </nz-input-group>
-      <ng-template #suffixIconButton>
-        <button nz-button nzType="primary" nzSearch (click)="loadData()">
-          <i class="anticon anticon-search"></i>
-        </button>
-      </ng-template>
+      <app-search-input [search]="search" (current)="query = $event" (loading)="loading = $event" (result)="page = $event"></app-search-input>
     </div>
   </div>
   <nz-table #basicTable [nzData]="page.content" [nzFrontPagination]="false" [nzTotal]="page.totalElements"

@@ -10,6 +10,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ScrollDirective } from './scroll.directive';
 import { UpdateMyPasswordComponent } from './update-my-password/update-my-password.component';
 import { SelectUserComponent } from './select-user/select-user.component';
+import { SearchInputComponent } from './search-input/search-input.component';
 
 export function InitDataFactory(initData: InitData): Function {
   return () => initData.load();
@@ -32,15 +33,21 @@ export function InitDataFactory(initData: InitData): Function {
     IconPipe,
     ScrollDirective,
     UpdateMyPasswordComponent,
-    SelectUserComponent
+    SelectUserComponent,
+    SearchInputComponent
   ],
-  entryComponents: [UpdateMyPasswordComponent, SelectUserComponent],
+  entryComponents: [
+    UpdateMyPasswordComponent,
+    SelectUserComponent,
+    SearchInputComponent
+  ],
   exports: [
     BooleanPipe,
     IconPipe,
     ScrollDirective,
     UpdateMyPasswordComponent,
-    SelectUserComponent
+    SelectUserComponent,
+    SearchInputComponent
   ]
 })
 export class SharedModule { }
