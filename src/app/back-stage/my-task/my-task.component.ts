@@ -11,7 +11,9 @@ import { Flow } from '../../model-interface/entities';
 })
 export class MyTaskComponent implements OnInit {
   todoTasks: Array<Flow> = [];
+  displayTodoTasks: Array<Flow> = [];
   flowTypeMap = new Map().set('ORGANIZATION', '检查公司信息').set('INVOICE', '开票');
+  searchValue = '';
 
   constructor(
     private httpClient: HttpClient,
@@ -21,6 +23,7 @@ export class MyTaskComponent implements OnInit {
   ngOnInit() {
     this.httpClient.get<Array<Flow>>(`${environment.SERVER_URL}/todoTasks`).subscribe((data: Array<Flow>) => {
       this.todoTasks = data;
+      this.displayTodoTasks = [...data];
     });
   }
 
@@ -31,6 +34,14 @@ export class MyTaskComponent implements OnInit {
         break;
         case 'INVOICE':
         this.router.navigate([`/back/invoice/detail/businessKey`, businessKey, 'taskId', taskId]);
+    }
+  }
+
+  search() {
+    if (!this.searchValue) {
+      this.displayTodoTasks = [...this.todoTasks];
+    } else {
+      this.displayTodoTasks = this.todoTasks.filter(item => item.flowNum.toUpperCase().includes(this.searchValue.toUpperCase()));
     }
   }
 }

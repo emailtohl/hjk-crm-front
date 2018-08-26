@@ -3,11 +3,20 @@
   <nz-breadcrumb-item>列表</nz-breadcrumb-item>
 </nz-breadcrumb>
 <div style="padding:24px; background: #fff; min-height: 360px;">
-  <nz-table #basicTable [nzData]="todoTasks">
+  <nz-table #basicTable [nzData]="displayTodoTasks">
     <thead>
       <tr>
         <th>申请人</th>
-        <th>流程号</th>
+        <th>
+          流程号
+          <nz-dropdown nzTrigger="click" [nzClickHide]="false">
+            <i class="anticon anticon-smile-o ant-table-filter-icon" nz-dropdown></i>
+            <div class="custom-filter-dropdown">
+              <input type="text" nz-input placeholder="Search number" [(ngModel)]="searchValue">
+              <button nz-button [nzType]="'primary'" (click)="search()">Search</button>
+            </div>
+          </nz-dropdown>
+        </th>
         <th>类别</th>
         <th>任务名</th>
         <th>创建时间</th>
