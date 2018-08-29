@@ -6,7 +6,7 @@ import { Principal } from '../shared/entities';
 import { InitData } from '../shared/init.data';
 import { SecurityService } from '../shared/security.service';
 import { Router } from '@angular/router';
-import { NzModalService, NzMessageService } from 'ng-zorro-antd';
+import { NzModalService, NzNotificationService } from 'ng-zorro-antd';
 import { UpdateMyPasswordComponent } from '../shared/update-my-password/update-my-password.component';
 import { Subscription, Observable } from 'rxjs';
 
@@ -29,7 +29,7 @@ export class BackStageComponent implements OnInit, OnDestroy {
     private router: Router,
     private modalService: NzModalService,
     private stompService: StompService,
-    private message: NzMessageService
+    private notification: NzNotificationService
   ) {
   }
 
@@ -56,7 +56,7 @@ export class BackStageComponent implements OnInit, OnDestroy {
   /** Consume a message from the _stompService */
   public on_next = (message: Message) => {
     // Log it to the console
-    this.message.info(message.body);
+    this.notification.info('任务提醒', message.body);
   }
 
   isAdmin(): boolean {

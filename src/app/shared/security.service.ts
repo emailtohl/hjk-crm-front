@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { zip, Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { zip, Observable, of } from 'rxjs';
+import { catchError, tap, mergeMap } from 'rxjs/operators';
 import { Csrf, Principal } from './entities';
 import { environment } from '../../environments/environment';
 
@@ -40,12 +40,45 @@ export class SecurityService {
     ;
   }
 
+  /**
+   * 返回csrf令牌
+   */
+  public refreshCsrf(): Observable<Csrf> {
+    return this.http.get<Csrf>(`${environment.SERVER_URL}/csrf`).pipe(
+      tap(csrf => SecurityService.headers[csrf.headerName] = csrf.token),
+      catchError(err => of(new Csrf()))
+    );
+  }
+
+  /**
+   * 获取用户身份
+   */
   public getPrincipal(): Observable<Principal> {
     return this.http.get<Principal>(`${environment.SERVER_URL}/principal`);
   }
 
+  /**
+   * 登录
+   * @param email 识别用户唯一性的邮箱
+   * @param password 登录密码
+   */
+  public login(email, password: string): Observable<Principal> {
+    const headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
+    return this.refreshCsrf().pipe(
+      mergeMap(csrf => {
+        const body = `email=${email}&password=${password}&${csrf.parameterName}=${csrf.token}`;
+        return this.http.post<Principal>(`${environment.SERVER_URL}/login`, body, { headers: headers });
+      })
+    );
+  }
+
+  /**
+   * 登出
+   */
   public logout(): Observable<void> {
-    return this.http.post<void>(`${environment.SERVER_URL}/logout`, {});
+    return this.refreshCsrf().pipe(
+      mergeMap(csrf => this.http.post<void>(`${environment.SERVER_URL}/logout`, {}))
+    );
   }
 
   public updateMyPassword(form: {id: number, oldPassword: string, newPassword: string}): Observable<void> {

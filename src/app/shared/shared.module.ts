@@ -34,7 +34,7 @@ export function InitDataFactory(initData: InitData): Function {
     ScrollDirective,
     UpdateMyPasswordComponent,
     SelectUserComponent,
-    SearchInputComponent
+    SearchInputComponent,
   ],
   entryComponents: [
     UpdateMyPasswordComponent,

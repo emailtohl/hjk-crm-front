@@ -3,14 +3,10 @@ import {
   FormBuilder,
   FormGroup,
   Validators,
-  FormControl
 } from '@angular/forms';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd';
-import { Principal, Csrf } from '../shared/entities';
-import { environment } from '../../environments/environment';
-import { InitData } from '../shared/init.data';
+import { Principal } from '../shared/entities';
 import { SecurityService } from '../shared/security.service';
 
 @Component({
@@ -24,14 +20,12 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient,
     private router: Router,
     private message: NzMessageService,
     private securityService: SecurityService,
   ) { }
 
   ngOnInit(): void {
-    this.securityService.refresh();
     this.validateForm = this.fb.group({
       email: [null, [Validators.required]],
       password: [null, [Validators.required]],
@@ -46,14 +40,11 @@ export class LoginComponent implements OnInit {
         this.validateForm.controls[i].updateValueAndValidity();
       }
     }
-    const url = `${environment.SERVER_URL}/login`;
-    const headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
     const email = this.validateForm.value.email;
     const password = this.validateForm.value.password;
-    const body = `email=${email}&password=${password}&${SecurityService.csrf.parameterName}=${SecurityService.csrf.token}`;
 
     this.isLoading = true;
-    this.http.post(url, body, { headers: headers }).subscribe((resp: Principal) => {
+    this.securityService.login(email, password).subscribe((resp: Principal) => {
       if (resp.authorities.length > 1 // 若有多个角色，那么肯定是内部人员
         || (resp.authorities.length === 1 && resp.authorities[0].authority !== 'CUSTOMER')) {
         this.router.navigate(['back']);

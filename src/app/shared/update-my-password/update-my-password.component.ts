@@ -4,11 +4,10 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
-  ValidationErrors,
   Validators
 } from '@angular/forms';
+import { environment } from '../../../environments/environment';
 import { SecurityService } from '../security.service';
-import { Principal } from '../entities';
 import { NzMessageService, NzModalRef } from 'ng-zorro-antd';
 
 @Component({
@@ -19,6 +18,7 @@ import { NzMessageService, NzModalRef } from 'ng-zorro-antd';
 export class UpdateMyPasswordComponent implements OnInit {
   @Input()
   id: number;
+  uploadPicture;
   validateForm: FormGroup;
   isLoading = false;
 
@@ -32,6 +32,7 @@ export class UpdateMyPasswordComponent implements OnInit {
 
   ngOnInit() {
     this.securityService.refresh();
+    this.uploadPicture = `${environment.SERVER_URL}/users/uploadPicture/${this.id}?d=${new Date().getTime()}`;
     this.validateForm = this.fb.group({
       id: [this.id, [Validators.required]],
       oldPassword: ['', [Validators.required]],
@@ -85,6 +86,14 @@ export class UpdateMyPasswordComponent implements OnInit {
       return { required: true };
     } else if (control.value !== this.validateForm.controls.newPassword.value) {
       return { confirm: true, error: true };
+    }
+  }
+
+  handleChange(event) {
+    console.log(event);
+    if (event.type === 'success') {
+      this.message.success('上传成功');
+      this.uploadPicture = `${environment.SERVER_URL}/users/uploadPicture/${this.id}?d=${new Date().getTime()}`;
     }
   }
 
