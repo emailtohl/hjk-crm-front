@@ -5,14 +5,13 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd';
 import { InitData } from '../shared/init.data';
 import { debouncedAsyncValidator } from '../shared/debouncedAsyncValidator';
 import { map } from 'rxjs/operators';
-import { environment } from '../../environments/environment';
 import { Group, User } from '../model-interface/entities';
+import { SecurityService } from '../shared/security.service';
 
 
 @Component({
@@ -27,7 +26,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private httpClient: HttpClient,
+    private securityService: SecurityService,
     private router: Router,
     private message: NzMessageService,
   ) {
@@ -36,8 +35,8 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
-      email: [null, [Validators.required, Validators.email], [debouncedAsyncValidator(v => {
-        return this.httpClient.get<boolean>(`${environment.SERVER_URL}/users/isEmailExist?email=${v}`).pipe(
+      email: [null, [Validators.required, Validators.email], [debouncedAsyncValidator((v: string) => {
+        return this.securityService.emailIsExist(v).pipe(
           map((b: boolean) => b ? { error: true, duplicated: true } : null),
         );
       })]],
@@ -47,8 +46,8 @@ export class RegisterComponent implements OnInit {
       groups: [[]],
       name: [null],
       cellPhonePrefix: ['+86'],
-      cellPhone: [null, [this.cellPhoneValidator], [debouncedAsyncValidator(v => {
-        return this.httpClient.get<boolean>(`${environment.SERVER_URL}/users/isCellPhoneExist?cellPhone=${v}`).pipe(
+      cellPhone: [null, [this.cellPhoneValidator], [debouncedAsyncValidator((v: string) => {
+        return this.securityService.cellPhoneIsExist(v).pipe(
           map((b: boolean) => b ? { error: true, duplicated: true } : null),
         );
       })]],
@@ -66,7 +65,7 @@ export class RegisterComponent implements OnInit {
     const group = this.validateForm.controls.group.value;
     this.validateForm.controls.groups.setValue([group]);
     this.isLoading = true;
-    this.httpClient.post(`${environment.SERVER_URL}/users`, this.validateForm.value)
+    this.securityService.register(this.validateForm.value)
     .subscribe((data: User) => {
       this.isLoading = false;
       this.message.create('success', '账号注册成功');

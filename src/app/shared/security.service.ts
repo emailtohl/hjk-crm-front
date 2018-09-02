@@ -4,6 +4,7 @@ import { zip, Observable, of } from 'rxjs';
 import { catchError, tap, switchMap } from 'rxjs/operators';
 import { Csrf, Principal } from './entities';
 import { environment } from '../../environments/environment';
+import { User } from '../model-interface/entities';
 
 @Injectable({
   providedIn: 'root'
@@ -47,6 +48,32 @@ export class SecurityService {
     return this.http.get<Csrf>(`${environment.SERVER_URL}/csrf`).pipe(
       tap(csrf => SecurityService.headers[csrf.headerName] = csrf.token),
       catchError(err => of(new Csrf()))
+    );
+  }
+
+  /**
+   * 校验邮箱是否已存在
+   * @param email
+   */
+  public emailIsExist(email: string): Observable<boolean> {
+    return this.http.get<boolean>(`${environment.SERVER_URL}/users/isEmailExist?email=${email}`);
+  }
+
+  /**
+   * 校验电话号码是否已存在
+   * @param cellPhone
+   */
+  public cellPhoneIsExist(cellPhone: string): Observable<boolean> {
+    return this.http.get<boolean>(`${environment.SERVER_URL}/users/isCellPhoneExist?cellPhone=${cellPhone}`);
+  }
+
+  /**
+   * 注册用户
+   * @param user
+   */
+  public register(user: User): Observable<User> {
+    return this.refreshCsrf().pipe(
+      switchMap(csrf => this.http.post<User>(`${environment.SERVER_URL}/users`, user))
     );
   }
 
