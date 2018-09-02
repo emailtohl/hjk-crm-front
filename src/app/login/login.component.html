@@ -2,9 +2,9 @@
   <nz-form-item>
     <nz-form-control>
       <nz-input-group nzPrefixIcon="anticon anticon-user">
-        <input type="email" nz-input formControlName="email" placeholder="email">
+        <input type="text" nz-input formControlName="emailOrCellPhone" placeholder="邮箱或手机号">
       </nz-input-group>
-      <nz-form-explain *ngIf="validateForm.get('email').dirty && validateForm.get('email').errors">Please input your email!</nz-form-explain>
+      <nz-form-explain *ngIf="validateForm.get('emailOrCellPhone').dirty && validateForm.get('emailOrCellPhone').errors">请输入邮箱或手机号!</nz-form-explain>
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
@@ -12,7 +12,7 @@
       <nz-input-group nzPrefixIcon="anticon anticon-lock">
         <input type="password" nz-input formControlName="password" placeholder="Password">
       </nz-input-group>
-      <nz-form-explain *ngIf="validateForm.get('password').dirty && validateForm.get('password').errors">Please input your Password!</nz-form-explain>
+      <nz-form-explain *ngIf="validateForm.get('password').dirty && validateForm.get('password').errors">请输入密码!</nz-form-explain>
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>

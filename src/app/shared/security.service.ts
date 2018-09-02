@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { zip, Observable, of } from 'rxjs';
-import { catchError, tap, mergeMap } from 'rxjs/operators';
+import { catchError, tap, switchMap } from 'rxjs/operators';
 import { Csrf, Principal } from './entities';
 import { environment } from '../../environments/environment';
 
@@ -59,14 +59,14 @@ export class SecurityService {
 
   /**
    * 登录
-   * @param email 识别用户唯一性的邮箱
+   * @param emailOrCellPhone 识别用户唯一性的邮箱或者手机号
    * @param password 登录密码
    */
-  public login(email, password: string): Observable<Principal> {
+  public login(emailOrCellPhone, password: string): Observable<Principal> {
     const headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
     return this.refreshCsrf().pipe(
-      mergeMap(csrf => {
-        const body = `email=${email}&password=${password}&${csrf.parameterName}=${csrf.token}`;
+      switchMap(csrf => {
+        const body = `emailOrCellPhone=${emailOrCellPhone}&password=${password}&${csrf.parameterName}=${csrf.token}`;
         return this.http.post<Principal>(`${environment.SERVER_URL}/login`, body, { headers: headers });
       })
     );
@@ -77,7 +77,7 @@ export class SecurityService {
    */
   public logout(): Observable<void> {
     return this.refreshCsrf().pipe(
-      mergeMap(csrf => this.http.post<void>(`${environment.SERVER_URL}/logout`, {}))
+      switchMap(csrf => this.http.post<void>(`${environment.SERVER_URL}/logout`, {}))
     );
   }
 

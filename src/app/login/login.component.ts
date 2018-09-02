@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
-      email: [null, [Validators.required]],
+      emailOrCellPhone: [null, [Validators.required]],
       password: [null, [Validators.required]],
       remember: [true]
     });
@@ -40,11 +40,11 @@ export class LoginComponent implements OnInit {
         this.validateForm.controls[i].updateValueAndValidity();
       }
     }
-    const email = this.validateForm.value.email;
+    const emailOrCellPhone = this.validateForm.value.emailOrCellPhone;
     const password = this.validateForm.value.password;
 
     this.isLoading = true;
-    this.securityService.login(email, password).subscribe((resp: Principal) => {
+    this.securityService.login(emailOrCellPhone, password).subscribe((resp: Principal) => {
       if (resp.authorities.length > 1 // 若有多个角色，那么肯定是内部人员
         || (resp.authorities.length === 1 && resp.authorities[0].authority !== 'CUSTOMER')) {
         this.router.navigate(['back']);

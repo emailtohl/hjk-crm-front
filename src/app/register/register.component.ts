@@ -47,7 +47,7 @@ export class RegisterComponent implements OnInit {
       groups: [[]],
       name: [null],
       cellPhonePrefix: ['+86'],
-      cellPhone: [null, [], [debouncedAsyncValidator(v => {
+      cellPhone: [null, [this.cellPhoneValidator], [debouncedAsyncValidator(v => {
         return this.httpClient.get<boolean>(`${environment.SERVER_URL}/users/isCellPhoneExist?cellPhone=${v}`).pipe(
           map((b: boolean) => b ? { error: true, duplicated: true } : null),
         );
@@ -91,6 +91,14 @@ export class RegisterComponent implements OnInit {
       return { required: true };
     } else if (control.value !== this.validateForm.controls.password.value) {
       return { confirm: true, error: true };
+    }
+  }
+
+  cellPhoneValidator = (control: FormControl): { [s: string]: boolean | null } => {
+    if (!control.value || /^1[0-9]{10}$/.test(control.value)) {
+      return null;
+    } else {
+      return { cellPhone: true, error: true };
     }
   }
 
