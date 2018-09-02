@@ -7,8 +7,8 @@ import { InitData } from '../shared/init.data';
 import { SecurityService } from '../shared/security.service';
 import { Router } from '@angular/router';
 import { NzModalService, NzNotificationService } from 'ng-zorro-antd';
-import { UpdateMyPasswordComponent } from '../shared/update-my-password/update-my-password.component';
 import { Subscription, Observable } from 'rxjs';
+import { UserUpdateComponent } from '../user-update/user-update.component';
 
 @Component({
   selector: 'app-back-stage',
@@ -70,14 +70,15 @@ export class BackStageComponent implements OnInit, OnDestroy {
     });
   }
 
-  openUpdateMyPasswordModal() {
+  openModal() {
     const modal = this.modalService.create({
-      nzTitle: '修改密码',
-      nzContent: UpdateMyPasswordComponent,
+      nzTitle: '个人信息',
+      nzContent: UserUpdateComponent,
       nzComponentParams: {
         id: Principal.getUserId(this.principal),
       },
       nzFooter: null
     });
+    modal.afterClose.subscribe((result) => console.log('[afterClose] The result is:', result));
   }
 }

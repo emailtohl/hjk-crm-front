@@ -1,0 +1,163 @@
+<nz-tabset [nzTabPosition]="'top'" [nzType]="'card'">
+  <nz-tab [nzTitle]="'基本资料'">
+    <form nz-form [formGroup]="profileForm" (ngSubmit)="submitProfileForm($event,profileForm.value)">
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>电子邮箱</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzHasFeedback>
+          <input nz-input formControlName="email" placeholder="email" type="email">
+          <nz-form-explain *ngIf="profileForm.get('email').dirty&&profileForm.get('email').errors">
+            <ng-container *ngIf="profileForm.get('email').hasError('email')">
+              邮箱格式有误!
+            </ng-container>
+            <ng-container *ngIf="profileForm.get('email').hasError('required')">
+              请输入邮箱!
+            </ng-container>
+            <ng-container *ngIf="profileForm.get('email').hasError('duplicated')">
+              该邮箱已注册!
+            </ng-container>
+            <ng-container *ngIf="profileForm.get('email').pending">
+              校验中...
+            </ng-container>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="name">
+          <span>
+            姓名
+            <nz-tooltip nzTitle="你的姓名">
+              <i nz-tooltip class="anticon anticon-question-circle-o"></i>
+            </nz-tooltip>
+          </span>
+        </nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input id="name" formControlName="name" placeholder="your name">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="cellPhone">手机号</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" [nzValidateStatus]="profileForm.controls['cellPhone']" nzHasFeedback>
+          <nz-input-group [nzAddOnBefore]="addOnBeforeTemplate">
+            <ng-template #addOnBeforeTemplate>
+              <nz-select formControlName="cellPhonePrefix" style="width: 70px;">
+                <nz-option nzLabel="+86" nzValue="+86"></nz-option>
+                <nz-option nzLabel="+87" nzValue="+87"></nz-option>
+              </nz-select>
+            </ng-template>
+            <input formControlName="cellPhone" id="'cellPhone'" nz-input placeholder="cell phone">
+          </nz-input-group>
+          <nz-form-explain *ngIf="profileForm.get('cellPhone').dirty && profileForm.get('cellPhone').errors || profileForm.get('cellPhone').pending">
+            <ng-container *ngIf="profileForm.get('cellPhone').hasError('duplicated')">
+              <span style="color:red">该手机号已注册!</span>
+            </ng-container>
+            <ng-container *ngIf="profileForm.get('cellPhone').pending">
+              校验中...
+            </ng-container>
+            <ng-container *ngIf="profileForm.get('cellPhone').hasError('cellPhone')">
+              <span style="color:red">手机号输入有误</span>
+            </ng-container>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24">生日</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzHasFeedback>
+          <nz-date-picker formControlName="birthday" [nzStyle]="{width: '155%'}"></nz-date-picker>
+          <nz-form-explain *ngIf="profileForm.get('birthday').dirty && profileForm.get('birthday').errors">
+            <ng-container *ngIf="profileForm.get('birthday').hasError('birthday')">
+              生日输入不对，至少是一年前!
+            </ng-container>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24">性别</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-radio-group [ngModelOptions]="{standalone: true}" [ngModel]="profileForm.get('gender').value" (ngModelChange)="profileForm.patchValue({gender: $event})">
+            <label nz-radio nzValue="MALE">男</label>
+            <label nz-radio nzValue="FEMALE">女</label>
+            <label nz-radio nzValue="UNSPECIFIED">未知</label>
+          </nz-radio-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item nz-row style="margin-bottom:8px;">
+        <nz-form-control [nzSpan]="14" [nzOffset]="6">
+          <button nz-button nzType="primary" [disabled]="profileForm.invalid" [nzLoading]="isLoading">确定</button>
+          <button nz-button type="button" nzType="default" (click)="back()" style="margin-left:30px;">取消</button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </nz-tab>
+  <nz-tab [nzTitle]="'修改密码'">
+    <form nz-form [formGroup]="passwordForm" (ngSubmit)="submitPasswordForm($event,passwordForm.value)">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired>原密码</nz-form-label>
+        <div>
+          <nz-form-control [nzSpan]="12" nzHasFeedback>
+            <input nz-input type="password" formControlName="oldPassword" (ngModelChange)="validateConfirmPassword()">
+            <nz-form-explain *ngIf="passwordForm.get('oldPassword').dirty&&passwordForm.get('oldPassword').hasError('required')">
+              输入你的原密码!</nz-form-explain>
+          </nz-form-control>
+        </div>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired>新密码</nz-form-label>
+        <div>
+          <nz-form-control [nzSpan]="12" nzHasFeedback>
+            <input nz-input type="password" formControlName="newPassword" (ngModelChange)="validateConfirmPassword()">
+            <nz-form-explain *ngIf="passwordForm.get('newPassword').dirty && passwordForm.get('newPassword').errors">
+              <ng-container *ngIf="passwordForm.get('newPassword').hasError('required')">
+                请输入密码!
+              </ng-container>
+              <ng-container *ngIf="passwordForm.get('newPassword').hasError('minlength')">
+                密码至少5位!
+              </ng-container>
+            </nz-form-explain>
+          </nz-form-control>
+        </div>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired>确认新密码</nz-form-label>
+        <nz-form-control [nzSpan]="12" nzHasFeedback>
+          <input nz-input type="password" formControlName="confirm" placeholder="confirm your password">
+          <nz-form-explain *ngIf="passwordForm.get('confirm').dirty&&passwordForm.get('confirm').errors">
+            <ng-container *ngIf="passwordForm.get('confirm').hasError('required')">
+              请输入确认密码!
+            </ng-container>
+            <ng-container *ngIf="passwordForm.get('confirm').hasError('confirm')">
+              前后密码输入不一致!
+            </ng-container>
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control [nzOffset]="7" [nzSpan]="12">
+          <button nz-button nzType="primary" [nzLoading]="isLoading" [disabled]="!passwordForm.valid">确定</button>
+          <button nz-button type="button" nzType="default" (click)="back()" style="margin-left:30px;">取消</button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </nz-tab>
+  <nz-tab [nzTitle]="'上传头像'">
+    <nz-form-label [nzSpan]="7" nzRequired>上传头像</nz-form-label>
+    <div>
+        <nz-upload
+        nzType="drag"
+        [nzMultiple]="false"
+        [nzLimit]="1"
+        nzAction="{{uploadPicture}}"
+        [nzSize]="5000"
+        [nzFileType]="'image/png,image/jpeg,image/gif,image/bmp'"
+        (nzChange)="handleChange($event)">
+        <p class="ant-upload-drag-icon">
+          <i class="anticon anticon-inbox"></i>
+        </p>
+        <p class="ant-upload-text">点击或拖动上传</p>
+        <p class="ant-upload-hint">上传你的头像</p>
+      </nz-upload>
+      <div>
+        <button nz-button type="button" nzType="default" (click)="back()" style="margin-top:30px;">取消</button>
+      </div>
+    </div>
+  </nz-tab>
+</nz-tabset>

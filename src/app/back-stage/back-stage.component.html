@@ -40,7 +40,7 @@
       <div class="logo" style="display: inline;">
         您好：{{principal?.name?.split(':')[1]}}
         <a><nz-avatar nzIcon="anticon anticon-user" nzSrc="{{icon}}"></nz-avatar></a>
-        <a (click)="openUpdateMyPasswordModal()" style="margin-left: 30px;"><i class="anticon anticon-paper-clip"></i></a>
+        <a (click)="openModal()" style="margin-left: 30px;"><i class="anticon anticon-paper-clip"></i></a>
       </div>
       <div class="logo" style="display: inline; margin-left: 30px;">
         <a (click)="logout()"><i class="anticon anticon-logout"></i></a>

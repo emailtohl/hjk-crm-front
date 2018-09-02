@@ -80,18 +80,18 @@
           </nz-select>
         </ng-template>
         <input formControlName="cellPhone" id="'cellPhone'" nz-input placeholder="cell phone">
-        <nz-form-explain *ngIf="validateForm.get('cellPhone').dirty && validateForm.get('cellPhone').errors || validateForm.get('cellPhone').pending">
-            <ng-container *ngIf="validateForm.get('cellPhone').hasError('duplicated')">
-              <span style="color:red">该手机号已注册!</span>
-            </ng-container>
-            <ng-container *ngIf="validateForm.get('cellPhone').pending">
-              校验中...
-            </ng-container>
-            <ng-container *ngIf="validateForm.get('cellPhone').hasError('cellPhone')">
-              <span style="color:red">手机号输入有误</span>
-            </ng-container>
-          </nz-form-explain>
       </nz-input-group>
+      <nz-form-explain *ngIf="validateForm.get('cellPhone').dirty && validateForm.get('cellPhone').errors || validateForm.get('cellPhone').pending">
+        <ng-container *ngIf="validateForm.get('cellPhone').hasError('duplicated')">
+          <span style="color:red">该手机号已注册!</span>
+        </ng-container>
+        <ng-container *ngIf="validateForm.get('cellPhone').pending">
+          校验中...
+        </ng-container>
+        <ng-container *ngIf="validateForm.get('cellPhone').hasError('cellPhone')">
+          <span style="color:red">手机号输入有误</span>
+        </ng-container>
+      </nz-form-explain>
     </nz-form-control>
   </nz-form-item>
   <!-- 

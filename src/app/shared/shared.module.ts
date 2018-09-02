@@ -8,7 +8,6 @@ import { BooleanPipe } from './boolean.pipe';
 import { IconPipe } from './icon.pipe';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ScrollDirective } from './scroll.directive';
-import { UpdateMyPasswordComponent } from './update-my-password/update-my-password.component';
 import { SelectUserComponent } from './select-user/select-user.component';
 import { SearchInputComponent } from './search-input/search-input.component';
 
@@ -32,12 +31,10 @@ export function InitDataFactory(initData: InitData): Function {
     BooleanPipe,
     IconPipe,
     ScrollDirective,
-    UpdateMyPasswordComponent,
     SelectUserComponent,
     SearchInputComponent,
   ],
   entryComponents: [
-    UpdateMyPasswordComponent,
     SelectUserComponent,
     SearchInputComponent
   ],
@@ -45,7 +42,6 @@ export function InitDataFactory(initData: InitData): Function {
     BooleanPipe,
     IconPipe,
     ScrollDirective,
-    UpdateMyPasswordComponent,
     SelectUserComponent,
     SearchInputComponent
   ]

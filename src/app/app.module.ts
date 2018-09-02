@@ -18,6 +18,7 @@ import { SharedModule } from './shared/shared.module';
 import { CarouselComponent } from './service-counter/carousel/carousel.component';
 import { MyTaskComponent } from './back-stage/my-task/my-task.component';
 import { OrganizationService } from './model-interface/organization.service';
+import { UserUpdateComponent } from './user-update/user-update.component';
 
 registerLocaleData(zh);
 
@@ -56,7 +57,9 @@ const stompConfig: StompConfig = {
     BackStageComponent,
     MyTaskComponent,
     CarouselComponent,
+    UserUpdateComponent,
   ],
+  entryComponents: [ UserUpdateComponent ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

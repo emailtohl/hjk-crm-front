@@ -108,7 +108,27 @@ export class SecurityService {
     );
   }
 
+  /**
+   * 更新密码
+   * @param form
+   */
   public updateMyPassword(form: {id: number, oldPassword: string, newPassword: string}): Observable<void> {
     return this.http.post<void>(`${environment.SERVER_URL}/users/updateMyPassword`, form);
+  }
+
+  /**
+   * 获取完整的用户信息
+   * @param id
+   */
+  public getProfile(id: number): Observable<User> {
+    return this.http.get<User>(`${environment.SERVER_URL}/users/${id}`);
+  }
+
+  /**
+   * 更新个人信息
+   * @param form
+   */
+  public updateProfile(id: number, user: User): Observable<User> {
+    return this.http.put<User>(`${environment.SERVER_URL}/users/${id}`, user);
   }
 }
