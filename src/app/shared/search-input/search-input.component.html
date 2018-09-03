@@ -1,8 +1,8 @@
 <nz-input-group nzSearch [nzSuffix]="suffixIconButton">
-  <input type="text" nz-input placeholder="搜索" (keyup)="keyupSearch($event.target.value)">
+  <input #searchInput type="text" nz-input placeholder="搜索" (keyup)="change($event)">
 </nz-input-group>
 <ng-template #suffixIconButton>
-  <button nz-button nzType="primary" nzSearch>
+  <button nz-button nzType="primary" nzSearch (click)="click()">
     <i class="anticon anticon-search"></i>
   </button>
 </ng-template>

@@ -47,16 +47,16 @@
         <span>{{data?.enabled | booleanPipe}}</span>
       </div>
       <div nz-col nzSpan="6">
-        <b>未过期</b>
-        <span>{{data?.accountNonExpired | booleanPipe}}</span>
+        <b>最后登录</b>
+        <span>{{data?.lastLogin}}</span>
       </div>
       <div nz-col nzSpan="6">
-        <b>未锁定</b>
-        <span>{{data?.accountNonLocked | booleanPipe}}</span>
+        <b>密码更新</b>
+        <span>{{data?.lastChangeCredentials}}</span>
       </div>
       <div nz-col nzSpan="6">
-        <b>密码有效</b>
-        <span>{{data?.credentialsNonExpired | booleanPipe}}</span>
+        <b>最后修改</b>
+        <span>{{data?.modifyDate}}</span>
       </div>
     </div>
     <div nz-row style="margin-top: 20px;">
@@ -66,7 +66,7 @@
       </div>
       <div nz-col nzSpan="6">
         <b>性别</b>
-        <span>{{data?.gender}}</span>
+        <span>{{data?.gender === 'MALE' ? '男' : data?.gender === 'FEMALE' ? '女' : '未知'}}</span>
       </div>
       <div nz-col nzSpan="6">
         <b>备注</b>

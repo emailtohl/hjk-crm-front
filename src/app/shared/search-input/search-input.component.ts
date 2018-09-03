@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, EventEmitter, Output, ElementRef, ViewChild } from '@angular/core';
 import { Subscription, Subject, of, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap, catchError } from 'rxjs/operators';
 
@@ -11,6 +11,10 @@ export class SearchInputComponent implements OnInit, OnDestroy {
   // 搜索函数
   @Input()
   search: (query: string) => Observable<any>;
+
+  @ViewChild('searchInput')
+  searchInput: ElementRef;
+
   // 当前输入框的值
   @Output()
   private current: EventEmitter<string> = new EventEmitter();
@@ -57,8 +61,23 @@ export class SearchInputComponent implements OnInit, OnDestroy {
     }, console.log, this.createQueryStream);
   }
 
-  keyupSearch(query: string) {
-    this.current.emit(query);
-    this.searchText$.next(query);
+  change(event) {
+    if (event.keyCode === 13) {
+      this.click();
+    } else {
+      this.current.emit(event.target.value);
+      this.searchText$.next(event.target.value);
+    }
+  }
+
+  click() {
+    this.loading.emit(true);
+    this.search(this.searchInput.nativeElement.value).subscribe((data: any) => {
+      this.loading.emit(false);
+      this.result.emit(data);
+    }, err => {
+      this.loading.emit(false);
+      this.result.emit({});
+    });
   }
 }
