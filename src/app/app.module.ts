@@ -6,7 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
 import { AppRoutingModule } from './app-routing.module';
-import { NgZorroAntdModule, NZ_I18N, zh_CN } from 'ng-zorro-antd';
+import { NgZorroAntdModule, NZ_I18N, zh_CN, NZ_MODAL_CONFIG } from 'ng-zorro-antd';
 import {StompConfig, StompService} from '@stomp/ng2-stompjs';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
@@ -72,6 +72,7 @@ const stompConfig: StompConfig = {
   ],
   providers: [
     { provide: NZ_I18N, useValue: zh_CN },
+    { provide: NZ_MODAL_CONFIG, useValue: { autoBodyPadding: true }},
     StompService,
     {
       provide: StompConfig,

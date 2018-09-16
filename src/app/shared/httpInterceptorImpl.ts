@@ -20,7 +20,7 @@ export class HttpInterceptorImpl implements HttpInterceptor {
             setHeaders: SecurityService.headers,
         });
         return next.handle(newReq).pipe(
-            mergeMap((event: Observable<HttpEvent<any>>) => {
+            mergeMap((event: HttpEvent<any>) => {
                 if (event instanceof HttpResponse) {
                     // console.log(event);
                 }

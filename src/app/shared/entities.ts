@@ -1,3 +1,7 @@
+export interface PartialParams {
+    id: number | string;
+}
+
 export class Csrf {
     public headerName: string;
     public parameterName: string;
@@ -25,6 +29,15 @@ export class Principal {
             return '';
         }
         return principal.name.split(':')[0];
+    }
+
+    public static getUserPartialId(principal: Principal): Partial<PartialParams> {
+        const params: Partial<PartialParams> = {id: null};
+        if (!principal.name) {
+            return params;
+        }
+        params.id = principal.name.split(':')[0];
+        return params;
     }
 
     public static getUserName(principal: Principal): string {

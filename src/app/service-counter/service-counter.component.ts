@@ -73,9 +73,7 @@ export class ServiceCounterComponent implements OnInit, OnDestroy {
     const modal = this.modalService.create({
       nzTitle: '个人信息',
       nzContent: UserUpdateComponent,
-      nzComponentParams: {
-        id: Principal.getUserId(this.principal),
-      },
+      nzComponentParams: Principal.getUserPartialId(this.principal),
       nzFooter: null
     });
     modal.afterClose.subscribe((result) => console.log('[afterClose] The result is:', result));

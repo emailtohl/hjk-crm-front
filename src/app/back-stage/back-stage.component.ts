@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import {Message} from '@stomp/stompjs';
 import {StompService} from '@stomp/ng2-stompjs';
 import { environment } from '../../environments/environment';
-import { Principal } from '../shared/entities';
+import { Principal, PartialParams } from '../shared/entities';
 import { InitData } from '../shared/init.data';
 import { SecurityService } from '../shared/security.service';
 import { Router } from '@angular/router';
@@ -74,9 +74,7 @@ export class BackStageComponent implements OnInit, OnDestroy {
     const modal = this.modalService.create({
       nzTitle: '个人信息',
       nzContent: UserUpdateComponent,
-      nzComponentParams: {
-        id: Principal.getUserId(this.principal),
-      },
+      nzComponentParams: Principal.getUserPartialId(this.principal),
       nzFooter: null
     });
     modal.afterClose.subscribe((result) => console.log('[afterClose] The result is:', result));
