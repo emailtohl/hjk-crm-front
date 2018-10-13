@@ -1,6 +1,6 @@
 FROM nginx
-MAINTAINER emailtohl@163.com
+LABEL author=emailtohl@163.com
 COPY dist/hjk-crm-front/ /usr/share/nginx/html
-VOLUME /var/log/nginx
-EXPOSE 80
+VOLUME ["/etc/nginx/sites-enabled", "/etc/nginx/certs", "/etc/nginx/conf.d", "/var/log/nginx", "/var/www/html"]
+EXPOSE 81
 CMD ["nginx", "-g", "daemon off;"]
