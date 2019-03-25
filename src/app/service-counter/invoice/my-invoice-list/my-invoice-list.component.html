@@ -21,7 +21,7 @@
         <td>{{data.organization.taxNumber}}</td>
         <td>{{data.type === 'ORDINARY' ? '普票' : data.type === 'SPECIAL' ? '专票' : data.type}}</td>
         <td>{{data.organization.deliveryAddress}}</td>
-        <td>{{data.createDate}}</td>
+        <td>{{data.creationTime}}</td>
         <td>{{data.flow?.pass == null ? '未完成' : data.flow?.pass === true ? '已完成' : '终止' }}</td>
         <td>
           <a (click)="getDetail(data.id)">详情</a>

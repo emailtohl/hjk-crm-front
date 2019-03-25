@@ -1,7 +1,7 @@
 export class BaseEntity {
     public id: number;
-    public createDate: string;
-    public modifyDate: string;
+    public creationTime: string;
+    public modifyTime: string;
     public version: number;
 }
 
